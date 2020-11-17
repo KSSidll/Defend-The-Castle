@@ -1,0 +1,49 @@
+{
+    "background":{
+        "textureSrc": "build/assets/background.jpg"
+    },
+
+    "summons":{
+        "warrior":{
+            "textureSrc": "build/assets/satyr_1.png",
+            "srcRectX": 0,
+            "srcRectY": 0,
+            "srcRectH": 420,
+            "srcRectW": 520,
+            "destRectX": 100,
+            "destRectY": 400,
+            "renderScale": 0.3
+        },
+        "tank":{
+            "textureSrc": "build/assets/satyr_2.png",
+            "srcRectX": 0,
+            "srcRectY": 0,
+            "srcRectH": 420,
+            "srcRectW": 520,
+            "destRectX": 100,
+            "destRectY": 400,
+            "renderScale": 0.3
+        },
+        "archer":{
+            "textureSrc": "build/assets/satyr_3.png",
+            "srcRectX": 0,
+            "srcRectY": 0,
+            "srcRectH": 420,
+            "srcRectW": 520,
+            "destRectX": 100,
+            "destRectY": 400,
+            "renderScale": 0.3
+        }
+    },
+
+    "enemy":{
+        "textureSrc": "build/assets/golem_reversed.png",
+        "srcRectX": 0,
+        "srcRectY": 0,
+        "srcRectH": 420,
+        "srcRectW": 520,
+        "destRectX": 100,
+        "destRectY": 400,
+        "renderScale": 0.3
+    }
+}
