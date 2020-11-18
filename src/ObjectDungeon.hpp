@@ -3,7 +3,8 @@
 class ObjectDungeon
 {
     private:
-        std::deque<GameObject*>objectArray;
+        //std::deque<GameObject*> objectArray;
+        GameObject* objectArray[5];
 
     public:
         ObjectDungeon();

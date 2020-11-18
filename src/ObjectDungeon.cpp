@@ -1,5 +1,15 @@
 #include "ObjectDungeon.hpp"
 
+ObjectDungeon::ObjectDungeon()
+{
+
+}
+
+ObjectDungeon::~ObjectDungeon()
+{
+
+}
+
 void ObjectDungeon::Update()
 {
     for(auto object : this->objectArray)
@@ -20,6 +30,8 @@ void ObjectDungeon::Render()
 
 void ObjectDungeon::SummonObject(rapidjson::Value& object, SDL_Renderer* renderer)
 {
-    this->objectArray.push_back(new GameObject(object, renderer));
+    GameObject *objeect = new GameObject(object, renderer);
+    objectArray[1] = objeect;
+    //this->objectArray.push_back(objeect);
 }
 

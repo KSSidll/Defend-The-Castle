@@ -17,6 +17,11 @@ GameObject::GameObject(rapidjson::Value& object, SDL_Renderer* renderer)
 
 }
 
+GameObject::~GameObject()
+{
+    
+}
+
 void GameObject::Update()
 {
     destRect.h = srcRect.h * renderScale;

@@ -1,6 +1,6 @@
-#include "GameObject.hpp"
+#include "ObjectDungeon.hpp"
 
-GameObject *satyr_test;
+ObjectDungeon *objectDungeon;
 SDL_Texture *bgTex;
 
 Game::Game()
@@ -47,7 +47,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
     bgTex = SDL_CreateTextureFromSurface(renderer, tempBgSurface);
     SDL_FreeSurface(tempBgSurface);
 
-    satyr_test = new GameObject(objectsDoc["summons"]["warrior"], renderer);
+    objectDungeon->SummonObject(objectsDoc["summons"]["warrior"], renderer);
     
 }
 
@@ -68,14 +68,14 @@ void Game::handleEvents()
 
 void Game::update()
 {
-    satyr_test->Update();
+    //objectDungeon->Update();
 }
 
 void Game::render()
 {
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, bgTex, NULL, NULL);
-    satyr_test->Render();
+    //objectDungeon->Render();
     SDL_RenderPresent(renderer);
 }
 
