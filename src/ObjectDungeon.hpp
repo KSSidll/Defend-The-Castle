@@ -9,5 +9,8 @@ class ObjectDungeon
         ObjectDungeon();
         ~ObjectDungeon();
 
-        void summonObject(rapidjson::Value& object, SDL_Renderer* renderer);
+        void Update();
+        void Render();
+
+        void SummonObject(rapidjson::Value& object, SDL_Renderer* renderer);
 };
