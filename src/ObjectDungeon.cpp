@@ -31,7 +31,6 @@ void ObjectDungeon::Render()
 void ObjectDungeon::SummonObject(rapidjson::Value& object, SDL_Renderer* renderer)
 {
     GameObject *objeect = new GameObject(object, renderer);
-    objectArray[1] = objeect;
-    //this->objectArray.push_back(objeect);
+    this->objectArray.push_back(objeect);
 }
 
