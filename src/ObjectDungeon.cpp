@@ -30,6 +30,6 @@ void ObjectDungeon::Render()
 
 void ObjectDungeon::SummonObject(rapidjson::Value& object, SDL_Renderer* renderer)
 {
-    GameObject *objeect = new GameObject(object, renderer);
-    this->objectArray.push_back(objeect);
+    PlayerSummon *summon = new PlayerSummon(object, renderer);
+    this->objectArray.push_back(summon);
 }

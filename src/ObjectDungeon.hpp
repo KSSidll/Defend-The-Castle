@@ -1,10 +1,10 @@
-#include "GameObject.hpp"
+#include "PlayerSummon.hpp"
 #include <deque>
 
 class ObjectDungeon
 {
     private:
-        std::deque<GameObject*> objectArray;
+        std::deque<PlayerSummon*> objectArray;
 
     public:
         ObjectDungeon();

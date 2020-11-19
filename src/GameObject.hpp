@@ -5,16 +5,25 @@
 
 class GameObject
 {
-    private:
+    protected:
         int xpos;
         int ypos;
         float renderScale;
+
+        int health;
+        int attackDamage;
+        float movementSpeed;
+        float attackInterval;
+        float range;
+
+        float timeSinceLastAttack = attackInterval / 2;
 
         SDL_Texture* objTexture;
         SDL_Rect srcRect, destRect;
         SDL_Renderer* renderer;
 
     public:
+        GameObject(){};
         GameObject(rapidjson::Value& object, SDL_Renderer* renderer);
         ~GameObject();
 

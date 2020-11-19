@@ -1,6 +1,6 @@
-#include "GameObject.hpp"
+#include "PlayerSummon.hpp"
 
-GameObject::GameObject(rapidjson::Value& object, SDL_Renderer* renderer)
+PlayerSummon::PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer)
 {
     this->renderer = renderer;
     this->srcRect.x = object["srcRectX"].GetInt();
@@ -11,6 +11,7 @@ GameObject::GameObject(rapidjson::Value& object, SDL_Renderer* renderer)
     this->destRect.y = object["destRectY"].GetInt();
     this->renderScale = object["renderScale"].GetFloat();
 
+    this->cost = object["cost"].GetInt();
     this->health = object["health"].GetInt();
     this->attackDamage = object["attackDamage"].GetInt();
     this->movementSpeed = object["movementSpeed"].GetFloat();
@@ -20,21 +21,9 @@ GameObject::GameObject(rapidjson::Value& object, SDL_Renderer* renderer)
     SDL_Surface* tempSurface = IMG_Load(object["textureSrc"].GetString());
     objTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
     SDL_FreeSurface(tempSurface);
-
 }
 
-GameObject::~GameObject()
+PlayerSummon::~PlayerSummon()
 {
-    
-}
 
-void GameObject::Update()
-{
-    destRect.h = srcRect.h * renderScale;
-    destRect.w = srcRect.w * renderScale;
-}
-
-void GameObject::Render()
-{
-    SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
 }
