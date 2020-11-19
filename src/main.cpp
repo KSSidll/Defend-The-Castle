@@ -40,4 +40,3 @@ int main()
     game->clean();
     return 0;
 }
-

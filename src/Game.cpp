@@ -1,8 +1,5 @@
 #include "ObjectDungeon.hpp"
 
-ObjectDungeon objectDungeon;
-SDL_Texture *bgTex;
-
 Game::Game()
 {
 
@@ -44,7 +41,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
     }
 
     SDL_Surface* tempBgSurface = IMG_Load(objectsDoc["background"]["textureSrc"].GetString());
-    bgTex = SDL_CreateTextureFromSurface(renderer, tempBgSurface);
+    background = SDL_CreateTextureFromSurface(renderer, tempBgSurface);
     SDL_FreeSurface(tempBgSurface);
 
     objectDungeon.SummonObject(objectsDoc["summons"]["warrior"], renderer);
@@ -74,7 +71,7 @@ void Game::update()
 void Game::render()
 {
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, bgTex, NULL, NULL);
+    SDL_RenderCopy(renderer, background, NULL, NULL);
     objectDungeon.Render();
     SDL_RenderPresent(renderer);
 }

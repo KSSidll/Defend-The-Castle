@@ -14,6 +14,8 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
     rapidjson::Document objectsDoc;
+    ObjectDungeon objectDungeon;
+    SDL_Texture *background;
 
 public:
     Game();
