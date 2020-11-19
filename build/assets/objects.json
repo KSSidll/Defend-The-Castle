@@ -60,7 +60,7 @@
         "srcRectY": 0,
         "srcRectH": 420,
         "srcRectW": 520,
-        "destRectX": 100,
+        "destRectX": 400,
         "destRectY": 400,
         "renderScale": 0.3,
         "health": 1,

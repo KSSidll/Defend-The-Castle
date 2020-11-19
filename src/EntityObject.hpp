@@ -1,3 +1,4 @@
+#pragma once
 #include "MovableObject.hpp"
 
 class EntityObject : public MovableObject

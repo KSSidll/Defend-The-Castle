@@ -32,6 +32,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
     background = new SceneObject(objectsDoc["background"], renderer);
     summonDungeon.SummonObject(objectsDoc["summons"]["warrior"], renderer);
+    enemy = new Enemy(objectsDoc["enemy"], renderer);
 }
 
 void Game::handleEvents()
@@ -59,6 +60,7 @@ void Game::render()
     SDL_RenderClear(renderer);
     background->Render();
     summonDungeon.Render();
+    enemy->Render();
     SDL_RenderPresent(renderer);
 }
 

@@ -1,3 +1,4 @@
+#pragma once
 #include "SceneObject.hpp"
 
 class MovableObject : public SceneObject

@@ -1,6 +1,8 @@
 #define SDL_MAIN_HANDLED
 
+#pragma once
 #include "SummonDungeon.hpp"
+#include "Enemy.hpp"
 
 class Game
 {
@@ -11,6 +13,7 @@ private:
     rapidjson::Document objectsDoc;
     SummonDungeon summonDungeon;
     SceneObject* background;
+    Enemy* enemy;
 
 public:
     Game(){};

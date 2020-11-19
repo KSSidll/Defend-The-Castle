@@ -1,3 +1,4 @@
+#pragma once
 #include "EntityObject.hpp"
 
 class PlayerSummon : virtual public EntityObject
