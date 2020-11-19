@@ -1,15 +1,5 @@
 #include "Game.hpp"
 
-Game::Game()
-{
-
-}
-
-Game::~Game()
-{
-
-}
-
 void Game::init(const char* title, int width, int height, bool fullscreen)
 {
     int flags = 0;
@@ -40,12 +30,8 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
         isRunning = false;
     }
 
-    SDL_Surface* tempBgSurface = IMG_Load(objectsDoc["background"]["textureSrc"].GetString());
-    background = SDL_CreateTextureFromSurface(renderer, tempBgSurface);
-    SDL_FreeSurface(tempBgSurface);
-
+    background = new SceneObject(objectsDoc["background"], renderer);
     summonDungeon.SummonObject(objectsDoc["summons"]["warrior"], renderer);
-    
 }
 
 void Game::handleEvents()
@@ -71,7 +57,7 @@ void Game::update()
 void Game::render()
 {
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, background, NULL, NULL);
+    background->Render();
     summonDungeon.Render();
     SDL_RenderPresent(renderer);
 }

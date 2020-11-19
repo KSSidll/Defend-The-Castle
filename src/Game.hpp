@@ -10,11 +10,11 @@ private:
     SDL_Renderer *renderer;
     rapidjson::Document objectsDoc;
     SummonDungeon summonDungeon;
-    SDL_Texture *background;
+    SceneObject* background;
 
 public:
-    Game();
-    ~Game();
+    Game(){};
+    ~Game(){};
 
     void init(const char* title, int width, int height, bool fullscreen);
     
