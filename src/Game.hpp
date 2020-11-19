@@ -1,11 +1,8 @@
 #define SDL_MAIN_HANDLED
 
-#include <deque>
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include "rapidjson/document.h"
-#include "rapidjson/filereadstream.h"
+#pragma once
+#include "SummonDungeon.hpp"
+#include "Enemy.hpp"
 
 class Game
 {
@@ -14,10 +11,13 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
     rapidjson::Document objectsDoc;
+    SummonDungeon summonDungeon;
+    SceneObject* background;
+    Enemy* enemy;
 
 public:
-    Game();
-    ~Game();
+    Game(){};
+    ~Game(){};
 
     void init(const char* title, int width, int height, bool fullscreen);
     

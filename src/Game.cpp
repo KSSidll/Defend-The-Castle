@@ -1,17 +1,4 @@
-#include "ObjectDungeon.hpp"
-
-ObjectDungeon objectDungeon;
-SDL_Texture *bgTex;
-
-Game::Game()
-{
-
-}
-
-Game::~Game()
-{
-
-}
+#include "Game.hpp"
 
 void Game::init(const char* title, int width, int height, bool fullscreen)
 {
@@ -43,12 +30,9 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
         isRunning = false;
     }
 
-    SDL_Surface* tempBgSurface = IMG_Load(objectsDoc["background"]["textureSrc"].GetString());
-    bgTex = SDL_CreateTextureFromSurface(renderer, tempBgSurface);
-    SDL_FreeSurface(tempBgSurface);
-
-    objectDungeon.SummonObject(objectsDoc["summons"]["warrior"], renderer);
-    
+    background = new SceneObject(objectsDoc["background"], renderer);
+    summonDungeon.SummonObject(objectsDoc["summons"]["warrior"], renderer);
+    enemy = new Enemy(objectsDoc["enemy"], renderer);
 }
 
 void Game::handleEvents()
@@ -68,14 +52,15 @@ void Game::handleEvents()
 
 void Game::update()
 {
-    objectDungeon.Update();
+    summonDungeon.Update();
 }
 
 void Game::render()
 {
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, bgTex, NULL, NULL);
-    objectDungeon.Render();
+    background->Render();
+    summonDungeon.Render();
+    enemy->Render();
     SDL_RenderPresent(renderer);
 }
 
