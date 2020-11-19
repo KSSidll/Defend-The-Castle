@@ -1,6 +1,6 @@
-#include "PlayerSummon.hpp"
+#include "MovableObject.hpp"
 
-PlayerSummon::PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer)
+MovableObject::MovableObject(rapidjson::Value& object, SDL_Renderer* renderer)
 {
     this->renderer = renderer;
 
@@ -18,12 +18,14 @@ PlayerSummon::PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer)
     destRect.y = object["destRectY"].GetInt();
     destRect.h = srcRect.h * renderScale;
     destRect.w = srcRect.w * renderScale;
+}
 
-    health = object["health"].GetInt();
-    attackDamage = object["attackDamage"].GetInt();
-    movementSpeed = object["movementSpeed"].GetFloat();
-    attackInterval = object["attackInterval"].GetFloat();
-    range = object["range"].GetFloat();
+void MovableObject::Update()
+{
+    
+}
 
-    cost = object["cost"].GetInt();
+void MovableObject::Render()
+{
+    SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
 }

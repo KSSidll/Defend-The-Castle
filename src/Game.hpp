@@ -1,6 +1,6 @@
 #define SDL_MAIN_HANDLED
 
-#include "ObjectDungeon.hpp"
+#include "SummonDungeon.hpp"
 
 class Game
 {
@@ -9,7 +9,7 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
     rapidjson::Document objectsDoc;
-    ObjectDungeon objectDungeon;
+    SummonDungeon summonDungeon;
     SDL_Texture *background;
 
 public:

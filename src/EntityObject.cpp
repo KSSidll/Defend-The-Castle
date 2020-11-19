@@ -1,6 +1,6 @@
-#include "PlayerSummon.hpp"
+#include "EntityObject.hpp"
 
-PlayerSummon::PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer)
+EntityObject::EntityObject(rapidjson::Value& object, SDL_Renderer* renderer)
 {
     this->renderer = renderer;
 
@@ -24,6 +24,9 @@ PlayerSummon::PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer)
     movementSpeed = object["movementSpeed"].GetFloat();
     attackInterval = object["attackInterval"].GetFloat();
     range = object["range"].GetFloat();
+}
 
-    cost = object["cost"].GetInt();
+void EntityObject::Update()
+{
+    
 }

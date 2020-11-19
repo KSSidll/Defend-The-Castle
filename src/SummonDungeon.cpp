@@ -1,16 +1,6 @@
-#include "ObjectDungeon.hpp"
+#include "SummonDungeon.hpp"
 
-ObjectDungeon::ObjectDungeon()
-{
-
-}
-
-ObjectDungeon::~ObjectDungeon()
-{
-
-}
-
-void ObjectDungeon::Update()
+void SummonDungeon::Update()
 {
     for(auto object : this->objectArray)
     {
@@ -19,7 +9,7 @@ void ObjectDungeon::Update()
     
 }
 
-void ObjectDungeon::Render()
+void SummonDungeon::Render()
 {
     for(auto object : this->objectArray)
     {
@@ -28,7 +18,7 @@ void ObjectDungeon::Render()
     
 }
 
-void ObjectDungeon::SummonObject(rapidjson::Value& object, SDL_Renderer* renderer)
+void SummonDungeon::SummonObject(rapidjson::Value& object, SDL_Renderer* renderer)
 {
     PlayerSummon *summon = new PlayerSummon(object, renderer);
     this->objectArray.push_back(summon);

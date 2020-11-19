@@ -44,7 +44,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
     background = SDL_CreateTextureFromSurface(renderer, tempBgSurface);
     SDL_FreeSurface(tempBgSurface);
 
-    objectDungeon.SummonObject(objectsDoc["summons"]["warrior"], renderer);
+    summonDungeon.SummonObject(objectsDoc["summons"]["warrior"], renderer);
     
 }
 
@@ -65,14 +65,14 @@ void Game::handleEvents()
 
 void Game::update()
 {
-    objectDungeon.Update();
+    summonDungeon.Update();
 }
 
 void Game::render()
 {
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, background, NULL, NULL);
-    objectDungeon.Render();
+    summonDungeon.Render();
     SDL_RenderPresent(renderer);
 }
 

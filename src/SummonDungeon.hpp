@@ -1,14 +1,14 @@
 #include "PlayerSummon.hpp"
 #include <deque>
 
-class ObjectDungeon
+class SummonDungeon
 {
     private:
         std::deque<PlayerSummon*> objectArray;
 
     public:
-        ObjectDungeon();
-        ~ObjectDungeon();
+        SummonDungeon(){};
+        ~SummonDungeon(){};
 
         void Update();
         void Render();
