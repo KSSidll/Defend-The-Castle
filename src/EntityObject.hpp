@@ -17,4 +17,5 @@ class EntityObject : public MovableObject
         EntityObject(rapidjson::Value& object, SDL_Renderer* renderer);
 
         void Update();
+        float GetRange();
 };
