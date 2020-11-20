@@ -65,7 +65,7 @@
         "renderScale": 0.3,
         "health": 1,
         "attackDamage": 1,
-        "movementSpeed": -1.0,
+        "movementSpeed": 1.0,
         "attackInterval": 1.0,
         "range": 1.0
     }

@@ -2,20 +2,18 @@
 
 void SummonDungeon::Update()
 {
-    for(auto object : this->objectArray)
+    for(auto summon : this->objectArray)
     {
-        object->Update();
+        summon->Update();
     }
-    
 }
 
 void SummonDungeon::Render()
 {
-    for(auto object : this->objectArray)
+    for(auto summon : this->objectArray)
     {
-        object->Render();
+        summon->Render();
     }
-    
 }
 
 void SummonDungeon::SummonObject(rapidjson::Value& object, SDL_Renderer* renderer)

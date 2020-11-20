@@ -1,5 +1,10 @@
 #include "PlayerSummon.hpp"
 
+void PlayerSummon::Move()
+{
+    destRect.x += movementSpeed;
+}
+
 PlayerSummon::PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer)
 {
     this->renderer = renderer;
@@ -26,4 +31,9 @@ PlayerSummon::PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer)
     range = object["range"].GetFloat();
 
     cost = object["cost"].GetInt();
+}
+
+void PlayerSummon::Update()
+{
+    Move();
 }

@@ -53,6 +53,7 @@ void Game::handleEvents()
 void Game::update()
 {
     summonDungeon.Update();
+    enemy->Update();
 }
 
 void Game::render()

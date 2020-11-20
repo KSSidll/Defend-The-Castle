@@ -1,5 +1,10 @@
 #include "Enemy.hpp"
 
+void Enemy::Move()
+{
+    destRect.x -= movementSpeed;
+}
+
 Enemy::Enemy(rapidjson::Value& object, SDL_Renderer* renderer)
 {
     this->renderer = renderer;
@@ -24,4 +29,9 @@ Enemy::Enemy(rapidjson::Value& object, SDL_Renderer* renderer)
     movementSpeed = object["movementSpeed"].GetFloat();
     attackInterval = object["attackInterval"].GetFloat();
     range = object["range"].GetFloat();
+}
+
+void Enemy::Update()
+{
+    Move();
 }
