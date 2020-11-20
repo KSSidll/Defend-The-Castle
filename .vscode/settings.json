@@ -43,6 +43,9 @@
         "valarray": "cpp",
         "forward_list": "cpp",
         "iterator": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "cstring": "cpp",
+        "map": "cpp",
+        "numeric": "cpp"
     }
 }

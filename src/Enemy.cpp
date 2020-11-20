@@ -2,7 +2,11 @@
 
 void Enemy::Move()
 {
-    destRect.x -= movementSpeed;
+    if( (movementSkipCount+1) * movementSpeed >= 1 )
+    {
+        destRect.x -= (movementSkipCount+1) * movementSpeed;
+        movementSkipCount = 0;
+    } else ++movementSkipCount;
 }
 
 Enemy::Enemy(rapidjson::Value& object, SDL_Renderer* renderer)
@@ -34,4 +38,9 @@ Enemy::Enemy(rapidjson::Value& object, SDL_Renderer* renderer)
 void Enemy::Update()
 {
     Move();
+}
+
+std::pair<int,int> Enemy::GetPosition()
+{
+    return std::make_pair( destRect.x, destRect.y );
 }

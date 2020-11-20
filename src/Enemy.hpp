@@ -11,5 +11,6 @@ class Enemy : virtual public EntityObject
         ~Enemy(){};
         Enemy(rapidjson::Value& object, SDL_Renderer* renderer);
 
-        void Update();   
+        void Update();
+        std::pair<int,int> GetPosition();
 };

@@ -2,7 +2,11 @@
 
 void PlayerSummon::Move()
 {
-    destRect.x += movementSpeed;
+    if( (movementSkipCount+1) * movementSpeed >= 1 )
+    {
+        destRect.x += (movementSkipCount+1) * movementSpeed;
+        movementSkipCount = 0;
+    } else ++movementSkipCount;
 }
 
 PlayerSummon::PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer)
@@ -36,4 +40,9 @@ PlayerSummon::PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer)
 void PlayerSummon::Update()
 {
     Move();
+}
+
+std::pair<int,int> PlayerSummon::GetPosition()
+{
+    return std::make_pair( destRect.x, destRect.y );
 }
