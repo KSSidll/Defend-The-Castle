@@ -37,5 +37,5 @@ Enemy::Enemy(rapidjson::Value& object, SDL_Renderer* renderer)
 
 void Enemy::Update()
 {
-    Move();
+    if( isMoving ) Move();
 }

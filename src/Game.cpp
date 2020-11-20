@@ -52,6 +52,8 @@ void Game::HandleEvents()
 
 void Game::Update()
 {
+    HandleCollisions();
+
     summonDungeon.Update();
     enemy->Update();
 }
@@ -70,4 +72,15 @@ void Game::Clean()
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
+}
+
+void Game::HandleCollisions()
+{
+    for(auto summon : summonDungeon.getObjectArray())
+    {
+        if( summon->GetPosition().first + summon->GetRange() > enemy->GetPosition().first )
+        {
+            summon->EnemyCollision();
+        }
+    }
 }

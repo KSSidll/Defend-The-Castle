@@ -25,6 +25,7 @@ public:
     void Update();
     void Render();
     void Clean();
+    void HandleCollisions();
 
     bool Running() { return isRunning; };
 };

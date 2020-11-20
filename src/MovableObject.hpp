@@ -8,6 +8,7 @@ class MovableObject : public SceneObject
         int ypos;
         int movementSkipCount = 0;
         float renderScale;
+        bool isMoving = true;
         SDL_Rect srcRect, destRect;
         
     public:
@@ -16,5 +17,5 @@ class MovableObject : public SceneObject
 
         void Update();
         void Render();
-        std::pair<int,int> GetPosition();
+        std::pair<int,int> GetPosition(){ return std::make_pair( destRect.x, destRect.y ); };
 };

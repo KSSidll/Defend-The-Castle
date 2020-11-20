@@ -5,7 +5,6 @@ class PlayerSummon : virtual public EntityObject
 {
     private:
         int cost;
-
         void Move();
 
     public:
@@ -14,4 +13,5 @@ class PlayerSummon : virtual public EntityObject
         PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer);
         
         void Update();
+        void EnemyCollision();
 };

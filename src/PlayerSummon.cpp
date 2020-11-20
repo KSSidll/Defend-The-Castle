@@ -39,5 +39,10 @@ PlayerSummon::PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer)
 
 void PlayerSummon::Update()
 {
-    Move();
+    if( isMoving ) Move();
+}
+
+void PlayerSummon::EnemyCollision()
+{
+    isMoving = false;
 }
