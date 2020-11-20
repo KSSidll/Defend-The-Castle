@@ -41,8 +41,3 @@ void PlayerSummon::Update()
 {
     Move();
 }
-
-std::pair<int,int> PlayerSummon::GetPosition()
-{
-    return std::make_pair( destRect.x, destRect.y );
-}

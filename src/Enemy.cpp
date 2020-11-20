@@ -39,8 +39,3 @@ void Enemy::Update()
 {
     Move();
 }
-
-std::pair<int,int> Enemy::GetPosition()
-{
-    return std::make_pair( destRect.x, destRect.y );
-}

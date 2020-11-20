@@ -17,4 +17,5 @@ class MovableObject : public SceneObject
 
         void Update();
         void Render();
+        std::pair<int,int> GetPosition();
 };

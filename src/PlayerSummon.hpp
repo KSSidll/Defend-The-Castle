@@ -14,5 +14,4 @@ class PlayerSummon : virtual public EntityObject
         PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer);
         
         void Update();
-        std::pair<int,int> GetPosition();
 };
