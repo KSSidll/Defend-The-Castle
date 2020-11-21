@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-void Game::init(const char* title, int width, int height, bool fullscreen)
+void Game::Init(const char* title, int width, int height, bool fullscreen)
 {
     int flags = 0;
     if(fullscreen) flags = SDL_WINDOW_FULLSCREEN;
@@ -35,7 +35,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
     enemy = new Enemy(objectsDoc["enemy"], renderer);
 }
 
-void Game::handleEvents()
+void Game::HandleEvents()
 {
     SDL_Event event;
     SDL_PollEvent(&event);
@@ -49,13 +49,20 @@ void Game::handleEvents()
         break;
     }
 }
-
-void Game::update()
+int updateframe = 0;
+void Game::Update()
 {
+    HandleCollisions();
+
     summonDungeon.Update();
+    enemy->Update();
+
+    if(updateframe%50 == 0)  summonDungeon.SummonObject(objectsDoc["summons"]["warrior"], renderer);
+
+    ++updateframe;
 }
 
-void Game::render()
+void Game::Render()
 {
     SDL_RenderClear(renderer);
     background->Render();
@@ -64,9 +71,21 @@ void Game::render()
     SDL_RenderPresent(renderer);
 }
 
-void Game::clean()
+void Game::Clean()
 {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
+}
+
+void Game::HandleCollisions()
+{
+    for(auto const &summon : summonDungeon.getObjectArray())
+    {
+        if( summon->GetPosition().first + summon->GetRange() > enemy->GetPosition().first )
+        {
+            summon->EnemyCollision();
+            summonDungeon.KillSummonObject(summon->GetId());
+        }
+    }
 }

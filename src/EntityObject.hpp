@@ -4,6 +4,7 @@
 class EntityObject : public MovableObject
 {
     protected:
+        int id;
         int health;
         int attackDamage;
         float movementSpeed;
@@ -17,4 +18,6 @@ class EntityObject : public MovableObject
         EntityObject(rapidjson::Value& object, SDL_Renderer* renderer);
 
         void Update();
+        int GetId(){ return id; };
+        float GetRange();
 };

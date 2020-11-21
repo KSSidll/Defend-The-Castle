@@ -5,27 +5,26 @@ Game *game = nullptr;
 int main()
 {
     const int FPS = 60;
-    const int frameDelay = 1000 / FPS;
+    const double frameDelay = 1000 / FPS;
 
     bool updateOnly = false;
     Uint32 frameStart;
     int frameTime;
 
     game = new Game();
-    game->init("SDL", 800, 600, false);
+    game->Init("SDL", 800, 600, false);
 
-    while (game->running())
+    while (game->Running())
     {
         frameStart = SDL_GetTicks();
 
-        game->handleEvents();
-        game->update();
+        game->HandleEvents();
+        game->Update();
 
         if(!updateOnly)
-            game->render();
+            game->Render();
         else
             updateOnly = false;
-
 
         frameTime = SDL_GetTicks() - frameStart;
 
@@ -36,6 +35,6 @@ int main()
         
     }
 
-    game->clean();
+    game->Clean();
     return 0;
 }

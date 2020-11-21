@@ -30,3 +30,8 @@ void EntityObject::Update()
 {
     
 }
+
+float EntityObject::GetRange()
+{
+    return range;
+}
