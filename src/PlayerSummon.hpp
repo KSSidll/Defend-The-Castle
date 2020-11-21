@@ -1,7 +1,7 @@
 #pragma once
 #include "EntityObject.hpp"
 
-class PlayerSummon : virtual public EntityObject
+class PlayerSummon : public EntityObject
 {
     private:
         int cost;
@@ -11,6 +11,7 @@ class PlayerSummon : virtual public EntityObject
         PlayerSummon(){};
         ~PlayerSummon(){};
         PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer);
+        PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer, int id);
         
         void Update();
         void EnemyCollision();

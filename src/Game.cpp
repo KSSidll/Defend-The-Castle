@@ -49,13 +49,17 @@ void Game::HandleEvents()
         break;
     }
 }
-
+int updateframe = 0;
 void Game::Update()
 {
     HandleCollisions();
 
     summonDungeon.Update();
     enemy->Update();
+
+    if(updateframe%50 == 0)  summonDungeon.SummonObject(objectsDoc["summons"]["warrior"], renderer);
+
+    ++updateframe;
 }
 
 void Game::Render()
@@ -76,11 +80,12 @@ void Game::Clean()
 
 void Game::HandleCollisions()
 {
-    for(auto summon : summonDungeon.getObjectArray())
+    for(auto const &summon : summonDungeon.getObjectArray())
     {
         if( summon->GetPosition().first + summon->GetRange() > enemy->GetPosition().first )
         {
             summon->EnemyCollision();
+            summonDungeon.KillSummonObject(summon->GetId());
         }
     }
 }
