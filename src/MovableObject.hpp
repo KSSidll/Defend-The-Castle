@@ -6,8 +6,8 @@ class MovableObject : public SceneObject
     protected:
         int xpos;
         int ypos;
-        int movementSkipCount = 0;
         float renderScale;
+        float xShift;
         bool isMoving = true;
         SDL_Rect srcRect, destRect;
         
