@@ -14,6 +14,7 @@ class MovableObject : public SceneObject
     public:
         MovableObject(){};
         ~MovableObject(){};
+        MovableObject(rapidjson::Value& object, SDL_Renderer* renderer);
 
         void Update();
         void Render();

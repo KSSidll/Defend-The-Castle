@@ -31,13 +31,11 @@ std::deque< std::pair<int,int> > SummonDungeon::GetPositions()
 
 void SummonDungeon::SummonObject(rapidjson::Value& object, SDL_Renderer* renderer)
 {
-    PlayerSummon *summon = new PlayerSummon(object, renderer, objectArray.size());
+    PlayerSummon *summon = new PlayerSummon(object, renderer);
     objectArray.push_back(summon);
 }
 
-void SummonDungeon::KillSummonObject(int id)
+void SummonDungeon::KillSummonObject()
 {
-    int sie = objectArray.size()-1;
-    //std::swap(objectArray.at(id),objectArray.at(sie));
     objectArray.pop_front();
 }

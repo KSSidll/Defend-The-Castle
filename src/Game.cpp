@@ -85,7 +85,7 @@ void Game::HandleCollisions()
         if( summon->GetPosition().first + summon->GetRange() > enemy->GetPosition().first )
         {
             summon->EnemyCollision();
-            summonDungeon.KillSummonObject(summon->GetId());
+            summonDungeon.KillSummonObject();
         }
     }
 }
