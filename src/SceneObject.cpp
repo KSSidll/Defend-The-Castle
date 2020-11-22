@@ -1,12 +1,9 @@
 #include "SceneObject.hpp"
 
-SceneObject::SceneObject(rapidjson::Value& object, SDL_Renderer* renderer)
+SceneObject::SceneObject(SDL_Texture* objTexture ,rapidjson::Value& object, SDL_Renderer* renderer)
 {
     this->renderer = renderer;
-
-    SDL_Surface* tempSurface = IMG_Load(object["textureSrc"].GetString());
-    objTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-    SDL_FreeSurface(tempSurface);
+    this->objTexture = objTexture;
 }
 
 void SceneObject::Render()

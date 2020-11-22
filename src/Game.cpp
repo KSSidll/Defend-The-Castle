@@ -30,9 +30,17 @@ void Game::Init(const char* title, int width, int height, bool fullscreen)
         isRunning = false;
     }
 
-    background = new SceneObject(objectsDoc["background"], renderer);
-    summonDungeon.SummonObject(objectsDoc["summons"]["warrior"], renderer);
-    enemy = new Enemy(objectsDoc["enemy"], renderer);
+    textureManager = new TextureManager(renderer);
+
+    textureManager->LoadTexture(objectsDoc["background"]["textureSrc"]);
+    textureManager->LoadTexture(objectsDoc["enemy"]["textureSrc"]);
+    textureManager->LoadTexture(objectsDoc["summons"]["warrior"]["textureSrc"]);
+
+
+
+    background = new SceneObject(textureManager->GetTexture(objectsDoc["background"]["textureSrc"]), objectsDoc["background"], renderer);
+    summonDungeon.SummonObject(textureManager->GetTexture(objectsDoc["summons"]["warrior"]["textureSrc"]), objectsDoc["summons"]["warrior"], renderer);
+    enemy = new Enemy(textureManager->GetTexture(objectsDoc["enemy"]["textureSrc"]), objectsDoc["enemy"], renderer);
 }
 
 void Game::HandleEvents()
@@ -57,7 +65,7 @@ void Game::Update()
     summonDungeon.Update();
     enemy->Update();
 
-    if(updateframe%50 == 0)  summonDungeon.SummonObject(objectsDoc["summons"]["warrior"], renderer);
+    if(updateframe%50 == 0)  summonDungeon.SummonObject(textureManager->GetTexture(objectsDoc["summons"]["warrior"]["textureSrc"]), objectsDoc["summons"]["warrior"], renderer);
 
     ++updateframe;
 }

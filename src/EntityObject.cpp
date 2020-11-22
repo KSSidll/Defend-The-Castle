@@ -1,6 +1,6 @@
 #include "EntityObject.hpp"
 
-EntityObject::EntityObject(rapidjson::Value& object, SDL_Renderer* renderer) : MovableObject(object, renderer)
+EntityObject::EntityObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer) : MovableObject(objTexture, object, renderer)
 {
     health = object["health"].GetInt();
     attackDamage = object["attackDamage"].GetInt();

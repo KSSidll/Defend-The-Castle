@@ -10,8 +10,7 @@ class PlayerSummon : public EntityObject
     public:
         PlayerSummon(){};
         ~PlayerSummon(){};
-        PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer);
-        PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer, int id);
+        PlayerSummon(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);
         
         void Update();
         void EnemyCollision();

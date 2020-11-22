@@ -29,9 +29,9 @@ std::deque< std::pair<int,int> > SummonDungeon::GetPositions()
     return positionsArray;
 }
 
-void SummonDungeon::SummonObject(rapidjson::Value& object, SDL_Renderer* renderer)
+void SummonDungeon::SummonObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer)
 {
-    PlayerSummon *summon = new PlayerSummon(object, renderer);
+    PlayerSummon *summon = new PlayerSummon(objTexture, object, renderer);
     objectArray.push_back(summon);
 }
 

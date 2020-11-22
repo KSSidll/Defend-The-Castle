@@ -13,7 +13,7 @@ class SceneObject
     public:
         SceneObject(){};
         ~SceneObject(){};
-        SceneObject(rapidjson::Value& object, SDL_Renderer* renderer);
+        SceneObject(SDL_Texture* objTexture ,rapidjson::Value& object, SDL_Renderer* renderer);
 
         void Render();
 };

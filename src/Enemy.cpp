@@ -9,7 +9,7 @@ void Enemy::Move()
     } else ++movementSkipCount;
 }
 
-Enemy::Enemy(rapidjson::Value& object, SDL_Renderer* renderer) : EntityObject(object, renderer)
+Enemy::Enemy(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer) : EntityObject(objTexture, object, renderer)
 {
 
 }

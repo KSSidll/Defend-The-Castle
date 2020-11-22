@@ -16,6 +16,6 @@ class SummonDungeon
         std::deque< std::pair<int,int> > GetPositions();
         std::deque<PlayerSummon*> getObjectArray(){ return objectArray; };
 
-        void SummonObject(rapidjson::Value& object, SDL_Renderer* renderer);
+        void SummonObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);
         void KillSummonObject();
 };

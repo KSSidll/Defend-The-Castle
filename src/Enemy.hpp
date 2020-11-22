@@ -9,7 +9,7 @@ class Enemy : virtual public EntityObject
     public:
         Enemy(){};
         ~Enemy(){};
-        Enemy(rapidjson::Value& object, SDL_Renderer* renderer);
+        Enemy(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);
 
         void Update();
 };

@@ -9,7 +9,7 @@ void PlayerSummon::Move()
     } else ++movementSkipCount;
 }
 
-PlayerSummon::PlayerSummon(rapidjson::Value& object, SDL_Renderer* renderer) : EntityObject(object, renderer)
+PlayerSummon::PlayerSummon(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer) : EntityObject(objTexture, object, renderer)
 {
     cost = object["cost"].GetInt();
 }

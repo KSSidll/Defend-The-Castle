@@ -15,7 +15,7 @@ class EntityObject : public MovableObject
     public:
         EntityObject(){};
         ~EntityObject(){};
-        EntityObject(rapidjson::Value& object, SDL_Renderer* renderer);
+        EntityObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);
 
         void Update();
         int GetId(){ return id; };

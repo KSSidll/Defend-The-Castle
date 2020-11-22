@@ -3,6 +3,7 @@
 #pragma once
 #include "SummonDungeon.hpp"
 #include "Enemy.hpp"
+#include "TextureManager.hpp"
 
 class Game
 {
@@ -14,6 +15,7 @@ private:
     SummonDungeon summonDungeon;
     SceneObject* background;
     Enemy* enemy;
+    TextureManager* textureManager;
 
 public:
     Game(){};
