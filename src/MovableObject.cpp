@@ -1,13 +1,7 @@
 #include "MovableObject.hpp"
 
-MovableObject::MovableObject(rapidjson::Value& object, SDL_Renderer* renderer)
+MovableObject::MovableObject(rapidjson::Value& object, SDL_Renderer* renderer) : SceneObject(object, renderer)
 {
-    this->renderer = renderer;
-
-    SDL_Surface* tempSurface = IMG_Load(object["textureSrc"].GetString());
-    objTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-    SDL_FreeSurface(tempSurface);
-
     renderScale = object["renderScale"].GetFloat();
 
     srcRect.x = object["srcRectX"].GetInt();
