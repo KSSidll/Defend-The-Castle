@@ -1,4 +1,7 @@
 #include "SummonDungeon.hpp"
+#include <iostream>
+#include <numeric>
+#include <string_view>
 
 void SummonDungeon::Update()
 {
@@ -12,14 +15,13 @@ void SummonDungeon::Render()
 {
     for(auto summon : objectArray)
     {
-        int id = summon->GetId();
         summon->Render();
     }
 }
 
-std::deque< std::pair<int,int> > SummonDungeon::GetPositions()
+std::deque<int> SummonDungeon::GetPositions()
 {
-    std::deque< std::pair<int,int> > positionsArray;
+    std::deque<int> positionsArray;
 
     for(auto summon : objectArray)
     {
@@ -31,11 +33,13 @@ std::deque< std::pair<int,int> > SummonDungeon::GetPositions()
 
 void SummonDungeon::SummonObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer)
 {
-    PlayerSummon *summon = new PlayerSummon(objTexture, object, renderer);
+    PlayerSummon *summon = new PlayerSummon(objTexture, object, renderer, id);
     objectArray.push_back(summon);
+    ++id;
 }
 
-void SummonDungeon::KillSummonObject()
+void SummonDungeon::KillSummonObject(int id)
 {
-    objectArray.pop_front();
+    objectArray.erase(objectArray.begin() + id - idOffset);
+    ++idOffset;
 }

@@ -35,11 +35,12 @@ void Game::Init(const char* title, int width, int height, bool fullscreen)
     textureManager->LoadTexture(objectsDoc["background"]["textureSrc"]);
     textureManager->LoadTexture(objectsDoc["enemy"]["textureSrc"]);
     textureManager->LoadTexture(objectsDoc["summons"]["warrior"]["textureSrc"]);
+    textureManager->LoadTexture(objectsDoc["summons"]["tank"]["textureSrc"]);
+    textureManager->LoadTexture(objectsDoc["summons"]["archer"]["textureSrc"]);
 
 
 
     background = new SceneObject(textureManager->GetTexture(objectsDoc["background"]["textureSrc"]), objectsDoc["background"], renderer);
-    summonDungeon.SummonObject(textureManager->GetTexture(objectsDoc["summons"]["warrior"]["textureSrc"]), objectsDoc["summons"]["warrior"], renderer);
     enemy = new Enemy(textureManager->GetTexture(objectsDoc["enemy"]["textureSrc"]), objectsDoc["enemy"], renderer);
 }
 
@@ -65,7 +66,9 @@ void Game::Update()
     summonDungeon.Update();
     enemy->Update();
 
-    if(updateframe%50 == 0)  summonDungeon.SummonObject(textureManager->GetTexture(objectsDoc["summons"]["warrior"]["textureSrc"]), objectsDoc["summons"]["warrior"], renderer);
+    if(updateframe%75 == 0)  summonDungeon.SummonObject(textureManager->GetTexture(objectsDoc["summons"]["warrior"]["textureSrc"]), objectsDoc["summons"]["warrior"], renderer);
+    if(updateframe%120 == 0)  summonDungeon.SummonObject(textureManager->GetTexture(objectsDoc["summons"]["tank"]["textureSrc"]), objectsDoc["summons"]["tank"], renderer);
+    if(updateframe%190 == 0)  summonDungeon.SummonObject(textureManager->GetTexture(objectsDoc["summons"]["archer"]["textureSrc"]), objectsDoc["summons"]["archer"], renderer);
 
     ++updateframe;
 }
@@ -90,10 +93,10 @@ void Game::HandleCollisions()
 {
     for(auto const &summon : summonDungeon.getObjectArray())
     {
-        if( summon->GetPosition().first + summon->GetRange() > enemy->GetPosition().first )
+        if( summon->GetPosition() + summon->GetRange() > enemy->GetPosition() )
         {
             summon->EnemyCollision();
-            summonDungeon.KillSummonObject();
+            summonDungeon.KillSummonObject(summon->GetId());
         }
     }
 }

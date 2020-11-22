@@ -12,6 +12,12 @@ PlayerSummon::PlayerSummon(SDL_Texture* objTexture, rapidjson::Value& object, SD
     cost = object["cost"].GetInt();
 }
 
+PlayerSummon::PlayerSummon(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer, int id) : EntityObject(objTexture, object, renderer)
+{
+    cost = object["cost"].GetInt();
+    this->id = id;
+}
+
 void PlayerSummon::Update()
 {
     if( isMoving ) Move();

@@ -18,5 +18,5 @@ class MovableObject : public SceneObject
 
         void Update();
         void Render();
-        std::pair<int,int> GetPosition(){ return std::make_pair( destRect.x, destRect.y ); };
+        int GetPosition(){ return destRect.x; };
 };
