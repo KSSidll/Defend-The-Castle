@@ -18,7 +18,7 @@
             "attackDamage": 1,
             "movementSpeed": 1.1,
             "attackInterval": 1.0,
-            "range": 1.0
+            "range": 1
         },
         "tank":{
             "textureSrc": "build/assets/satyr_2.png",
@@ -34,7 +34,7 @@
             "attackDamage": 1,
             "movementSpeed": 1.0,
             "attackInterval": 1.0,
-            "range": 1.0
+            "range": 1
         },
         "archer":{
             "textureSrc": "build/assets/satyr_3.png",
@@ -50,7 +50,7 @@
             "attackDamage": 1,
             "movementSpeed": 1.0,
             "attackInterval": 1.0,
-            "range": 1.0
+            "range": 1
         }
     },
 
@@ -67,6 +67,6 @@
         "attackDamage": 1,
         "movementSpeed": 1.9,
         "attackInterval": 1.0,
-        "range": 1.0
+        "range": 1
     }
 }

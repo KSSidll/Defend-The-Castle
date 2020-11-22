@@ -7,9 +7,9 @@ class EntityObject : public MovableObject
         int id;
         int health;
         int attackDamage;
+        int range;
         float movementSpeed;
         float attackInterval;
-        float range;
         float timeSinceLastAttack = attackInterval / 2;
         
     public:

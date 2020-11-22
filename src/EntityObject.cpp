@@ -4,9 +4,9 @@ EntityObject::EntityObject(SDL_Texture* objTexture, rapidjson::Value& object, SD
 {
     health = object["health"].GetInt();
     attackDamage = object["attackDamage"].GetInt();
+    range = object["range"].GetInt();
     movementSpeed = object["movementSpeed"].GetFloat();
     attackInterval = object["attackInterval"].GetFloat();
-    range = object["range"].GetFloat();
 }
 
 void EntityObject::Update()
