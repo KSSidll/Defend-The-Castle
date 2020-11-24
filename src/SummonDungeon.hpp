@@ -15,7 +15,6 @@ class SummonDungeon
 
         void Update();
         void Render();
-        std::deque<int> GetPositions();
         std::deque<PlayerSummon*> getObjectArray(){ return objectArray; };
 
         void SummonObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);

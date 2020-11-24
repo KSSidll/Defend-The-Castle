@@ -19,18 +19,6 @@ void SummonDungeon::Render()
     }
 }
 
-std::deque<int> SummonDungeon::GetPositions()
-{
-    std::deque<int> positionsArray;
-
-    for(auto summon : objectArray)
-    {
-        positionsArray.push_back(summon->GetPosition());
-    }
-
-    return positionsArray;
-}
-
 void SummonDungeon::SummonObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer)
 {
     PlayerSummon *summon = new PlayerSummon(objTexture, object, renderer, id);
