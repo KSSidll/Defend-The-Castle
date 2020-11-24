@@ -19,6 +19,8 @@ MovableObject::MovableObject(SDL_Texture* objTexture, rapidjson::Value& object, 
 
 void MovableObject::Render()
 {
+    isAnimationDone = false;
+
     SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
 
     if(animationFramesSkipped == FPS/animationSpeed)
@@ -28,8 +30,12 @@ void MovableObject::Render()
         srcRect.x = srcRect.w * animationXpos;
         srcRect.y = srcRect.h * animationYpos;
 
-        if(animationXpos == animationLengths[ animationYpos ] -1) animationXpos = 0;
-
+        if(animationXpos == animationLengths[ animationYpos ] -1)
+        {
+            animationXpos = 0;
+            isAnimationDone = true;
+        } 
+        
         animationFramesSkipped = 0;
     } else ++animationFramesSkipped;
 }

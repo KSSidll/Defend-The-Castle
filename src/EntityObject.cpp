@@ -13,3 +13,11 @@ float EntityObject::GetRange()
 {
     return range;
 }
+
+void EntityObject::Kill()
+{
+    alive = false;
+    animationYpos = animationLengths.size()-1;
+    animationXpos = 0;
+    animationFramesSkipped = 0;
+}

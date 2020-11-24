@@ -21,6 +21,9 @@ PlayerSummon::PlayerSummon(SDL_Texture* objTexture, rapidjson::Value& object, SD
 void PlayerSummon::Update()
 {
     if( isMoving ) Move();
+
+    //chec
+    if( isAnimationDone && animationYpos == animationLengths.size()-1 ) pendingKill = true;
 }
 
 void PlayerSummon::EnemyCollision()

@@ -7,6 +7,8 @@
 
 void SummonDungeon::Update()
 {
+    KillPending();
+
     for(auto summon : objectArray)
     {
         summon->Update();
@@ -30,11 +32,24 @@ void SummonDungeon::SummonObject(SDL_Texture* objTexture, rapidjson::Value& obje
 
 void SummonDungeon::KillSummonObject(PlayerSummon* summon)
 {
-    for(int i = 0; i != objectArray.size(); ++i)
-    {
-        if(objectArray[i]->GetId() == summon->GetId())
-            objectArray.erase(objectArray.begin() + i);
-    }
+    summon->Kill();
+    pendingKills.push_back(summon);
+}
 
-    delete summon;
+void SummonDungeon::KillPending()
+{
+    for(auto const& summon : pendingKills)
+    {
+        if( summon->KillPending() )
+        {
+            for(int i = 0; i != objectArray.size(); ++i)
+            {
+                if(objectArray[i]->GetId() == summon->GetId())
+                    objectArray.erase(objectArray.begin() + i);  
+            }
+            pendingKills.pop_front();
+            delete summon;
+        }
+        
+    }
 }

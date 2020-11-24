@@ -4,6 +4,8 @@
 class EntityObject : public MovableObject
 {
     protected:
+        bool pendingKill = false;
+        bool alive = true;
         int id;
         int health;
         int attackDamage;
@@ -17,7 +19,9 @@ class EntityObject : public MovableObject
         ~EntityObject(){};
         EntityObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);
 
+        void Kill();
         float GetRange();
         int GetId(){ return id; };
-
+        bool KillPending(){ return pendingKill; };
+        bool Alive(){ return alive; };
 };

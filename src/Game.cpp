@@ -88,6 +88,7 @@ void Game::HandleCollisions()
 {
     for(auto const &summon : summonDungeon.getObjectArray())
     {
+        if( summon->Alive() )
         if( summon->GetPosition() + summon->GetRange() > enemy->GetPosition() )
         {
             summon->EnemyCollision();

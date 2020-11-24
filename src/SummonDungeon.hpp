@@ -6,7 +6,10 @@ class SummonDungeon
 {
     private:
         std::deque<PlayerSummon*> objectArray;
+        std::deque<PlayerSummon*> pendingKills;
         int id = 0;
+
+        void KillPending();
 
     public:
         SummonDungeon(){};
