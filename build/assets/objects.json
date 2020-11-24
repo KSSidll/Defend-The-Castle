@@ -1,4 +1,12 @@
 {
+    "textures":[
+        "build/assets/background.jpg",
+        "build/assets/satyr_1.png",
+        "build/assets/satyr_2.png",
+        "build/assets/satyr_3.png",
+        "build/assets/golem_reversed.png"
+    ],
+
     "background":{
         "textureSrc": "build/assets/background.jpg"
     },

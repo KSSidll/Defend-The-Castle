@@ -32,13 +32,8 @@ void Game::Init(const char* title, int width, int height, bool fullscreen)
 
     textureManager = new TextureManager(renderer);
 
-    textureManager->LoadTexture(objectsDoc["background"]["textureSrc"]);
-    textureManager->LoadTexture(objectsDoc["enemy"]["textureSrc"]);
-    textureManager->LoadTexture(objectsDoc["summons"]["warrior"]["textureSrc"]);
-    textureManager->LoadTexture(objectsDoc["summons"]["tank"]["textureSrc"]);
-    textureManager->LoadTexture(objectsDoc["summons"]["archer"]["textureSrc"]);
-
-
+    for (auto& texture : objectsDoc["textures"].GetArray())
+        textureManager->LoadTexture(texture);
 
     background = new SceneObject(textureManager->GetTexture(objectsDoc["background"]["textureSrc"]), objectsDoc["background"], renderer);
     enemy = new Enemy(textureManager->GetTexture(objectsDoc["enemy"]["textureSrc"]), objectsDoc["enemy"], renderer);

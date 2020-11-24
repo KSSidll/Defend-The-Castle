@@ -17,7 +17,8 @@
                 "-lSDL2main",
                 "-lSDL2",
                 "-lSDL2_image",
-                "-mwindows"
+                "-mwindows",
+                "--std=c++11"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
