@@ -38,7 +38,7 @@ void SummonDungeon::KillSummonObject(PlayerSummon* summon)
 
 void SummonDungeon::KillPending()
 {
-    for(auto const& summon : pendingKills)
+    for(auto const summon : pendingKills)
     {
         if( summon->KillPending() )
         {
@@ -49,7 +49,6 @@ void SummonDungeon::KillPending()
             }
             pendingKills.pop_front();
             delete summon;
-        }
-        
+        }   
     }
 }

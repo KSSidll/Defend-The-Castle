@@ -17,6 +17,7 @@ float EntityObject::GetRange()
 void EntityObject::Kill()
 {
     alive = false;
+    isMoving = false;
     animationYpos = animationLengths.size()-1;
     animationXpos = 0;
     animationFramesSkipped = 0;

@@ -23,8 +23,8 @@ int main()
 
         frameTime = SDL_GetTicks() - frameStart;
 
-        if(frameDelay > frameTime)
-            SDL_Delay(frameDelay - frameTime);
+        if(FRAME_DELAY > frameTime)
+            SDL_Delay(FRAME_DELAY - frameTime);
         else
             updateOnly = true;
         

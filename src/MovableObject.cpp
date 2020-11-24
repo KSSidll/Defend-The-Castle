@@ -23,7 +23,7 @@ void MovableObject::Render()
 
     SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
 
-    if(animationFramesSkipped == FPS/animationSpeed)
+    if(animationFramesSkipped == ANIMATION_SPEED_DIVISOR/(FPS*animationSpeed))
     {
         ++animationXpos;
 
@@ -34,8 +34,8 @@ void MovableObject::Render()
         {
             animationXpos = 0;
             isAnimationDone = true;
-        } 
-        
+        }
+
         animationFramesSkipped = 0;
     } else ++animationFramesSkipped;
 }

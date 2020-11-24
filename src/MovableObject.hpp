@@ -10,7 +10,7 @@ class MovableObject : public SceneObject
         int animationFramesSkipped = 0;
         int animationYpos = 0;
         int animationXpos = 0;
-        int animationSpeed = 10;
+        int animationSpeed = 5;
 
         float renderScale;
         float xShift;
