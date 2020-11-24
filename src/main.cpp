@@ -1,17 +1,12 @@
 #include "Game.hpp"
 
-Game *game = nullptr;
-
 int main()
 {
-    const int FPS = 60;
-    const double frameDelay = 1000 / FPS;
-
     bool updateOnly = false;
     Uint32 frameStart;
     int frameTime;
 
-    game = new Game();
+    Game* game = new Game();
     game->Init("SDL", 800, 600, false);
 
     while (game->Running())

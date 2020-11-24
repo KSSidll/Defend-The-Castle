@@ -1,6 +1,7 @@
 #define SDL_MAIN_HANDLED
 
 #pragma once
+#include "Global.hpp"
 #include "SummonDungeon.hpp"
 #include "Enemy.hpp"
 #include "TextureManager.hpp"
