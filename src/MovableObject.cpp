@@ -1,10 +1,5 @@
 #include "MovableObject.hpp"
 
-void MovableObject::Update()
-{
-    
-}
-
 MovableObject::MovableObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer) : SceneObject(objTexture, object, renderer)
 {
     renderScale = object["renderScale"].GetFloat();

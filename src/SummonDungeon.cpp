@@ -2,6 +2,8 @@
 #include <iostream>
 #include <numeric>
 #include <string_view>
+#include <bits/stdc++.h>
+
 
 void SummonDungeon::Update()
 {
@@ -26,8 +28,13 @@ void SummonDungeon::SummonObject(SDL_Texture* objTexture, rapidjson::Value& obje
     ++id;
 }
 
-void SummonDungeon::KillSummonObject(int id)
+void SummonDungeon::KillSummonObject(PlayerSummon* summon)
 {
-    objectArray.erase(objectArray.begin() + id - idOffset);
-    ++idOffset;
+    for(int i = 0; i != objectArray.size(); ++i)
+    {
+        if(objectArray[i]->GetId() == summon->GetId())
+            objectArray.erase(objectArray.begin() + i);
+    }
+
+    delete summon;
 }

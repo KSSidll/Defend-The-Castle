@@ -9,11 +9,6 @@ EntityObject::EntityObject(SDL_Texture* objTexture, rapidjson::Value& object, SD
     attackInterval = object["attackInterval"].GetFloat();
 }
 
-void EntityObject::Update()
-{
-    
-}
-
 float EntityObject::GetRange()
 {
     return range;
