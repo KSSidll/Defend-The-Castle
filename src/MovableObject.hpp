@@ -20,6 +20,7 @@ class MovableObject : public SceneObject
         bool isAnimationDone = false;
 
         SDL_Rect srcRect, destRect;
+        SDL_Rect OsrcRect;
         std::vector<int> animationLengths;
 
         void Move();

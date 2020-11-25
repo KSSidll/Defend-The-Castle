@@ -7,7 +7,7 @@ int main()
     int frameTime;
 
     Game* game = new Game();
-    game->Init("SDL", 800, 600, false);
+    game->Init("SDL", 1024, 768, false);
 
     while (game->Running())
     {

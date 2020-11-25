@@ -86,14 +86,21 @@ void Game::Clean()
 
 void Game::HandleCollisions()
 {
+    if( enemy->Alive() )
     for(auto const &summon : summonDungeon.getObjectArray())
     {
-        if( summon->Alive() && enemy->Alive() )
+        
         if( summon->GetPosition() + summon->GetRange() > enemy->GetPosition() )
         {
-            summon->EnemyCollision();
-            summonDungeon.KillSummonObject(summon);
-            enemy->Attack();
+            summon->EnemyCollision(enemy);
         }
+
+        if( enemy->GetPosition() < summon->GetPosition() )
+        {
+            enemy->EnemyCollision(summon);
+        }
+
+        if( summon->GetHealth() <= 0 && summon->Alive() ) summonDungeon.KillSummonObject(summon);
+        if( enemy->GetHealth() <= 0 && enemy->Alive() ) enemy->Kill();
     }
 }

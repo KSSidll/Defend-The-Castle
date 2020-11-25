@@ -1,7 +1,10 @@
 #pragma once
 #include "EntityObject.hpp"
+#include "Enemy.hpp"
 
-class PlayerSummon : public EntityObject
+class Enemy;
+
+class PlayerSummon : virtual public EntityObject
 {
     private:
         int cost;
@@ -15,4 +18,5 @@ class PlayerSummon : public EntityObject
         void Update();
         void Render();
         void EnemyCollision();
+        void EnemyCollision(Enemy* entity);
 };

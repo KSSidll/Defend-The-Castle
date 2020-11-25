@@ -2,7 +2,7 @@
 
 void EntityObject::Move()
 {
-    xShift += movementSpeed;
+    xShift += (float)(movementSpeed)/20;
     MovableObject::Move();
 }
 
@@ -12,32 +12,49 @@ EntityObject::EntityObject(SDL_Texture* objTexture, rapidjson::Value& object, SD
     attackDamage = object["attackDamage"].GetInt();
     range = object["range"].GetInt();
     attackSpeed = object["attackSpeed"].GetInt();
-    movementSpeed = object["movementSpeed"].GetFloat();
-    animationSpeed *= movementSpeed * 10;
+    movementSpeed = object["movementSpeed"].GetInt();
+    animationSpeed = movementSpeed;
 }
 
 void EntityObject::Kill()
 {
-    alive = false;
-    isMoving = false;
-    animationYpos = animationLengths.size()-1;
-    animationSpeed = 20;
-    animationXpos = 0;
-    animationFramesSkipped = 0;
+    if( alive )
+    {
+        alive = false;
+        attacking = false;
+        isMoving = false;
+        animationYpos = animationLengths.size()-1;
+        animationSpeed = 20;
+        animationXpos = 0;
+        animationFramesSkipped = 0;
+    }
 }
 
 void EntityObject::Attack()
 {
-    attacking = true;
-    isMoving = false;
-    animationYpos = 1;
-    animationSpeed = attackSpeed;
-    animationXpos = 0;
-    animationFramesSkipped = 0;
+    if( alive && !attacking )
+    {
+        attacking = true;
+        isMoving = false;
+        animationYpos = 1;
+        animationSpeed = attackSpeed;
+        animationXpos = 0;
+        animationFramesSkipped = 0;
+    }
 }
 
 void EntityObject::Update()
 {
+    if( attacking && isAnimationDone )
+    {
+        attacking = false;
+        isMoving = true;
+        animationYpos = 0;
+        animationSpeed = movementSpeed;
+        srcRect.x = OsrcRect.x;
+        srcRect.y = OsrcRect.y;
+    }
+
     MovableObject::Update();
 }
 
@@ -46,5 +63,17 @@ void EntityObject::Render()
     if( !pendingKill )
     {
         MovableObject::Render();
+    }
+}
+
+void EntityObject::EnemyCollision()
+{
+    if( !attacking )
+    {
+        isMoving = false;
+        animationYpos = 0;
+        animationSpeed = 0;
+        srcRect.x = OsrcRect.x;
+        srcRect.y = OsrcRect.y;
     }
 }

@@ -22,3 +22,15 @@ void Enemy::Render()
 {
     EntityObject::Render();
 }
+
+void Enemy::EnemyCollision()
+{
+    EntityObject::EnemyCollision();
+}
+
+void Enemy::EnemyCollision(PlayerSummon* entity)
+{
+    Attack();
+    if( isAnimationDone && attacking )
+        entity->DoDamage( attackDamage );
+}

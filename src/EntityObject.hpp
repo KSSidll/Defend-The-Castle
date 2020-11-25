@@ -11,7 +11,7 @@ class EntityObject : public MovableObject
         int health;
         int attackDamage;
         int range;
-        float movementSpeed;
+        int movementSpeed;
         int attackSpeed;
 
         void Move();
@@ -25,9 +25,12 @@ class EntityObject : public MovableObject
         void Attack();
         void Update();
         void Render();
+        void EnemyCollision();
+        void DoDamage(int damage){ health -= damage; };
 
         float GetRange(){ return range; };
         int GetId(){ return id; };
+        int GetHealth(){ return health; };
         bool KillPending(){ return pendingKill; };
         bool Alive(){ return alive; };
 };

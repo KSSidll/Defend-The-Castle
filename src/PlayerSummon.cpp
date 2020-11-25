@@ -26,5 +26,13 @@ void PlayerSummon::Render()
 
 void PlayerSummon::EnemyCollision()
 {
-    isMoving = false;
+    EntityObject::EnemyCollision();
+}
+
+void PlayerSummon::EnemyCollision(Enemy* entity)
+{
+    Attack();
+    if( isAnimationDone && attacking )
+        entity->DoDamage( attackDamage );
+
 }

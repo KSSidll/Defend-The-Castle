@@ -10,8 +10,8 @@ MovableObject::MovableObject(SDL_Texture* objTexture, rapidjson::Value& object, 
 {
     renderScale = object["renderScale"].GetFloat();
 
-    srcRect.x = object["srcRectX"].GetInt();
-    srcRect.y = object["srcRectY"].GetInt();
+    OsrcRect.x = srcRect.x = object["srcRectX"].GetInt();
+    OsrcRect.y = srcRect.y = object["srcRectY"].GetInt();
     srcRect.h = object["srcRectH"].GetInt();
     srcRect.w = object["srcRectW"].GetInt();
     destRect.x = object["destRectX"].GetInt();
@@ -25,10 +25,10 @@ MovableObject::MovableObject(SDL_Texture* objTexture, rapidjson::Value& object, 
 
 void MovableObject::Update()
 {
+    isAnimationDone = false;
+
     if( animationSpeed )
     {
-        isAnimationDone = false;
-
         if( animationFramesSkipped == ANIMATION_SPEED_DIVISOR / (FPS*animationSpeed) )
         {
             ++animationXpos;
