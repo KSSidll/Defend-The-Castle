@@ -1,18 +1,19 @@
 #include "EntityObject.hpp"
 
+thenvoid EntityObject::Move()
+{
+    xShift += movementSpeed;
+    MovableObject::Move();
+}
+
 EntityObject::EntityObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer) : MovableObject(objTexture, object, renderer)
 {
     health = object["health"].GetInt();
     attackDamage = object["attackDamage"].GetInt();
     range = object["range"].GetInt();
+    attackSpeed = object["attackSpeed"].GetInt();
     movementSpeed = object["movementSpeed"].GetFloat();
-    attackInterval = object["attackInterval"].GetFloat();
     animationSpeed *= movementSpeed * 10;
-}
-
-float EntityObject::GetRange()
-{
-    return range;
 }
 
 void EntityObject::Kill()
@@ -25,26 +26,25 @@ void EntityObject::Kill()
     animationFramesSkipped = 0;
 }
 
+void EntityObject::Attack()
+{
+    attacking = true;
+    isMoving = false;
+    animationYpos = 1;
+    animationSpeed = attackSpeed;
+    animationXpos = 0;
+    animationFramesSkipped = 0;
+}
+
+void EntityObject::Update()
+{
+    MovableObject::Update();
+}
+
 void EntityObject::Render()
 {
-    isAnimationDone = false;
-
-    SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
-    
-    if( animationSpeed )
-    if( animationFramesSkipped == ANIMATION_SPEED_DIVISOR / (FPS*animationSpeed) )
+    if( !pendingKill )
     {
-        ++animationXpos;
-
-        srcRect.x = srcRect.w * animationXpos;
-        srcRect.y = srcRect.h * animationYpos;
-
-        if(animationXpos == animationLengths[ animationYpos ] -1)
-        {
-            animationXpos = 0;
-            isAnimationDone = true;
-        }
-
-        animationFramesSkipped = 0;
-    } else ++animationFramesSkipped;
+        MovableObject::Render();
+    }
 }

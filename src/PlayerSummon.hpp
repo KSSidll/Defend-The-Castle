@@ -5,7 +5,6 @@ class PlayerSummon : public EntityObject
 {
     private:
         int cost;
-        void Move();
 
     public:
         PlayerSummon(){};
@@ -14,5 +13,6 @@ class PlayerSummon : public EntityObject
         PlayerSummon(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer, int id);
         
         void Update();
+        void Render();
         void EnemyCollision();
 };

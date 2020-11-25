@@ -4,6 +4,7 @@
 class EntityObject : public MovableObject
 {
     protected:
+        bool attacking = false;
         bool pendingKill = false;
         bool alive = true;
         int id;
@@ -11,8 +12,9 @@ class EntityObject : public MovableObject
         int attackDamage;
         int range;
         float movementSpeed;
-        float attackInterval;
-        float timeSinceLastAttack = attackInterval / 2;
+        int attackSpeed;
+
+        void Move();
         
     public:
         EntityObject(){};
@@ -20,8 +22,11 @@ class EntityObject : public MovableObject
         EntityObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);
 
         void Kill();
+        void Attack();
+        void Update();
         void Render();
-        float GetRange();
+
+        float GetRange(){ return range; };
         int GetId(){ return id; };
         bool KillPending(){ return pendingKill; };
         bool Alive(){ return alive; };

@@ -4,6 +4,8 @@
 class Enemy : virtual public EntityObject 
 {
     private:
+        
+
         void Move();
 
     public:
@@ -12,4 +14,5 @@ class Enemy : virtual public EntityObject
         Enemy(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);
 
         void Update();
+        void Render();
 };

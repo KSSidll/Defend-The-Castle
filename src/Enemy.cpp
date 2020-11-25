@@ -2,9 +2,8 @@
 
 void Enemy::Move()
 {
-    xShift += movementSpeed;
-    destRect.x -= (int)xShift;
-    xShift -= (int)xShift;
+    movementVector = -1;
+    EntityObject::Move();
 }
 
 Enemy::Enemy(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer) : EntityObject(objTexture, object, renderer)
@@ -14,5 +13,12 @@ Enemy::Enemy(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* re
 
 void Enemy::Update()
 {
+    EntityObject::Update();
     if( isMoving ) Move();
+    if( isAnimationDone && !alive ) pendingKill = true;
+}
+
+void Enemy::Render()
+{
+    EntityObject::Render();
 }
