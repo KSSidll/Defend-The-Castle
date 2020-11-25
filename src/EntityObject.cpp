@@ -1,6 +1,6 @@
 #include "EntityObject.hpp"
 
-thenvoid EntityObject::Move()
+void EntityObject::Move()
 {
     xShift += movementSpeed;
     MovableObject::Move();
