@@ -20,6 +20,7 @@ class EntityObject : public MovableObject
         EntityObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);
 
         void Kill();
+        void Render();
         float GetRange();
         int GetId(){ return id; };
         bool KillPending(){ return pendingKill; };

@@ -67,7 +67,7 @@
 
     "enemy":{
         "textureSrc": "build/assets/golem_reversed.png",
-        "srcRectX": 0,
+        "srcRectX": 2880,
         "srcRectY": 0,
         "srcRectH": 480,
         "srcRectW": 720,

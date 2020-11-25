@@ -26,6 +26,5 @@ class MovableObject : public SceneObject
         ~MovableObject(){};
         MovableObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);
 
-        void Render();
         int GetPosition(){ return destRect.x; };
 };

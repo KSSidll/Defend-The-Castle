@@ -16,26 +16,3 @@ MovableObject::MovableObject(SDL_Texture* objTexture, rapidjson::Value& object, 
     for (auto& position : object["positions"].GetArray())
         animationLengths.push_back(position.GetInt());
 }
-
-void MovableObject::Render()
-{
-    isAnimationDone = false;
-
-    SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
-
-    if(animationFramesSkipped == ANIMATION_SPEED_DIVISOR/(FPS*animationSpeed))
-    {
-        ++animationXpos;
-
-        srcRect.x = srcRect.w * animationXpos;
-        srcRect.y = srcRect.h * animationYpos;
-
-        if(animationXpos == animationLengths[ animationYpos ] -1)
-        {
-            animationXpos = 0;
-            isAnimationDone = true;
-        }
-
-        animationFramesSkipped = 0;
-    } else ++animationFramesSkipped;
-}
