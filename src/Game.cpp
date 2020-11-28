@@ -92,15 +92,13 @@ void Game::HandleCollisions()
         
         if( summon->GetPosition() + summon->GetRange() > enemy->GetPosition() )
         {
-            summon->EnemyCollision(enemy);
+            summon->HandleCollision(enemy);
         }
 
         if( enemy->GetPosition() < summon->GetPosition() )
         {
-            enemy->EnemyCollision(summon);
+            enemy->HandleCollision(summon);
         }
 
-        if( summon->GetHealth() <= 0 && summon->Alive() ) summonDungeon.KillSummonObject(summon);
-        if( enemy->GetHealth() <= 0 && enemy->Alive() ) enemy->Kill();
     }
 }

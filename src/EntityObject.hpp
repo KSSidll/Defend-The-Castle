@@ -25,7 +25,7 @@ class EntityObject : public MovableObject
         void Attack();
         void Update();
         void Render();
-        void EnemyCollision();
+        void HandleCollision();
         void DoDamage(int damage){ health -= damage; };
 
         float GetRange(){ return range; };

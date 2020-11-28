@@ -16,6 +16,6 @@ class Enemy : virtual public EntityObject
 
         void Update();
         void Render();
-        void EnemyCollision();
-        void EnemyCollision(PlayerSummon* entity);
+        void HandleCollision();
+        void HandleCollision(PlayerSummon* entity);
 };

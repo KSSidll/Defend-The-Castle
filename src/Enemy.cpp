@@ -23,12 +23,12 @@ void Enemy::Render()
     EntityObject::Render();
 }
 
-void Enemy::EnemyCollision()
+void Enemy::HandleCollision()
 {
-    EntityObject::EnemyCollision();
+    EntityObject::HandleCollision();
 }
 
-void Enemy::EnemyCollision(PlayerSummon* entity)
+void Enemy::HandleCollision(PlayerSummon* entity)
 {
     Attack();
     if( isAnimationDone && attacking )

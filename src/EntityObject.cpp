@@ -45,6 +45,8 @@ void EntityObject::Attack()
 
 void EntityObject::Update()
 {
+    if( health <= 0 && alive ) Kill();
+
     if( attacking && isAnimationDone )
     {
         attacking = false;
@@ -66,7 +68,7 @@ void EntityObject::Render()
     }
 }
 
-void EntityObject::EnemyCollision()
+void EntityObject::HandleCollision()
 {
     if( !attacking )
     {

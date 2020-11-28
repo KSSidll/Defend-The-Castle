@@ -74,7 +74,7 @@
         "destRectX": 800,
         "destRectY": 290,
         "renderScale": 0.5,
-        "health": 300,
+        "health": 30,
         "attackDamage": 1,
         "movementSpeed": 10,
         "attackSpeed": 20,
