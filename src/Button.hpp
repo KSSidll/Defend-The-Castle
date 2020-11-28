@@ -9,8 +9,7 @@ class Button
 private:
     SDL_Renderer* renderer;
     state state;
-    int xPos, yPos;
-    int width, height;
+    SDL_Rect rect;
 
 public:
     Button(rapidjson::Value& json, SDL_Renderer* renderer);
