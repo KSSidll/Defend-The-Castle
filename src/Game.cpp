@@ -37,6 +37,8 @@ void Game::Init(const char* title, int width, int height, bool fullscreen)
 
     background = new SceneObject(textureManager->GetTexture(objectsDoc["background"]["textureSrc"]), objectsDoc["background"], renderer);
     enemy = new Enemy(textureManager->GetTexture(objectsDoc["enemy"]["textureSrc"]), objectsDoc["enemy"], renderer);
+
+    userInterface = new UserInterface(&summonDungeon, renderer);
 }
 
 void Game::HandleEvents()
@@ -72,8 +74,11 @@ void Game::Render()
 {
     SDL_RenderClear(renderer);
     background->Render();
+
     summonDungeon.Render();
     enemy->Render();
+
+    userInterface->Render();
     SDL_RenderPresent(renderer);
 }
 

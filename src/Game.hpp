@@ -2,7 +2,7 @@
 
 #pragma once
 #include "Global.hpp"
-#include "SummonDungeon.hpp"
+#include "UserInterface.hpp"
 #include "Enemy.hpp"
 #include "TextureManager.hpp"
 
@@ -14,6 +14,7 @@ private:
     SDL_Renderer *renderer;
     rapidjson::Document objectsDoc;
     SummonDungeon summonDungeon;
+    UserInterface* userInterface;
     SceneObject* background;
     Enemy* enemy;
     TextureManager* textureManager;
