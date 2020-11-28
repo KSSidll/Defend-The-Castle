@@ -66,7 +66,7 @@ void EntityObject::Render()
     }
 }
 
-void EntityObject::EnemyCollision()
+void EntityObject::HandleCollision()
 {
     if( !attacking )
     {
