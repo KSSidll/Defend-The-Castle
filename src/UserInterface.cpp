@@ -8,6 +8,7 @@ UserInterface::UserInterface(rapidjson::Value& json, SummonDungeon* dungeon, SDL
     {
         for (auto itr = button.MemberBegin(); itr != button.MemberEnd(); ++itr)
         {
+            buttons.push_back( Button(button, renderer, [](){}) );
             if( (std::string)itr->name.GetString() == "Usage" )
             {
                 if( (std::string)itr->value.GetString() == "summon warrior")

@@ -1,23 +1,27 @@
+#include <unordered_map>
+#include <iostream>
 #include "Button.hpp"
 
 Button::Button(rapidjson::Value& json, SDL_Renderer* renderer)
 {
     this->renderer = renderer;
 
+    std::unordered_map<std::string, int&> nobody_cares;
+    nobody_cares.insert({ "xPos", rect.x });
+    nobody_cares.insert({ "yPos", rect.y });
+    nobody_cares.insert({ "width", rect.w });
+    nobody_cares.insert({ "height", rect.h });
+
     for (auto itr = json.MemberBegin(); itr != json.MemberEnd(); ++itr)
     {
-
-        if( (std::string)itr->name.GetString() == "xPos" )
-            rect.x = itr->value.GetInt();
-
-        else if( (std::string)itr->name.GetString() == "yPos" )
-            rect.y = itr->value.GetInt();
-
-        else if( (std::string)itr->name.GetString() == "width" )
-            rect.w = itr->value.GetInt();
-
-        else if( (std::string)itr->name.GetString() == "height" )
-            rect.h = itr->value.GetInt();
+        try 
+        {
+            nobody_cares.at( (std::string)itr->name.GetString() ) = itr->value.GetInt();
+        } 
+        catch (std::out_of_range e)
+        {
+            std::cerr << e.what();
+        }
     }
 }
 
