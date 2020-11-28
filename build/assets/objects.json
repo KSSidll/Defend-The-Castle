@@ -80,5 +80,11 @@
         "attackSpeed": 20,
         "range": 100,
         "positions" : [18,12,12,15]
+    },
+
+    "UserInterface":{
+        "Buttons":[
+            
+        ]
     }
 }

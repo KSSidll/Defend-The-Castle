@@ -38,7 +38,7 @@ void Game::Init(const char* title, int width, int height, bool fullscreen)
     background = new SceneObject(textureManager->GetTexture(objectsDoc["background"]["textureSrc"]), objectsDoc["background"], renderer);
     enemy = new Enemy(textureManager->GetTexture(objectsDoc["enemy"]["textureSrc"]), objectsDoc["enemy"], renderer);
 
-    userInterface = new UserInterface(&summonDungeon, renderer);
+    userInterface = new UserInterface(objectsDoc["UserInterface"] ,&summonDungeon, renderer);
 }
 
 void Game::HandleEvents()
