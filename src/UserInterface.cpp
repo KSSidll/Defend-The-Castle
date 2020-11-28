@@ -5,18 +5,17 @@ UserInterface::UserInterface(rapidjson::Value& json, SummonDungeon* dungeon, SDL
     this->renderer = renderer;
     this->dungeon = dungeon;
     
-    /*
-    Button *tmpButton;
     for(auto& button : json["Buttons"].GetArray())
     {
-        tmpButton = new Button(button, renderer);
+        Button tmpButton(button, renderer);
         buttons.push_back(tmpButton);
     }
-    delete tmpButton;
-    */
 }
 
 void UserInterface::Render()
 {
-
+    for(auto button : buttons)
+    {
+        button.Render();
+    }
 }

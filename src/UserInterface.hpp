@@ -5,7 +5,7 @@
 class UserInterface
 {
 private:
-    std::deque<Button*> buttons;
+    std::deque<Button> buttons;
     SDL_Renderer* renderer;
     SummonDungeon* dungeon;
 

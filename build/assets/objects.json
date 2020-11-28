@@ -84,7 +84,12 @@
 
     "UserInterface":{
         "Buttons":[
-            
+            {
+                "xPos" : 0,
+                "yPos" : 0,
+                "width" : 0,
+                "height" : 0
+            }
         ]
     }
 }
