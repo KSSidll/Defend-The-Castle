@@ -85,6 +85,7 @@
     "UserInterface":{
         "Buttons":[
             {
+                "Usage" : "summon warrior",
                 "xPos" : 0,
                 "yPos" : 568,
                 "width" : 300,

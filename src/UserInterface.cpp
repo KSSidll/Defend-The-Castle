@@ -4,11 +4,17 @@ UserInterface::UserInterface(rapidjson::Value& json, SummonDungeon* dungeon, SDL
 {
     this->renderer = renderer;
     this->dungeon = dungeon;
-    
-    for(auto& button : json["Buttons"].GetArray())
+    for(auto& button : json["UserInterface"]["Buttons"].GetArray())
     {
-        Button tmpButton(button, renderer);
-        buttons.push_back(tmpButton);
+        for (auto itr = button.MemberBegin(); itr != button.MemberEnd(); ++itr)
+        {
+            if( (std::string)itr->name.GetString() == "Usage" )
+            {
+                if( (std::string)itr->value.GetString() == "summon warrior")
+                    //buttons.push_back( Button(button, renderer,[dungeon](){ dungeon->SummonObject(); }, json["summons"]["warrior"]) );
+                break;
+            }
+        }
     }
 }
 

@@ -1,6 +1,5 @@
 #pragma once
-#include <SDL2/SDL.h>
-#include "rapidjson/document.h"
+#include "SummonDungeon.hpp"
 
 enum state{ nothing = 0, hover = 1, press = 2 };
 
@@ -10,9 +9,15 @@ private:
     SDL_Renderer* renderer;
     state state;
     SDL_Rect rect;
+    rapidjson::Value* entityDoc;
+    SummonDungeon* dungeon;
+
+    void (*callback)();
+    Button(rapidjson::Value& json, SDL_Renderer* renderer);
 
 public:
-    Button(rapidjson::Value& json, SDL_Renderer* renderer);
+    Button(rapidjson::Value& json, SDL_Renderer* renderer, void (*callback)());
+    Button(rapidjson::Value& json, SDL_Renderer* renderer, void (*callback)(), rapidjson::Value& entityDoc);
     ~Button();
 
     void Render();

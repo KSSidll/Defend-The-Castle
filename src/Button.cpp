@@ -4,9 +4,6 @@ Button::Button(rapidjson::Value& json, SDL_Renderer* renderer)
 {
     this->renderer = renderer;
 
-    int ca;
-    std::string caa;
-
     for (auto itr = json.MemberBegin(); itr != json.MemberEnd(); ++itr)
     {
 
@@ -22,6 +19,18 @@ Button::Button(rapidjson::Value& json, SDL_Renderer* renderer)
         else if( (std::string)itr->name.GetString() == "height" )
             rect.h = itr->value.GetInt();
     }
+}
+
+Button::Button(rapidjson::Value& json, SDL_Renderer* renderer, void (*callback)()) : Button(json, renderer)
+{
+    this->callback = callback;
+}
+
+Button::Button(rapidjson::Value& json, SDL_Renderer* renderer, void (*callback)(), rapidjson::Value& entityDoc) : Button(json, renderer)
+{
+    this->dungeon = dungeon;
+    this->callback = callback;
+    this->entityDoc = &entityDoc;
 }
 
 Button::~Button()
