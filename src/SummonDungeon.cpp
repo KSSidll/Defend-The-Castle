@@ -4,6 +4,24 @@
 #include <string_view>
 #include <bits/stdc++.h>
 
+void SummonDungeon::KillPending()
+{
+    for(auto const summon : pendingKills)
+    {
+        for(int i = 0; i != objectArray.size(); ++i)
+        {
+            if(objectArray[i]->GetId() == summon->GetId())
+                objectArray.erase(objectArray.begin() + i);  
+        }
+        pendingKills.pop_front();
+        delete summon;
+    }
+}
+
+void SummonDungeon::KillSummonObject(PlayerSummon* summon)
+{
+    pendingKills.push_back(summon);
+}
 
 void SummonDungeon::Update()
 {
@@ -12,6 +30,7 @@ void SummonDungeon::Update()
     for(auto summon : objectArray)
     {
         summon->Update();
+        if( summon->KillPending() ) KillSummonObject(summon);
     }
 }
 
@@ -28,27 +47,4 @@ void SummonDungeon::SummonObject(SDL_Texture* objTexture, rapidjson::Value& obje
     PlayerSummon *summon = new PlayerSummon(objTexture, object, renderer, id);
     objectArray.push_back(summon);
     ++id;
-}
-
-void SummonDungeon::KillSummonObject(PlayerSummon* summon)
-{
-    summon->Kill();
-    pendingKills.push_back(summon);
-}
-
-void SummonDungeon::KillPending()
-{
-    for(auto const summon : pendingKills)
-    {
-        if( summon->KillPending() )
-        {
-            for(int i = 0; i != objectArray.size(); ++i)
-            {
-                if(objectArray[i]->GetId() == summon->GetId())
-                    objectArray.erase(objectArray.begin() + i);  
-            }
-            pendingKills.pop_front();
-            delete summon;
-        }   
-    }
 }

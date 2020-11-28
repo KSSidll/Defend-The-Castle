@@ -10,6 +10,7 @@ class SummonDungeon
         int id = 0;
 
         void KillPending();
+        void KillSummonObject(PlayerSummon* summon);
 
     public:
         SummonDungeon(){};
@@ -20,5 +21,4 @@ class SummonDungeon
         std::deque<PlayerSummon*> getObjectArray(){ return objectArray; };
 
         void SummonObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);
-        void KillSummonObject(PlayerSummon* summon);
 };

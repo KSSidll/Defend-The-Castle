@@ -45,6 +45,8 @@ void EntityObject::Attack()
 
 void EntityObject::Update()
 {
+    if( health <= 0 && alive ) Kill();
+
     if( attacking && isAnimationDone )
     {
         attacking = false;

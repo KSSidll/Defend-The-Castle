@@ -100,7 +100,5 @@ void Game::HandleCollisions()
             enemy->HandleCollision(summon);
         }
 
-        if( summon->GetHealth() <= 0 && summon->Alive() ) summonDungeon.KillSummonObject(summon);
-        if( enemy->GetHealth() <= 0 && enemy->Alive() ) enemy->Kill();
     }
 }
