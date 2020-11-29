@@ -6,17 +6,17 @@ Button::Button(rapidjson::Value& json, SDL_Renderer* renderer)
 {
     this->renderer = renderer;
 
-    std::unordered_map<std::string, int&> nobody_cares;
-    nobody_cares.insert({ "xPos", rect.x });
-    nobody_cares.insert({ "yPos", rect.y });
-    nobody_cares.insert({ "width", rect.w });
-    nobody_cares.insert({ "height", rect.h });
+    std::unordered_map<std::string, int&> attributes;
+    attributes.insert({ "xPos", rect.x });
+    attributes.insert({ "yPos", rect.y });
+    attributes.insert({ "width", rect.w });
+    attributes.insert({ "height", rect.h });
 
     for (auto itr = json.MemberBegin(); itr != json.MemberEnd(); ++itr)
     {
         try 
         {
-            nobody_cares.at( (std::string)itr->name.GetString() ) = itr->value.GetInt();
+            attributes.at( (std::string)itr->name.GetString() ) = itr->value.GetInt();
         } 
         catch (std::out_of_range e)
         {
