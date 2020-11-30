@@ -6,7 +6,7 @@ void Enemy::Move()
     EntityObject::Move();
 }
 
-Enemy::Enemy(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer) : EntityObject(objTexture, object, renderer)
+Enemy::Enemy( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer ) : EntityObject( objTexture, object, renderer )
 {
 
 }
@@ -28,7 +28,7 @@ void Enemy::HandleCollision()
     EntityObject::HandleCollision();
 }
 
-void Enemy::HandleCollision(PlayerSummon* entity)
+void Enemy::HandleCollision( PlayerSummon* entity )
 {
     Attack();
     if( isAnimationDone && attacking )

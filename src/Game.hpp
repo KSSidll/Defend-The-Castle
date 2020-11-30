@@ -23,7 +23,7 @@ public:
     Game(){};
     ~Game(){};
 
-    void Init(const char* title, int width, int height, bool fullscreen);
+    void Init( const char* title, int width, int height, bool fullscreen );
     
     void HandleEvents();
     void Update();

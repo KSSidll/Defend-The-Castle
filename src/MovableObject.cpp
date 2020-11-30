@@ -6,7 +6,7 @@ void MovableObject::Move()
     xShift -= (int)xShift;
 }
 
-MovableObject::MovableObject(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer) : SceneObject(objTexture, object, renderer)
+MovableObject::MovableObject( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer ) : SceneObject( objTexture, object, renderer )
 {
     renderScale = object["renderScale"].GetFloat();
 
@@ -19,8 +19,8 @@ MovableObject::MovableObject(SDL_Texture* objTexture, rapidjson::Value& object, 
     destRect.h = srcRect.h * renderScale;
     destRect.w = srcRect.w * renderScale;
 
-    for (auto& position : object["positions"].GetArray())
-        animationLengths.push_back(position.GetInt());
+    for ( auto& position : object["positions"].GetArray() )
+        animationLengths.push_back( position.GetInt() );
 }
 
 void MovableObject::Update()
@@ -36,7 +36,7 @@ void MovableObject::Update()
             srcRect.x = srcRect.w * animationXpos;
             srcRect.y = srcRect.h * animationYpos;
 
-            if(animationXpos == animationLengths[ animationYpos ] -1)
+            if( animationXpos == animationLengths[ animationYpos ] -1 )
             {
                 animationXpos = 0;
                 isAnimationDone = true;
@@ -49,5 +49,5 @@ void MovableObject::Update()
 
 void MovableObject::Render()
 {
-    SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
+    SDL_RenderCopy( renderer, objTexture, &srcRect, &destRect );
 }

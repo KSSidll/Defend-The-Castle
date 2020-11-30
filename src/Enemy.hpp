@@ -12,10 +12,10 @@ class Enemy : virtual public EntityObject
     public:
         Enemy(){};
         ~Enemy(){};
-        Enemy(SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer);
+        Enemy( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer );
 
         void Update();
         void Render();
         void HandleCollision();
-        void HandleCollision(PlayerSummon* entity);
+        void HandleCollision( PlayerSummon* entity );
 };

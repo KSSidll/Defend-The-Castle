@@ -1,8 +1,6 @@
-#include <unordered_map>
-#include <iostream>
 #include "SummonButton.hpp"
 
-Button::Button( SDL_Rect rect, SDL_Renderer* renderer, SummonDungeon* dungeon, rapidjson::Value* entityDoc )
+SummonButton::SummonButton( SDL_Rect rect, SDL_Renderer* renderer, SummonDungeon* dungeon, rapidjson::Value* entityDoc )
 {   
     this->rect.x = rect.x;
     this->rect.y = rect.y;
@@ -15,12 +13,7 @@ Button::Button( SDL_Rect rect, SDL_Renderer* renderer, SummonDungeon* dungeon, r
     this->entityDoc = entityDoc;
 }
 
-Button::~Button()
-{
-    
-}
-
-void Button::Render()
+void SummonButton::Render()
 {
     SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0x00 );
     SDL_RenderDrawRect( renderer,&rect );

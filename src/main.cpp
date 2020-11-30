@@ -7,24 +7,24 @@ int main()
     int frameTime;
 
     Game* game = new Game();
-    game->Init("SDL", 1024, 768, false);
+    game->Init( "Defend The Castle", 1024, 768, false );
 
-    while (game->Running())
+    while ( game->Running() )
     {
         frameStart = SDL_GetTicks();
 
         game->HandleEvents();
         game->Update();
 
-        if(!updateOnly)
+        if( !updateOnly )
             game->Render();
         else
             updateOnly = false;
 
         frameTime = SDL_GetTicks() - frameStart;
 
-        if(FRAME_DELAY > frameTime)
-            SDL_Delay(FRAME_DELAY - frameTime);
+        if( FRAME_DELAY > frameTime )
+            SDL_Delay( FRAME_DELAY - frameTime );
         else
             updateOnly = true;
         

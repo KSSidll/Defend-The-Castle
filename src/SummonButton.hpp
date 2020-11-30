@@ -3,7 +3,7 @@
 
 enum state{ nothing = 0, hover = 1, press = 2 };
 
-class Button
+class SummonButton
 {
 private:
     SDL_Renderer* renderer;
@@ -13,8 +13,8 @@ private:
     SummonDungeon* dungeon;
 
 public:
-    Button( SDL_Rect rect, SDL_Renderer* renderer, SummonDungeon* dungeon, rapidjson::Value* entityDoc );
-    ~Button();
+    SummonButton( SDL_Rect rect, SDL_Renderer* renderer, SummonDungeon* dungeon, rapidjson::Value* entityDoc );
+    ~SummonButton(){};
 
     void Render();
 };

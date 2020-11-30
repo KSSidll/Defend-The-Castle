@@ -2,19 +2,16 @@
 #include "SummonDungeon.hpp"
 #include "TextureManager.hpp"
 #include "SummonButton.hpp"
-#include <unordered_map>
 
 class UserInterface
 {
 private:
-    std::deque<Button> buttons;
+    std::deque<SummonButton*> summonButtons;
     SDL_Renderer* renderer;
     SummonDungeon* dungeon;
-    TextureManager* textureManager;
-    std::unordered_map< const char*, rapidjson::Document > map;
 
 public:
-    UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager );
+    UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer );
     ~UserInterface();
 
     void Render();
