@@ -12,9 +12,9 @@ class TextureManager
         SDL_Renderer* renderer;
 
     public:
-        TextureManager(SDL_Renderer* renderer);
+        TextureManager( SDL_Renderer* renderer );
         ~TextureManager(){};
         
-        void LoadTexture(rapidjson::Value& texturePath);
-        SDL_Texture* GetTexture(rapidjson::Value& texturePath);
+        void LoadTexture( rapidjson::Value& texturePath );
+        SDL_Texture* GetTexture( rapidjson::Value& texturePath );
 };

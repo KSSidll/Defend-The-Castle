@@ -2,7 +2,7 @@
 
 #pragma once
 #include "Global.hpp"
-#include "SummonDungeon.hpp"
+#include "UserInterface.hpp"
 #include "Enemy.hpp"
 #include "TextureManager.hpp"
 
@@ -13,7 +13,8 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
     rapidjson::Document objectsDoc;
-    SummonDungeon summonDungeon;
+    SummonDungeon* summonDungeon;
+    UserInterface* userInterface;
     SceneObject* background;
     Enemy* enemy;
     TextureManager* textureManager;
@@ -22,7 +23,7 @@ public:
     Game(){};
     ~Game(){};
 
-    void Init(const char* title, int width, int height, bool fullscreen);
+    void Init( const char* title, int width, int height, bool fullscreen );
     
     void HandleEvents();
     void Update();
