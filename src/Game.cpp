@@ -41,7 +41,7 @@ void Game::Init(const char* title, int width, int height, bool fullscreen)
 
     enemy = new Enemy(textureManager->GetTexture(objectsDoc["enemy"]["textureSrc"]), objectsDoc["enemy"], renderer);
 
-    userInterface = new UserInterface(objectsDoc, summonDungeon, renderer);
+    //userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, textureManager );
 }
 
 void Game::HandleEvents()
@@ -66,9 +66,9 @@ void Game::Update()
     summonDungeon->Update();
     enemy->Update();
 
-    if(updateframe%75 == 0)  summonDungeon->SummonObject(textureManager->GetTexture(objectsDoc["summons"]["warrior"]["textureSrc"]), objectsDoc["summons"]["warrior"], renderer);
-    if(updateframe%120 == 0)  summonDungeon->SummonObject(textureManager->GetTexture(objectsDoc["summons"]["tank"]["textureSrc"]), objectsDoc["summons"]["tank"], renderer);
-    if(updateframe%190 == 0)  summonDungeon->SummonObject(textureManager->GetTexture(objectsDoc["summons"]["archer"]["textureSrc"]), objectsDoc["summons"]["archer"], renderer);
+    if(updateframe%75 == 0) summonDungeon->SummonObject(textureManager->GetTexture(objectsDoc["summons"]["warrior"]["textureSrc"]), objectsDoc["summons"]["warrior"], renderer);
+    if(updateframe%120 == 0) summonDungeon->SummonObject(textureManager->GetTexture(objectsDoc["summons"]["tank"]["textureSrc"]), objectsDoc["summons"]["tank"], renderer);
+    if(updateframe%190 == 0) summonDungeon->SummonObject(textureManager->GetTexture(objectsDoc["summons"]["archer"]["textureSrc"]), objectsDoc["summons"]["archer"], renderer);
 
     ++updateframe;
 }
@@ -95,17 +95,17 @@ void Game::Clean()
 void Game::HandleCollisions()
 {
     if( enemy->Alive() )
-    for(auto const &summon : summonDungeon->getObjectArray())
+    for( auto const &summon : summonDungeon->getObjectArray() )
     {
         
         if( summon->GetPosition() + summon->GetRange() > enemy->GetPosition() )
         {
-            summon->HandleCollision(enemy);
+            summon->HandleCollision( enemy );
         }
 
         if( enemy->GetPosition() < summon->GetPosition() )
         {
-            enemy->HandleCollision(summon);
+            enemy->HandleCollision( summon );
         }
 
     }

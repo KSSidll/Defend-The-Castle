@@ -1,22 +1,13 @@
 #include "UserInterface.hpp"
 
-UserInterface::UserInterface(rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer)
+UserInterface::UserInterface(rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* rendererm, TextureManager* textureManager)
 {
     this->renderer = renderer;
     this->dungeon = dungeon;
-    for(auto& button : json["UserInterface"]["Buttons"].GetArray())
-    {
-        for (auto itr = button.MemberBegin(); itr != button.MemberEnd(); ++itr)
-        {
-            buttons.push_back( Button(button, renderer, [](){}) );
-            if( (std::string)itr->name.GetString() == "Usage" )
-            {
-                if( (std::string)itr->value.GetString() == "summon warrior")
-                    //buttons.push_back( Button(button, renderer,[dungeon](){ dungeon->SummonObject(); }, json["summons"]["warrior"]) );
-                break;
-            }
-        }
-    }
+    this->textureManager = textureManager;
+
+    
+
 }
 
 void UserInterface::Render()
