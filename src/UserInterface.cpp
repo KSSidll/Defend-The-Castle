@@ -1,9 +1,10 @@
 #include "UserInterface.hpp"
 
-UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer )
+UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, const bool* paused )
 {
     this->renderer = renderer;
     this->dungeon = dungeon;
+    this->paused = paused;
 
     SDL_Rect a = {0,678,200,100};
     SummonButton* button = new SummonButton(a, renderer, dungeon, &json["summons"]["warrior"]);
@@ -12,16 +13,23 @@ UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SD
 
 void UserInterface::Render()
 {
-    for( auto button : buttons )
+    if( !*paused )
     {
-        button->Render();
+        for( auto button : buttons )
+        {
+            button->Render();
+        }
     }
 }
 
 void UserInterface::HandleEvents( SDL_Event* event )
 {
-    for( auto button : buttons )
+    if( !*paused )
     {
-        button->HandleEvents( event );
+        for( auto button : buttons )
+        {
+            button->HandleEvents( event );
+        }
     }
+    
 }

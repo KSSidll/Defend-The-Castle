@@ -41,7 +41,7 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
 
     enemy = new Enemy( textureManager->GetTexture( objectsDoc["enemy"]["textureSrc"] ), objectsDoc["enemy"], renderer );
 
-    userInterface = new UserInterface( objectsDoc, summonDungeon, renderer );
+    userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, &isPaused );
 }
 
 void Game::HandleEvents()
@@ -59,15 +59,9 @@ void Game::HandleEvents()
         {
         case SDLK_ESCAPE:
             if( isPaused )
-            {
                 UnPause();
-                userInterface->HidePauseMenu();
-            }
             else
-            {
                 Pause();
-                userInterface->ShowPauseMenu();
-            }
             break;
         }
         break;
