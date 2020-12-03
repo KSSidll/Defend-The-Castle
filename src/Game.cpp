@@ -53,6 +53,18 @@ void Game::HandleEvents()
     case SDL_QUIT:
         isRunning = false;
         break;
+
+    case SDL_KEYDOWN:
+        switch ( event.key.keysym.sym )
+        {
+        case SDLK_ESCAPE:
+            Pause();
+            break;
+        
+        default:
+            break;
+        }
+        break;
     
     default:
         break;
@@ -61,16 +73,19 @@ void Game::HandleEvents()
 int updateframe = 0;
 void Game::Update()
 {
-    HandleCollisions();
+    if( !isPaused )
+    {
+        HandleCollisions();
 
-    summonDungeon->Update();
-    enemy->Update();
+        summonDungeon->Update();
+        enemy->Update();
 
-    if( updateframe%75 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["warrior"], renderer );
-    if( updateframe%120 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["tank"], renderer );
-    if( updateframe%190 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["archer"], renderer );
+        if( updateframe%75 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["warrior"], renderer );
+        if( updateframe%120 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["tank"], renderer );
+        if( updateframe%190 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["archer"], renderer );
 
-    ++updateframe;
+        ++updateframe;
+    } 
 }
 
 void Game::Render()
