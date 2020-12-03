@@ -9,6 +9,7 @@
 class Game
 {
 private:
+    bool isPaused = false;
     bool isRunning;
     SDL_Window *window;
     SDL_Renderer *renderer;
@@ -30,6 +31,9 @@ public:
     void Render();
     void Clean();
     void HandleCollisions();
+    void Pause() { isPaused = true; };
+    void UnPause() { isPaused = false; };
 
     bool Running() { return isRunning; };
+    bool Paused() { return isPaused; };
 };

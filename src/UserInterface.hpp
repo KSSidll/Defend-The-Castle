@@ -6,7 +6,8 @@
 class UserInterface
 {
 private:
-    std::deque<SummonButton*> summonButtons;
+    bool pause = false;
+    std::deque<SummonButton*> buttons;
     SDL_Renderer* renderer;
     SummonDungeon* dungeon;
 
@@ -15,5 +16,7 @@ public:
     ~UserInterface();
 
     void Render();
-    void HandleEvents( SDL_Event event );
+    void HandleEvents( SDL_Event* event );
+    void ShowPauseMenu(){ pause = true; };
+    void HidePauseMenu(){ pause = false; };
 };
