@@ -58,17 +58,22 @@ void Game::HandleEvents()
         switch ( event.key.keysym.sym )
         {
         case SDLK_ESCAPE:
-            Pause();
-            break;
-        
-        default:
+            if( isPaused )
+            {
+                UnPause();
+                userInterface->HidePauseMenu();
+            }
+            else
+            {
+                Pause();
+                userInterface->ShowPauseMenu();
+            }
             break;
         }
         break;
-    
-    default:
-        break;
     }
+
+    userInterface->HandleEvents( &event );
 }
 int updateframe = 0;
 void Game::Update()
@@ -80,9 +85,9 @@ void Game::Update()
         summonDungeon->Update();
         enemy->Update();
 
-        if( updateframe%75 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["warrior"], renderer );
-        if( updateframe%120 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["tank"], renderer );
-        if( updateframe%190 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["archer"], renderer );
+        // if( updateframe%75 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["warrior"], renderer );
+        // if( updateframe%120 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["tank"], renderer );
+        // if( updateframe%190 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["archer"], renderer );
 
         ++updateframe;
     } 

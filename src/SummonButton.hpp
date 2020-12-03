@@ -1,13 +1,13 @@
 #pragma once
 #include "SummonDungeon.hpp"
 
-enum state{ nothing = 0, hover = 1, press = 2 };
+enum BUTTON_STATE{ MOUSE_OUT = 0, MOUSE_OVER = 1, MOUSE_DOWN = 2, MOUSE_UP = 3 };
 
 class SummonButton
 {
 private:
     SDL_Renderer* renderer;
-    state state;
+    BUTTON_STATE BUTTON_STATE = MOUSE_OUT;
     SDL_Rect rect;
     rapidjson::Value* entityDoc;
     SummonDungeon* dungeon;
@@ -17,4 +17,5 @@ public:
     ~SummonButton(){};
 
     void Render();
+    void HandleEvents( SDL_Event* event );
 };
