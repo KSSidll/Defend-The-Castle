@@ -1,15 +1,18 @@
 #pragma once
 #include "SummonDungeon.hpp"
 #include "TextureManager.hpp"
-#include "SummonButton.hpp"
+#include "Button.hpp"
 
 class UserInterface
 {
 private:
     const bool* paused;
-    std::deque<SummonButton*> buttons;
+
+    rapidjson::Value json;
     SDL_Renderer* renderer;
     SummonDungeon* dungeon;
+    std::deque<Button*> summonButtons;
+    std::deque<Button*> menuButtons;
 
 public:
     UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, const bool* paused );

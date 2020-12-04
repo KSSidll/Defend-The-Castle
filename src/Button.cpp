@@ -1,6 +1,6 @@
-#include "SummonButton.hpp"
+#include "Button.hpp"
 
-SummonButton::SummonButton( SDL_Rect rect, SDL_Renderer* renderer, SummonDungeon* dungeon, rapidjson::Value* entityDoc )
+Button::Button( SDL_Rect rect, SDL_Renderer* renderer )
 {   
     this->rect.x = rect.x;
     this->rect.y = rect.y;
@@ -8,12 +8,14 @@ SummonButton::SummonButton( SDL_Rect rect, SDL_Renderer* renderer, SummonDungeon
     this->rect.h = rect.h;
 
     this->renderer = renderer;
-
-    this->dungeon = dungeon;
-    this->entityDoc = entityDoc;
 }
 
-void SummonButton::Render()
+Button::Button( SDL_Rect rect, SDL_Renderer* renderer, void (*callback)( SummonDungeon* dungeon, rapidjson::Value& json, SDL_Renderer* renderer ) ) : Button( rect, renderer )
+{
+    this->callback = callback;
+}
+
+void Button::Render()
 {
     switch ( BUTTON_STATE )
     {
@@ -37,7 +39,7 @@ void SummonButton::Render()
     SDL_RenderFillRect( renderer, &rect );
 }
 
-void SummonButton::HandleEvents( SDL_Event* event )
+bool Button::HandleEvents( SDL_Event* event )
 {
     if( event->type == SDL_MOUSEMOTION || event->type == SDL_MOUSEBUTTONDOWN || event->type == SDL_MOUSEBUTTONUP )
     {
@@ -74,8 +76,8 @@ void SummonButton::HandleEvents( SDL_Event* event )
 
     if( BUTTON_STATE == MOUSE_UP )
     {
-
-        dungeon->SummonObject( *entityDoc, renderer );
-        BUTTON_STATE = MOUSE_OUT;
+        BUTTON_STATE = MOUSE_OVER;
+        return true;
     }
+    return false;
 }
