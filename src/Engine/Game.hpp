@@ -2,9 +2,9 @@
 
 #pragma once
 #include "Global.hpp"
-#include "UserInterface.hpp"
-#include "Enemy.hpp"
-#include "TextureManager.hpp"
+#include "../UserInterface/UserInterface.hpp"
+#include "../Objects/Enemy.hpp"
+#include "../Managers/TextureManager.hpp"
 
 class Game
 {

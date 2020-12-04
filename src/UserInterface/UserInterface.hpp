@@ -1,6 +1,6 @@
 #pragma once
-#include "SummonDungeon.hpp"
-#include "TextureManager.hpp"
+#include "../Managers/SummonDungeon.hpp"
+#include "../Managers/TextureManager.hpp"
 #include "Button.hpp"
 
 class UserInterface
