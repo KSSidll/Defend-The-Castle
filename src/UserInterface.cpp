@@ -7,9 +7,11 @@ UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SD
     this->dungeon = dungeon;
     this->paused = paused;
 
-    SDL_Rect aa = {0,678,200,100};
-    Button* summmonButton = new Button( aa, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json, SDL_Renderer* renderer ){ dungeon->SummonObject( json["summons"]["warrior"], renderer ); } );
-    summonButtons.push_back( summmonButton );
+    SDL_Rect ButtonCoords = {0,678,200,100};
+    summonButtons.push_back( new Button( ButtonCoords, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json, SDL_Renderer* renderer ){ dungeon->SummonObject( json["summons"]["warrior"], renderer ); } ) );
+
+    ButtonCoords = {0,0,300,300};
+    menuButtons.push_back( new Button( ButtonCoords, renderer ) );
 }
 
 void UserInterface::Render()
@@ -20,12 +22,15 @@ void UserInterface::Render()
         {
             button->Render();
         }
-
+    }
+    else
+    {
         for( auto button : menuButtons )
         {
             button->Render();
         }
     }
+    
 }
 
 void UserInterface::HandleEvents( SDL_Event* event )
@@ -38,12 +43,15 @@ void UserInterface::HandleEvents( SDL_Event* event )
             if( summon )
                 button->callback( dungeon, json, renderer );
         }
-
-        
+    }
+    else
+    {
         for( auto button : menuButtons )
         {
             button->HandleEvents( event );
         }
     }
+    
+    
     
 }
