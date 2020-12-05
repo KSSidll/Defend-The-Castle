@@ -1,18 +1,15 @@
 #pragma once
 #include "../Managers/SummonDungeon.hpp"
 #include "../Managers/TextureManager.hpp"
-#include "Button.hpp"
+#include "MainMenu.hpp"
+#include "GameMenu.hpp"
+#include "PauseMenu.hpp"
 
 class UserInterface
 {
 private:
     const bool* paused;
-
-    rapidjson::Value json;
-    SDL_Renderer* renderer;
-    SummonDungeon* dungeon;
-    std::deque<Button*> summonButtons;
-    std::deque<Button*> menuButtons;
+    GameMenu* gameMenu;
 
 public:
     UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, const bool* paused );
