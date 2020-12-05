@@ -5,7 +5,7 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
     int flags = 0;
     if( fullscreen ) flags = SDL_WINDOW_FULLSCREEN;
 
-    FILE* objectsJsonFile = fopen( "build/assets/objects.json", "r" );
+    FILE* objectsJsonFile = fopen( "assets/objects.json", "r" );
     char* readBuffer = new char[65536];
     rapidjson::FileReadStream objectsJson( objectsJsonFile, readBuffer, sizeof( readBuffer ) );
     objectsDoc.ParseStream( objectsJson );
