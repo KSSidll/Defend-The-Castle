@@ -11,7 +11,10 @@ void SummonDungeon::KillPending()
         for( int i = 0; i != objectArray.size(); ++i )
         {
             if( objectArray[i]->GetId() == summon->GetId() )
-                objectArray.erase( objectArray.begin() + i );  
+            {
+                objectArray.erase( objectArray.begin() + i );
+                --i;
+            }
         }
         pendingKills.pop_front();
         delete summon;
@@ -30,7 +33,7 @@ SummonDungeon::SummonDungeon( TextureManager* textureManager )
 
 void SummonDungeon::Update()
 {
-    KillPending();
+    if( pendingKills.size() != 0 ) KillPending();
 
     for( auto summon : objectArray )
     {
