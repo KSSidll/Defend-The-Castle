@@ -16,5 +16,8 @@ class TextureManager
         ~TextureManager(){};
         
         void LoadTexture( rapidjson::Value& texturePath );
+        void LoadTexture( const char* key, const char* texturePath );
         SDL_Texture* GetTexture( rapidjson::Value& texturePath );
+        SDL_Texture* GetTexture( const char* key );
+        SDL_Texture* CreateTextTexture( const char* text );
 };

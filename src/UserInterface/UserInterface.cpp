@@ -1,10 +1,11 @@
 #include "UserInterface.hpp"
 
-UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, const bool* paused )
+UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, const bool* paused )
 {
     this->paused = paused;
+    this->textureManager = textureManager;
 
-    gameMenu = new GameMenu( json, dungeon, renderer );
+    gameMenu = new GameMenu( json, dungeon, renderer, textureManager );
 
 }
 

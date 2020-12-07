@@ -11,9 +11,11 @@ private:
     SDL_Renderer* renderer;
     SDL_Rect rect;
 
+    SDL_Texture* texture;
+
 public:
-    Button( SDL_Rect rect, SDL_Renderer* renderer );
-    Button( SDL_Rect rect, SDL_Renderer* renderer, void (*callback)( SummonDungeon* dungeon, rapidjson::Value& json, SDL_Renderer* renderer ) );
+    Button( SDL_Texture* texture, SDL_Rect rect, SDL_Renderer* renderer );
+    Button( SDL_Texture* texture, SDL_Rect rect, SDL_Renderer* renderer, void (*callback)( SummonDungeon* dungeon, rapidjson::Value& json, SDL_Renderer* renderer ) );
     ~Button(){};
 
     void Render();

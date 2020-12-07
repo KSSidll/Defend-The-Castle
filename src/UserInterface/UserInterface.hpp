@@ -9,10 +9,11 @@ class UserInterface
 {
 private:
     const bool* paused;
+    TextureManager* textureManager;
     GameMenu* gameMenu;
 
 public:
-    UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, const bool* paused );
+    UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, const bool* paused );
     ~UserInterface();
 
     void Render();

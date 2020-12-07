@@ -11,7 +11,7 @@ class GameMenu
         SummonDungeon* dungeon;
 
     public:
-        GameMenu( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer );
+        GameMenu( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager );
         ~GameMenu(){};
 
         void Render();

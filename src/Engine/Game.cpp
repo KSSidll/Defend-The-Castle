@@ -35,13 +35,16 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
     for ( auto& texture : objectsDoc["textures"].GetArray() )
         textureManager->LoadTexture( texture );
 
+    textureManager->LoadTexture( "button1", "assets/button1.png" );
+    textureManager->LoadTexture( "button2", "assets/button2.png" );
+
     background = new SceneObject( textureManager->GetTexture(objectsDoc["background"]["textureSrc"]), objectsDoc["background"], renderer );
 
     summonDungeon = new SummonDungeon( textureManager );
 
     enemy = new Enemy( textureManager->GetTexture( objectsDoc["enemy"]["textureSrc"] ), objectsDoc["enemy"], renderer );
 
-    userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, &isPaused );
+    userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, textureManager, &isPaused );
 }
 
 void Game::HandleEvents()
