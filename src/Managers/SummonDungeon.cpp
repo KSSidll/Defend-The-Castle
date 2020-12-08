@@ -24,9 +24,10 @@ void SummonDungeon::KillSummonObject( PlayerSummon* summon )
     pendingKills.push_back( summon );
 }
 
-SummonDungeon::SummonDungeon( TextureManager* textureManager )
+SummonDungeon::SummonDungeon( TextureManager* textureManager, SDL_Renderer* renderer )
 {
     this->textureManager = textureManager;
+    this->renderer = renderer;
 }
 
 void SummonDungeon::Update()
@@ -48,7 +49,7 @@ void SummonDungeon::Render()
     }
 }
 
-void SummonDungeon::SummonObject( rapidjson::Value& object, SDL_Renderer* renderer )
+void SummonDungeon::SummonObject( rapidjson::Value& object )
 {
     PlayerSummon *summon = new PlayerSummon( textureManager->GetTexture( object["textureSrc"] ), object, renderer, id );
     objectArray.push_back( summon );

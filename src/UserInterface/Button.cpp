@@ -1,6 +1,6 @@
 #include "Button.hpp"
 
-Button::Button( SDL_Texture* texture, SDL_Texture* text, SDL_Rect rect, SDL_Renderer* renderer )
+Button::Button( ButtonTextures textures, SDL_Texture* text, SDL_Rect rect, SDL_Renderer* renderer )
 {   
     this->rect.x = rect.x;
     this->rect.y = rect.y;
@@ -10,25 +10,33 @@ Button::Button( SDL_Texture* texture, SDL_Texture* text, SDL_Rect rect, SDL_Rend
     this->renderer = renderer;
 
     this->text = text;
-    this->texture = texture;
+    this->textures = textures;
 }
 
-Button::Button( SDL_Texture* texture, SDL_Texture* text, SDL_Rect rect, SDL_Renderer* renderer, void (*callback)( SummonDungeon* dungeon, rapidjson::Value& json, SDL_Renderer* renderer ) ) : Button( texture, text, rect, renderer )
+Button::Button( ButtonTextures textures, SDL_Texture* text, SDL_Rect rect, SDL_Renderer* renderer, void (*callback)( SummonDungeon* dungeon, rapidjson::Value& json ) ) : Button( textures, text, rect, renderer )
 {
     this->callback = callback;
 }
 
 void Button::Render()
 {
+
     switch ( BUTTON_STATE )
     {
     case MOUSE_OUT:
-        SDL_RenderCopy( renderer, texture, NULL, &rect );
-        SDL_RenderCopy( renderer, text, NULL, &rect );
+        SDL_RenderCopy( renderer, textures.none, NULL, &rect );
         break;
 
+    case MOUSE_OVER:
+        SDL_RenderCopy( renderer, textures.over, NULL, &rect );
+        break;
+
+    case MOUSE_DOWN:
+        SDL_RenderCopy( renderer, textures.down, NULL, &rect );
+        break;
     }
 
+    SDL_RenderCopy( renderer, text, NULL, &rect );
 }
 
 bool Button::HandleEvents( SDL_Event* event )

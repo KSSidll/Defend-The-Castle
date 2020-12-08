@@ -6,7 +6,7 @@ void MovableObject::Move()
     xShift -= (int)xShift;
 }
 
-MovableObject::MovableObject( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer ) : SceneObject( objTexture, object, renderer )
+MovableObject::MovableObject( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer ) : SceneObject( objTexture, renderer )
 {
     renderScale = object["renderScale"].GetFloat();
 

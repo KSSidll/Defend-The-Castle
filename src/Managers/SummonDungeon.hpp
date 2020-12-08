@@ -9,6 +9,7 @@ class SummonDungeon
         std::deque<PlayerSummon*> objectArray;
         std::deque<PlayerSummon*> pendingKills;
         TextureManager* textureManager;
+        SDL_Renderer* renderer;
 
         int id = 0;
 
@@ -16,12 +17,12 @@ class SummonDungeon
         void KillSummonObject( PlayerSummon* summon );
 
     public:
-        SummonDungeon( TextureManager* textureManager );
+        SummonDungeon( TextureManager* textureManager, SDL_Renderer* renderer );
         ~SummonDungeon(){};
 
         void Update();
         void Render();
         std::deque<PlayerSummon*> getObjectArray(){ return objectArray; };
 
-        void SummonObject( rapidjson::Value& object, SDL_Renderer* renderer);
+        void SummonObject( rapidjson::Value& object );
 };

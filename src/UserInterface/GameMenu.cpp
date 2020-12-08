@@ -6,7 +6,7 @@ GameMenu::GameMenu( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer
     this->dungeon = dungeon;
     this->renderer = renderer;
 
-    summonButtons.push_back( new Button( textureManager->GetTexture( "button2" ), textureManager->CreateTextTexture( "test", 72, {255,255,255} ), {0,678,200,100}, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json, SDL_Renderer* renderer ){ dungeon->SummonObject( json["summons"]["warrior"], renderer ); } ) );
+    summonButtons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), textureManager->CreateTextTexture( "test", 72, {255,255,255} ), {0,678,200,100}, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json ){ dungeon->SummonObject( json["summons"]["warrior"] ); } ) );
 }
 
 void GameMenu::Render()
@@ -22,6 +22,6 @@ void GameMenu::HandleEvents( SDL_Event* event )
     for( auto button : summonButtons )
     {
         if( button->HandleEvents( event ) )
-            button->callback( dungeon, json, renderer );
+            button->callback( dungeon, json );
     }
 }
