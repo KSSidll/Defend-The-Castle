@@ -8,7 +8,7 @@ void Enemy::Move()
 
 Enemy::Enemy( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer ) : EntityObject( objTexture, object, renderer )
 {
-
+    speedReference = (float)movementSpeed / (float)health;
 }
 
 void Enemy::Update()
@@ -21,6 +21,13 @@ void Enemy::Update()
 void Enemy::Render()
 {
     EntityObject::Render();
+}
+
+void Enemy::DoDamage( int attack )
+{
+    EntityObject::DoDamage( attack );
+    if( movementSpeed >= 6 )
+        movementSpeed = speedReference * health;
 }
 
 void Enemy::HandleCollision()

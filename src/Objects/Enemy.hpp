@@ -7,6 +7,8 @@ class PlayerSummon;
 class Enemy : virtual public EntityObject 
 {
     private:
+        float speedReference;
+
         void Move();
 
     public:
@@ -16,6 +18,7 @@ class Enemy : virtual public EntityObject
 
         void Update();
         void Render();
+        void DoDamage( int attack );
         void HandleCollision();
         void HandleCollision( PlayerSummon* entity );
 };

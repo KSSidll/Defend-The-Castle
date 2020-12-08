@@ -11,10 +11,12 @@ void SummonDungeon::KillPending()
         for( int i = 0; i != objectArray.size(); ++i )
         {
             if( objectArray[i]->GetId() == summon->GetId() )
+            {
                 objectArray.erase( objectArray.begin() + i );
                 --i;  
+                pendingKills.pop_front();
+            }
         }
-        pendingKills.pop_front();
         delete summon;
     }
 }
