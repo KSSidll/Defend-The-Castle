@@ -6,9 +6,7 @@ GameMenu::GameMenu( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer
     this->dungeon = dungeon;
     this->renderer = renderer;
 
-    summonButtons.push_back( new Button( textureManager->GetTexture( "button2" ), {0,678,200,100}, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json, SDL_Renderer* renderer ){ dungeon->SummonObject( json["summons"]["warrior"], renderer ); } ) );
-    summonButtons.push_back( new Button( textureManager->GetTexture( "button2" ), {200,678,200,100}, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json, SDL_Renderer* renderer ){ dungeon->SummonObject( json["summons"]["tank"], renderer ); } ) );
-    summonButtons.push_back( new Button( textureManager->GetTexture( "button2" ), {400,678,200,100}, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json, SDL_Renderer* renderer ){ dungeon->SummonObject( json["summons"]["archer"], renderer ); } ) );
+    summonButtons.push_back( new Button( textureManager->GetTexture( "button2" ), textureManager->CreateTextTexture( "test", 72, {255,255,255} ), {0,678,200,100}, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json, SDL_Renderer* renderer ){ dungeon->SummonObject( json["summons"]["warrior"], renderer ); } ) );
 }
 
 void GameMenu::Render()

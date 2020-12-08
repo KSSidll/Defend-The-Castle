@@ -2,6 +2,7 @@
 
 TextureManager::TextureManager( SDL_Renderer* renderer )
 {
+    TTF_Init();
     this->renderer = renderer;
 }
 
@@ -33,4 +34,15 @@ SDL_Texture* TextureManager::GetTexture( rapidjson::Value& texturePath )
 SDL_Texture* TextureManager::GetTexture( const char* key )
 {
     return textureArray.at( key );
+}
+
+SDL_Texture* TextureManager::CreateTextTexture( const char* text, const int size, SDL_Color color )
+{
+    TTF_Font* Sans = TTF_OpenFont( "assets/fonts/Sans.ttf", size );
+    
+    SDL_Surface* surfaceText = TTF_RenderText_Solid( Sans, text, color );
+    SDL_Texture* Text = SDL_CreateTextureFromSurface( renderer, surfaceText );
+    SDL_FreeSurface( surfaceText );
+
+    return Text;
 }
