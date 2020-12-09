@@ -35,6 +35,8 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
     for ( auto& texture : objectsDoc["textures"].GetArray() )
         textureManager->LoadTexture( texture );
 
+    textureManager->LoadTexture( "enemyLabelBackground", "assets/prototypes/button2.png" );
+
     textureManager->LoadButtonTexture( "button1", "assets/prototypes/button1.png", "assets/prototypes/button1-over.png", "assets/prototypes/button1-down.png" );
     textureManager->LoadButtonTexture( "button2", "assets/prototypes/button2.png", "assets/prototypes/button2-over.png", "assets/prototypes/button2-down.png" );
     

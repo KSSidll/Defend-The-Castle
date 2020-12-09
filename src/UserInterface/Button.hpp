@@ -1,5 +1,7 @@
 #pragma once
 #include "../Managers/SummonDungeon.hpp"
+#include "../Managers/TextureManager.hpp"
+#include "UILabel.hpp"
 
 enum BUTTON_STATE{ MOUSE_OUT = 0, MOUSE_OVER = 1, MOUSE_DOWN = 2, MOUSE_UP = 3 };
 
@@ -11,12 +13,12 @@ private:
     SDL_Renderer* renderer;
     SDL_Rect rect;
 
+    UILabel* label;
     ButtonTextures textures;
-    SDL_Texture* text;
 
 public:
-    Button( ButtonTextures textures, SDL_Texture* text, SDL_Rect rect, SDL_Renderer* renderer );
-    Button( ButtonTextures textures, SDL_Texture* text, SDL_Rect rect, SDL_Renderer* renderer, void (*callback)( SummonDungeon* dungeon, rapidjson::Value& json ) );
+    Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer );
+    Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*callback)( SummonDungeon* dungeon, rapidjson::Value& json ) );
     ~Button(){};
 
     void Render();

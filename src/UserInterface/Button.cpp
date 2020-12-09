@@ -1,6 +1,6 @@
 #include "Button.hpp"
 
-Button::Button( ButtonTextures textures, SDL_Texture* text, SDL_Rect rect, SDL_Renderer* renderer )
+Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer )
 {   
     this->rect.x = rect.x;
     this->rect.y = rect.y;
@@ -9,11 +9,12 @@ Button::Button( ButtonTextures textures, SDL_Texture* text, SDL_Rect rect, SDL_R
 
     this->renderer = renderer;
 
-    this->text = text;
+    this->label = label;
+
     this->textures = textures;
 }
 
-Button::Button( ButtonTextures textures, SDL_Texture* text, SDL_Rect rect, SDL_Renderer* renderer, void (*callback)( SummonDungeon* dungeon, rapidjson::Value& json ) ) : Button( textures, text, rect, renderer )
+Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*callback)( SummonDungeon* dungeon, rapidjson::Value& json ) ) : Button( textures, label, rect, renderer )
 {
     this->callback = callback;
 }
@@ -36,7 +37,7 @@ void Button::Render()
         break;
     }
 
-    SDL_RenderCopy( renderer, text, NULL, &rect );
+    label->Render();
 }
 
 bool Button::HandleEvents( SDL_Event* event )

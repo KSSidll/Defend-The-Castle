@@ -17,6 +17,7 @@ class TextureManager
 {
     private:
         std::map< std::string, SDL_Texture* > textureArray;
+        std::map< std::string, TTF_Font* > fontArray;
         std::map< std::string, ButtonTextures > buttonTextureArray;
         SDL_Renderer* renderer;
 
@@ -25,8 +26,10 @@ class TextureManager
         ~TextureManager(){};
         
         void LoadTexture( rapidjson::Value& texturePath );
+        void LoadTexture( const char* key, const char* filePath );
         void LoadButtonTexture( const char* key, const char* none, const char* over, const char* down );
+
         SDL_Texture* GetTexture( rapidjson::Value& texturePath );
+        SDL_Texture* GetTexture( const char* key );
         ButtonTextures GetButtonTexture( const char* key );
-        SDL_Texture* CreateTextTexture( const char* text, const int size, SDL_Color color );
 };
