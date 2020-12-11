@@ -23,8 +23,10 @@ class EntityObject : public MovableObject
 
         void Kill();
         void Attack();
+        void SetObjectValues( rapidjson::Value& object );
         void Update();
         void Render();
+        void Reset();
         void HandleCollision();
         void DoDamage( int damage ){ health -= damage; };
 

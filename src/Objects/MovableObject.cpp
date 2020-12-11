@@ -8,19 +8,27 @@ void MovableObject::Move()
 
 MovableObject::MovableObject( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer ) : SceneObject( objTexture, renderer )
 {
+    originalJsonValues = &object;
+
     renderScale = object["renderScale"].GetFloat();
 
     OsrcRect.x = srcRect.x = object["srcRectX"].GetInt();
     OsrcRect.y = srcRect.y = object["srcRectY"].GetInt();
     srcRect.h = object["srcRectH"].GetInt();
     srcRect.w = object["srcRectW"].GetInt();
-    destRect.x = object["destRectX"].GetInt();
-    destRect.y = object["destRectY"].GetInt();
     destRect.h = srcRect.h * renderScale;
     destRect.w = srcRect.w * renderScale;
 
     for ( auto& position : object["positions"].GetArray() )
         animationLengths.push_back( position.GetInt() );
+
+    SetObjectValues( object );
+}
+
+void MovableObject::SetObjectValues( rapidjson::Value& object )
+{
+    destRect.x = object["destRectX"].GetInt();
+    destRect.y = object["destRectY"].GetInt();
 }
 
 void MovableObject::Update()
@@ -50,4 +58,17 @@ void MovableObject::Update()
 void MovableObject::Render()
 {
     SDL_RenderCopy( renderer, objTexture, &srcRect, &destRect );
+}
+
+void MovableObject::Reset()
+{
+    movementVector = 1;
+    animationFramesSkipped = 0;
+    animationYpos = 0;
+    animationXpos = 0;
+    animationSpeed = 5;
+    xShift = 0;
+    isMoving = true;
+    isAnimationDone = false;
+    SetObjectValues( *originalJsonValues );
 }

@@ -27,7 +27,6 @@ int main()
             SDL_Delay( FRAME_DELAY - frameTime );
         else
             updateOnly = true;
-        
     }
 
     game->Clean();

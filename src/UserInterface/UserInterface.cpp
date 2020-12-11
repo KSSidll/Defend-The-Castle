@@ -1,8 +1,8 @@
 #include "UserInterface.hpp"
 
-UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, const bool* paused, Game* game )
+UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Game* game )
 {
-    this->paused = paused;
+    this->game = game;
     this->textureManager = textureManager;
 
     gameMenu = new GameMenu( json, dungeon, renderer, textureManager );
@@ -12,7 +12,7 @@ UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SD
 
 void UserInterface::Render()
 {
-    if( !*paused )
+    if( !game->Paused() )
     {
         gameMenu->Render();
     }
@@ -24,7 +24,7 @@ void UserInterface::Render()
 
 void UserInterface::HandleEvents( SDL_Event* event )
 {
-    if( !*paused )
+    if( !game->Paused() )
     {
         gameMenu->HandleEvents( event );
     }

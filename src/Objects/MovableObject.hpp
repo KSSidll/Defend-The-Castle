@@ -5,6 +5,8 @@
 class MovableObject : public SceneObject
 {
     protected:
+        rapidjson::Value* originalJsonValues;
+
         int movementVector = 1;
         int xpos;
         int ypos;
@@ -30,7 +32,9 @@ class MovableObject : public SceneObject
         ~MovableObject(){};
         MovableObject( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer );
 
+        void SetObjectValues( rapidjson::Value& object );
         void Update();
         void Render();
+        void Reset();
         int GetPosition(){ return destRect.x; };
 };

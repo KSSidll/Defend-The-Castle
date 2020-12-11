@@ -8,12 +8,7 @@ void EntityObject::Move()
 
 EntityObject::EntityObject( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer) : MovableObject(objTexture, object, renderer )
 {
-    health = object["health"].GetInt();
-    attackDamage = object["attackDamage"].GetInt();
-    range = object["range"].GetInt();
-    attackSpeed = object["attackSpeed"].GetInt();
-    movementSpeed = object["movementSpeed"].GetInt();
-    animationSpeed = movementSpeed;
+    SetObjectValues( object );
 }
 
 void EntityObject::Kill()
@@ -43,6 +38,16 @@ void EntityObject::Attack()
     }
 }
 
+void EntityObject::SetObjectValues( rapidjson::Value& object )
+{
+    health = object["health"].GetInt();
+    attackDamage = object["attackDamage"].GetInt();
+    range = object["range"].GetInt();
+    attackSpeed = object["attackSpeed"].GetInt();
+    movementSpeed = object["movementSpeed"].GetInt();
+    animationSpeed = movementSpeed;
+}
+
 void EntityObject::Update()
 {
     if( health <= 0 && alive ) Kill();
@@ -66,6 +71,16 @@ void EntityObject::Render()
     {
         MovableObject::Render();
     }
+}
+
+void EntityObject::Reset()
+{
+    attacking = false;
+    pendingKill = false;
+    alive = true;
+
+    MovableObject::SetObjectValues( *originalJsonValues );
+    SetObjectValues( *originalJsonValues );
 }
 
 void EntityObject::HandleCollision()

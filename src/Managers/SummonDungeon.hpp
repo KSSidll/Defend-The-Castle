@@ -22,6 +22,7 @@ class SummonDungeon
 
         void Update();
         void Render();
+        void Reset();
         std::deque<PlayerSummon*> getObjectArray(){ return objectArray; };
 
         void SummonObject( rapidjson::Value& object );

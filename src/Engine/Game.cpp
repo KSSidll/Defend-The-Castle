@@ -46,7 +46,7 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
 
     enemy = new Enemy( textureManager->GetTexture( objectsDoc["enemy"]["textureSrc"] ), objectsDoc["enemy"], renderer );
 
-    userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, textureManager, &isPaused, this );
+    userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, textureManager, this );
 }
 
 void Game::HandleEvents()
@@ -85,7 +85,12 @@ void Game::Update()
         enemy->Update();
 
         ++updateframe;
-    } 
+    }
+
+    if( enemy->KillPending() )
+        Pause();
+
+    
 }
 
 void Game::Render()
@@ -124,4 +129,12 @@ void Game::HandleCollisions()
         }
 
     }
+}
+
+void Game::Reset()
+{
+    enemy->Reset();
+    summonDungeon->Reset();
+
+    UnPause();
 }

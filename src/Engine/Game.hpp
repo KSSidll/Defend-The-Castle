@@ -11,7 +11,8 @@ class UserInterface;
 class Game
 {
 private:
-    bool isPaused = false;
+    bool isPaused = true;
+    bool mainMenu = true;
     bool isRunning;
     SDL_Window *window;
     SDL_Renderer *renderer;
@@ -33,9 +34,12 @@ public:
     void Render();
     void Clean();
     void HandleCollisions();
+    void Reset();
     void Pause() { isPaused = true; };
     void UnPause() { isPaused = false; };
-    void Quit() { isRunning = false; };
+    void Quit() { Reset(); };
+    void MainMenu() { mainMenu = true; };
+    void Start() { UnPause(); mainMenu = false; };
 
     bool Running() { return isRunning; };
     bool Paused() { return isPaused; };

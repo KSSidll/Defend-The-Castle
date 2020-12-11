@@ -51,6 +51,17 @@ void SummonDungeon::Render()
     }
 }
 
+void SummonDungeon::Reset()
+{
+    for( auto summon : objectArray )
+    {
+        delete summon;
+    }
+
+    objectArray.erase( objectArray.begin(), objectArray.end() );
+    pendingKills.erase( pendingKills.begin(), pendingKills.end() );
+}
+
 void SummonDungeon::SummonObject( rapidjson::Value& object )
 {
     PlayerSummon *summon = new PlayerSummon( textureManager->GetTexture( object["textureSrc"] ), object, renderer, id );
