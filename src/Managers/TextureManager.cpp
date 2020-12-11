@@ -4,6 +4,13 @@ TextureManager::TextureManager( SDL_Renderer* renderer )
 {
     TTF_Init();
     this->renderer = renderer;
+
+    SDL_Surface* tempSurface = SDL_CreateRGBSurface( 0, 1, 1, 12, 0, 0, 0, 0 );
+
+    SDL_Texture* blackBackground = SDL_CreateTextureFromSurface( renderer, tempSurface );
+    textureArray.insert({ "darkBackground", blackBackground });
+
+    SDL_FreeSurface( tempSurface );
 }
 
 void TextureManager::LoadTexture( rapidjson::Value& texturePath )

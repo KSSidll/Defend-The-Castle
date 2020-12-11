@@ -6,6 +6,8 @@
 #include "../Objects/Enemy.hpp"
 #include "../Managers/TextureManager.hpp"
 
+class UserInterface;
+
 class Game
 {
 private:
@@ -33,6 +35,7 @@ public:
     void HandleCollisions();
     void Pause() { isPaused = true; };
     void UnPause() { isPaused = false; };
+    void Quit() { isRunning = false; };
 
     bool Running() { return isRunning; };
     bool Paused() { return isPaused; };

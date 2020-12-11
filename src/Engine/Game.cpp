@@ -46,7 +46,7 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
 
     enemy = new Enemy( textureManager->GetTexture( objectsDoc["enemy"]["textureSrc"] ), objectsDoc["enemy"], renderer );
 
-    userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, textureManager, &isPaused );
+    userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, textureManager, &isPaused, this );
 }
 
 void Game::HandleEvents()
@@ -83,10 +83,6 @@ void Game::Update()
 
         summonDungeon->Update();
         enemy->Update();
-
-        // if( updateframe%75 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["warrior"], renderer );
-        // if( updateframe%120 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["tank"], renderer );
-        // if( updateframe%190 == 0 ) summonDungeon->SummonObject( objectsDoc["summons"]["archer"], renderer );
 
         ++updateframe;
     } 

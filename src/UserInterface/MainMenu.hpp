@@ -2,6 +2,8 @@
 #include "Button.hpp"
 #include <deque>
 
+class Button;
+
 class MainMenu
 {
     private:

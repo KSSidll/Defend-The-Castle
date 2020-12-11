@@ -14,9 +14,14 @@ Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Rend
     this->textures = textures;
 }
 
-Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*callback)( SummonDungeon* dungeon, rapidjson::Value& json ) ) : Button( textures, label, rect, renderer )
+Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json ) ) : Button( textures, label, rect, renderer )
 {
-    this->callback = callback;
+    this->summon = summon;
+}
+
+Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*game)( Game* game ) ) : Button( textures, label, rect, renderer )
+{
+    this->game = game;
 }
 
 void Button::Render()

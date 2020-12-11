@@ -27,6 +27,11 @@ UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPa
     position.x += ( labelWidth - position.w ) / 2;
 }
 
+UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPath, int fontSize, std::string text, SDL_Color color, int labelWidth, int labelHeight ) : UILabel ( renderer, xPos, yPos, fontPath, fontSize, text, color, labelWidth )
+{
+    position.y += ( labelHeight - position.h ) / 2;
+}
+
 void UILabel::ChangeText( std::string text )
 {
     TTF_SizeText( font, text.c_str(), &position.w, &position.h );
