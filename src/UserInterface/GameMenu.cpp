@@ -52,11 +52,6 @@ GameMenu::GameMenu( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer
     enemyLabel = new UILabel( renderer, enemyRect.x + 5, enemyRect.y + enemyNameLabel->GetPosition().h + 5, "assets/fonts/Sans.ttf", 16, enemyLabelText, {255,255,255} );
     enemyLabelBackground = new SceneObject( textureManager->GetTexture( "enemyLabelBackground" ), renderer, enemyRect );
 
-    // for( int it = 0; it < summonButtonCount; ++it )
-    // {
-    //     summonButton.push_back(  );
-    // }
-
 }
 
 void GameMenu::Render()

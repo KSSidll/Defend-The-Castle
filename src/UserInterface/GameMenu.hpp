@@ -6,6 +6,7 @@
 
 class Button;
 
+// TBD - Make this modular 
 // struct SummonButton
 // {
 //     SDL_Rect Position;
@@ -17,12 +18,11 @@ class GameMenu
 {
     private:
         std::deque<Button*> summonButtons;
-        // std::deque<SummonButton> summonButton;
+        // std::deque<SummonButton*> summonButtons;
         rapidjson::Value json;
         SDL_Renderer* renderer;
         SummonDungeon* dungeon;
         int summonButtonWidth = 256;
-        int summonButtonCount = 3;
 
         SDL_Rect warriorRect = { 0 * summonButtonWidth, 543, summonButtonWidth, 225 };
         std::string warriorLabelText = "";
@@ -38,8 +38,8 @@ class GameMenu
         std::string archerLabelText = "";
         UILabel* archerNameLabel;
         UILabel* archerLabel;
-
-        SDL_Rect enemyRect = { summonButtonCount * summonButtonWidth, 543, summonButtonWidth, 225 };
+        
+        SDL_Rect enemyRect = { 3 * summonButtonWidth, 543, summonButtonWidth, 225 };
         std::string enemyLabelText = "";
         UILabel* enemyNameLabel;
         UILabel* enemyLabel;
