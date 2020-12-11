@@ -16,7 +16,10 @@ private:
     bool isPaused = true;
     bool mainMenu = true;
     bool difficultyMenu = false;
+    bool winMenu = false;
+    bool loseMenu = false;
     bool isRunning;
+
     SDL_Window *window;
     SDL_Renderer *renderer;
     rapidjson::Document objectsDoc;
@@ -25,6 +28,8 @@ private:
     SceneObject* background;
     Enemy* enemy;
     TextureManager* textureManager;
+
+    void ResetMenus();
 
 public:
     Game(){};
@@ -38,18 +43,25 @@ public:
     void Clean();
     void HandleCollisions();
     void Reset();
-    void NewGame();
-    void Start();
-    void MainMenu();
+    
     void Pause() { isPaused = true; };
     void UnPause() { isPaused = false; };
     void Quit() { isRunning = false; };
     
-    void IncreaseLevel(){ ++level; Reset(); };
-    void ChangeEnemyLevelMultiplier( float multiplier ) { enemyStatsLevelMultiplier = multiplier; Start(); };
+    void IncreaseLevel();
+    void ChangeEnemyLevelMultiplier( float multiplier );
 
     bool Running() { return isRunning; };
     bool Paused() { return isPaused; };
+
+    void LoseGame();
+    void NewGame();
+    void Start();
+    void MainMenu();
+    void WinMenu();
+
     bool isMainMenu() { return mainMenu; };
-    bool DifficultyChange() { return difficultyMenu; };
+    bool isDifficultyMenu() { return difficultyMenu; };
+    bool isWinMenu() { return winMenu; };
+    bool isLoseMenu() { return loseMenu; };
 };

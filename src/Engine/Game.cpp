@@ -88,8 +88,10 @@ void Game::Update()
     }
 
     if( enemy->KillPending() )
-        IncreaseLevel();
+        WinMenu();
 
+    if( enemy->GetPosition() <= 0 )
+        LoseGame();
 }
 
 void Game::Render()
@@ -130,6 +132,18 @@ void Game::HandleCollisions()
     }
 }
 
+void Game::IncreaseLevel()
+{
+    ++level;
+    Start();
+}
+
+void Game::ChangeEnemyLevelMultiplier( float multiplier )
+{
+    enemyStatsLevelMultiplier = multiplier;
+    Start();
+}
+
 void Game::Reset()
 {
     enemy->Reset( powf(enemyStatsLevelMultiplier, level) );
@@ -138,23 +152,46 @@ void Game::Reset()
     UnPause();
 }
 
-void Game::NewGame()
+void Game::ResetMenus()
 {
     mainMenu = false;
+    isPaused = false;
+    difficultyMenu = false;
+    winMenu = false;
+    loseMenu = false;
+}
+
+void Game::LoseGame()
+{
+    ResetMenus();
+    Reset();
+    loseMenu = true;
+    isPaused = true;
+}
+
+void Game::NewGame()
+{
+    ResetMenus();
     isPaused = true;
     difficultyMenu = true;
 }
 
 void Game::Start()
 {
-    mainMenu = false;
-    isPaused = false;
-    difficultyMenu = false;
+    ResetMenus();
 }
 
 void Game::MainMenu()
 {
+    ResetMenus();
     mainMenu = true;
     isPaused = true;
-    difficultyMenu = false;
+}
+
+void Game::WinMenu()
+{
+    Reset();
+    ResetMenus();
+    winMenu = true;
+    isPaused = true;
 }
