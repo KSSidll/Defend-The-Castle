@@ -3,7 +3,6 @@
 PauseMenu::PauseMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager )
 {
     this->renderer = renderer;
-    this->textureManager = textureManager;
     this->game = game;
 
     background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );

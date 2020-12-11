@@ -1,7 +1,5 @@
 #pragma once
 #include "Button.hpp"
-#include "rapidjson/document.h"
-#include "rapidjson/filereadstream.h"
 #include <deque>
 
 class Button;

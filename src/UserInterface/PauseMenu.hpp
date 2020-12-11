@@ -11,7 +11,6 @@ class PauseMenu
         Game* game;
         std::deque<Button*> buttons;
         SDL_Renderer* renderer;
-        TextureManager* textureManager;
         SceneObject* background;
         UILabel* label;
 

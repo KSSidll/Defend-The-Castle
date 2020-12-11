@@ -46,9 +46,10 @@ public:
     void Quit() { isRunning = false; };
     
     void IncreaseLevel(){ ++level; Reset(); };
-    void ChangeEnemyLevelMultiplier( float multiplier ) { enemyStatsLevelMultiplier = multiplier; };
+    void ChangeEnemyLevelMultiplier( float multiplier ) { enemyStatsLevelMultiplier = multiplier; Start(); };
 
     bool Running() { return isRunning; };
     bool Paused() { return isPaused; };
     bool isMainMenu() { return mainMenu; };
+    bool DifficultyChange() { return difficultyMenu; };
 };

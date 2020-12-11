@@ -1,5 +1,5 @@
 #include "Game.hpp"
-
+ 
 void Game::Init( const char* title, int width, int height, bool fullscreen )
 {
     int flags = 0;
