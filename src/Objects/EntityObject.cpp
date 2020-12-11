@@ -48,6 +48,16 @@ void EntityObject::SetObjectValues( rapidjson::Value& object )
     animationSpeed = movementSpeed;
 }
 
+void EntityObject::SetObjectValues( rapidjson::Value& object, float multiplier )
+{
+    health = object["health"].GetInt() * multiplier;
+    attackDamage = object["attackDamage"].GetInt() * multiplier;
+    range = object["range"].GetInt();
+    attackSpeed = object["attackSpeed"].GetInt() * multiplier;
+    movementSpeed = object["movementSpeed"].GetInt() * multiplier;
+    animationSpeed = movementSpeed;
+}
+
 void EntityObject::Update()
 {
     if( health <= 0 && alive ) Kill();
@@ -79,8 +89,18 @@ void EntityObject::Reset()
     pendingKill = false;
     alive = true;
 
-    MovableObject::SetObjectValues( *originalJsonValues );
+    MovableObject::Reset();
     SetObjectValues( *originalJsonValues );
+}
+
+void EntityObject::Reset( float multiplier )
+{
+    attacking = false;
+    pendingKill = false;
+    alive = true;
+
+    MovableObject::Reset();
+    SetObjectValues( *originalJsonValues, multiplier );
 }
 
 void EntityObject::HandleCollision()

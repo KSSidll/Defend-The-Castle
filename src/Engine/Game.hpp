@@ -11,8 +11,11 @@ class UserInterface;
 class Game
 {
 private:
+    float enemyStatsLevelMultiplier = 1.1;
+    int level = 0;
     bool isPaused = true;
     bool mainMenu = true;
+    bool difficultyMenu = false;
     bool isRunning;
     SDL_Window *window;
     SDL_Renderer *renderer;
@@ -35,12 +38,17 @@ public:
     void Clean();
     void HandleCollisions();
     void Reset();
+    void NewGame();
+    void Start();
+    void MainMenu();
     void Pause() { isPaused = true; };
     void UnPause() { isPaused = false; };
-    void Quit() { Reset(); };
-    void MainMenu() { mainMenu = true; };
-    void Start() { UnPause(); mainMenu = false; };
+    void Quit() { isRunning = false; };
+    
+    void IncreaseLevel(){ ++level; Reset(); };
+    void ChangeEnemyLevelMultiplier( float multiplier ) { enemyStatsLevelMultiplier = multiplier; };
 
     bool Running() { return isRunning; };
     bool Paused() { return isPaused; };
+    bool isMainMenu() { return mainMenu; };
 };

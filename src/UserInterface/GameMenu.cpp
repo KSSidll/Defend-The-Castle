@@ -80,3 +80,15 @@ void GameMenu::HandleEvents( SDL_Event* event )
             button->summon( dungeon, json );
     }
 }
+
+void GameMenu::Reset( float multiplier )
+{
+    enemyLabelText = "";
+    enemyLabelText.append( "\nHealth: " + std::to_string( (int)(this->json["enemy"]["health"].GetInt() * multiplier) ) );
+    enemyLabelText.append( "\nAttack Damage: " + std::to_string( (int)(this->json["enemy"]["attackDamage"].GetInt() * multiplier) ) );
+    enemyLabelText.append( "\nMovement Speed: " + std::to_string( (int)(this->json["enemy"]["movementSpeed"].GetInt() * multiplier) ) );
+    enemyLabelText.append( "\nAttack Speed: " + std::to_string( (int)(this->json["enemy"]["attackSpeed"].GetInt() * multiplier) ) );
+    enemyLabelText.append( "\nRange: " + std::to_string( this->json["enemy"]["range"].GetInt() ) );
+
+    enemyLabel->ChangeText( enemyLabelText );
+}

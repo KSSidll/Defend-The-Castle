@@ -17,6 +17,7 @@ private:
     TextureManager* textureManager;
     GameMenu* gameMenu;
     PauseMenu* pauseMenu;
+    MainMenu* mainMenu;
 
 public:
     UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Game* game );
@@ -24,4 +25,5 @@ public:
 
     void Render();
     void HandleEvents( SDL_Event* event );
+    void Reset( float multiplier );
 };

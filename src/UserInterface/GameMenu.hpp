@@ -51,4 +51,5 @@ class GameMenu
 
         void Render();
         void HandleEvents( SDL_Event* event );
+        void Reset( float multiplier );
 };

@@ -88,9 +88,8 @@ void Game::Update()
     }
 
     if( enemy->KillPending() )
-        Pause();
+        IncreaseLevel();
 
-    
 }
 
 void Game::Render()
@@ -133,8 +132,29 @@ void Game::HandleCollisions()
 
 void Game::Reset()
 {
-    enemy->Reset();
+    enemy->Reset( powf(enemyStatsLevelMultiplier, level) );
     summonDungeon->Reset();
-
+    userInterface->Reset( powf(enemyStatsLevelMultiplier, level) );
     UnPause();
+}
+
+void Game::NewGame()
+{
+    mainMenu = false;
+    isPaused = true;
+    difficultyMenu = true;
+}
+
+void Game::Start()
+{
+    mainMenu = false;
+    isPaused = false;
+    difficultyMenu = false;
+}
+
+void Game::MainMenu()
+{
+    mainMenu = true;
+    isPaused = true;
+    difficultyMenu = false;
 }

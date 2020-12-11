@@ -62,12 +62,13 @@ void MovableObject::Render()
 
 void MovableObject::Reset()
 {
-    movementVector = 1;
     animationFramesSkipped = 0;
     animationYpos = 0;
     animationXpos = 0;
     animationSpeed = 5;
     xShift = 0;
+    srcRect.x = srcRect.w * animationXpos;
+    srcRect.y = srcRect.h * animationYpos;
     isMoving = true;
     isAnimationDone = false;
     SetObjectValues( *originalJsonValues );

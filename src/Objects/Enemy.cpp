@@ -2,12 +2,12 @@
 
 void Enemy::Move()
 {
-    movementVector = -1;
     EntityObject::Move();
 }
 
 Enemy::Enemy( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer ) : EntityObject( objTexture, object, renderer )
 {
+    movementVector = -1;
     speedReference = (float)movementSpeed / (float)health;
 }
 

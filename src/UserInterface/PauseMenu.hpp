@@ -16,7 +16,7 @@ class PauseMenu
         UILabel* label;
 
         SDL_Rect resumeButtonPos = {412,200,200,100};
-        SDL_Rect quitButtonPos = {412,400,200,100};
+        SDL_Rect exitButtonPos = {412,400,200,100};
         
     public:
         PauseMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager );
