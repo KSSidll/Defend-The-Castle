@@ -5,6 +5,7 @@
 #include "../UserInterface/UserInterface.hpp"
 #include "../Objects/Enemy.hpp"
 #include "../Managers/TextureManager.hpp"
+#include "../Managers/Player.hpp"
 
 class UserInterface;
 
@@ -28,6 +29,7 @@ private:
     SceneObject* background;
     Enemy* enemy;
     TextureManager* textureManager;
+    Player* player;
 
     void ResetMenus();
 

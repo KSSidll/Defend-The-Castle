@@ -30,6 +30,7 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
         isRunning = false;
     }
 
+    player = new Player();
     textureManager = new TextureManager( renderer );
 
     for ( auto& texture : objectsDoc["textures"].GetArray() )
@@ -42,7 +43,7 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
     
     background = new SceneObject( textureManager->GetTexture(objectsDoc["background"]["textureSrc"]), renderer );
 
-    summonDungeon = new SummonDungeon( textureManager, renderer );
+    summonDungeon = new SummonDungeon( textureManager, renderer, player );
 
     enemy = new Enemy( textureManager->GetTexture( objectsDoc["enemy"]["textureSrc"] ), objectsDoc["enemy"], renderer );
 
@@ -81,6 +82,7 @@ void Game::Update()
     {
         HandleCollisions();
 
+        player->Update();
         summonDungeon->Update();
         enemy->Update();
 

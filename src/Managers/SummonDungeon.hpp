@@ -1,5 +1,6 @@
 #pragma once
 #include "../Objects/PlayerSummon.hpp"
+#include "Player.hpp"
 #include "TextureManager.hpp"
 #include <deque>
 
@@ -10,6 +11,7 @@ class SummonDungeon
         std::deque<PlayerSummon*> pendingKills;
         TextureManager* textureManager;
         SDL_Renderer* renderer;
+        Player* player;
 
         int id = 0;
 
@@ -17,7 +19,7 @@ class SummonDungeon
         void KillSummonObject( PlayerSummon* summon );
 
     public:
-        SummonDungeon( TextureManager* textureManager, SDL_Renderer* renderer );
+        SummonDungeon( TextureManager* textureManager, SDL_Renderer* renderer, Player* player );
         ~SummonDungeon(){};
 
         void Update();
