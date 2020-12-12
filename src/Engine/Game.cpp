@@ -151,6 +151,7 @@ void Game::Reset()
     enemy->Reset( powf(enemyStatsLevelMultiplier, level) );
     summonDungeon->Reset();
     userInterface->Reset( powf(enemyStatsLevelMultiplier, level) );
+    player->Reset();
     UnPause();
 }
 
