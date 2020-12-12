@@ -16,7 +16,8 @@ class MainMenu
 
         UILabel* mainMenuLabel;
 
-        SDL_Rect newGameButtonPos = { 362,300,300,150 };
+        SDL_Rect newGameButtonPos = { 362,200,300,150 };
+        SDL_Rect continueButtonPos = { 362,400,300,150 };
         SDL_Rect quitButtonPos = { 412,600,200,100 };
 
     public:
