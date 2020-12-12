@@ -24,7 +24,8 @@ UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPa
 
 UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPath, int fontSize, std::string text, SDL_Color color, int labelWidth ) : UILabel ( renderer, xPos, yPos, fontPath, fontSize, text, color )
 {
-    position.x += ( labelWidth - position.w ) / 2;
+    if( labelWidth != 0 )
+        position.x += ( labelWidth - position.w ) / 2;
 }
 
 UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPath, int fontSize, std::string text, SDL_Color color, int labelWidth, int labelHeight ) : UILabel ( renderer, xPos, yPos, fontPath, fontSize, text, color, labelWidth )

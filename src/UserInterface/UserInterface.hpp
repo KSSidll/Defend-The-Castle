@@ -1,6 +1,7 @@
 #pragma once
 #include "../Managers/SummonDungeon.hpp"
 #include "../Managers/TextureManager.hpp"
+#include "../Managers/Player.hpp"
 #include "MainMenu.hpp"
 #include "GameMenu.hpp"
 #include "PauseMenu.hpp"
@@ -28,9 +29,10 @@ private:
     LoseMenu* loseMenu;
 
 public:
-    UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Game* game );
+    UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Game* game, Player* player );
     ~UserInterface();
 
+    void Update();
     void Render();
     void HandleEvents( SDL_Event* event );
     void Reset( float multiplier );

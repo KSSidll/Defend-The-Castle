@@ -22,6 +22,11 @@ public:
 
     bool Summon( int cost );
 
+    int GetFujika() { return fujika; };
+    int GetFujikaLimit() { return fujikaLimit; };
+    int GetFuko() { return fuko; };
+    int GetFukoLimit() { return fukoLimit; };
+
     void Update();
     void Reset();
 };

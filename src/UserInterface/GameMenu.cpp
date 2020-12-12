@@ -1,12 +1,20 @@
 #include "GameMenu.hpp"
 
-GameMenu::GameMenu( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager )
+GameMenu::GameMenu( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Player* player, Game* game )
 {
     this->json = json;
     this->dungeon = dungeon;
     this->renderer = renderer;
+    this->player = player;
+    this->game = game;
 
-    warriorLabelText.append( "Cost: " + std::to_string( this->json["summons"]["warrior"]["cost"].GetInt() ) );
+    gameInfoBackground = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer, gameInfoBackgroundPos );
+
+    playerFujika = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 0), gameInfoBackgroundPos.y, "assets/fonts/Sans.ttf", 24, "Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
+    levelInfo = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 1), gameInfoBackgroundPos.y, "assets/fonts/Sans.ttf", 24, "Level " + std::to_string( game->Level() +1 ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
+    playerFuko = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 2), gameInfoBackgroundPos.y, "assets/fonts/Sans.ttf", 24, "Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
+
+    warriorLabelText.append( "Fujika Cost: " + std::to_string( this->json["summons"]["warrior"]["cost"].GetInt() ) );
     warriorLabelText.append( "\nHealth: " + std::to_string( this->json["summons"]["warrior"]["health"].GetInt() ) );
     warriorLabelText.append( "\nAttack Damage: " + std::to_string( this->json["summons"]["warrior"]["attackDamage"].GetInt() ) );
     warriorLabelText.append( "\nMovement Speed: " + std::to_string( this->json["summons"]["warrior"]["movementSpeed"].GetInt() ) );
@@ -18,7 +26,7 @@ GameMenu::GameMenu( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer
     summonButtons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), warriorLabel, warriorRect, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json ){ dungeon->SummonObject( json["summons"]["warrior"] ); } ) );
 
 
-    tankLabelText.append( "Cost: " + std::to_string( this->json["summons"]["tank"]["cost"].GetInt() ) );
+    tankLabelText.append( "Fujika Cost: " + std::to_string( this->json["summons"]["tank"]["cost"].GetInt() ) );
     tankLabelText.append( "\nHealth: " + std::to_string( this->json["summons"]["tank"]["health"].GetInt() ) );
     tankLabelText.append( "\nAttack Damage: " + std::to_string( this->json["summons"]["tank"]["attackDamage"].GetInt() ) );
     tankLabelText.append( "\nMovement Speed: " +  std::to_string( this->json["summons"]["tank"]["movementSpeed"].GetInt() ) );
@@ -30,7 +38,7 @@ GameMenu::GameMenu( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer
     summonButtons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), tankLabel, tankRect, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json ){ dungeon->SummonObject( json["summons"]["tank"] ); } ) );
 
 
-    archerLabelText.append( "Cost: " + std::to_string( this->json["summons"]["archer"]["cost"].GetInt() ) );
+    archerLabelText.append( "Fujika Cost: " + std::to_string( this->json["summons"]["archer"]["cost"].GetInt() ) );
     archerLabelText.append( "\nHealth: " + std::to_string( this->json["summons"]["archer"]["health"].GetInt() ) );
     archerLabelText.append( "\nAttack Damage: " + std::to_string( this->json["summons"]["archer"]["attackDamage"].GetInt() ) );
     archerLabelText.append( "\nMovement Speed: " + std::to_string( this->json["summons"]["archer"]["movementSpeed"].GetInt() ) );
@@ -60,6 +68,11 @@ void GameMenu::Render()
     {
         button->Render();
     }
+
+    gameInfoBackground->Render();
+    levelInfo->Render();
+    playerFujika->Render();
+    playerFuko->Render();
 
     enemyLabelBackground->Render();
     enemyLabel->Render();
@@ -91,4 +104,11 @@ void GameMenu::Reset( float multiplier )
     enemyLabelText.append( "\nRange: " + std::to_string( this->json["enemy"]["range"].GetInt() ) );
 
     enemyLabel->ChangeText( enemyLabelText );
+}
+
+void GameMenu::Update()
+{
+    playerFujika->ChangeText( "Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() ) );
+    levelInfo->ChangeText( "Level " + std::to_string( game->Level() +1 ) );
+    playerFuko->ChangeText( "Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() ) );
 }

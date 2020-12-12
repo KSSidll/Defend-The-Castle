@@ -55,6 +55,7 @@ public:
 
     bool Running() { return isRunning; };
     bool Paused() { return isPaused; };
+    int Level() { return level; };
 
     void LoseGame();
     void NewGame();

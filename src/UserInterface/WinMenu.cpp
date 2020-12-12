@@ -7,7 +7,7 @@ WinMenu::WinMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureMan
 
     background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
 
-    label = new UILabel( renderer, 0, 20, "assets/fonts/Sans.ttf", 72, "You Won", {255,255,255}, 1024 );
+    label = new UILabel( renderer, 0, 20, "assets/fonts/Sans.ttf", 72, "Level Cleared", {255,255,255}, 1024 );
 
     UILabel* saveLabel = new UILabel( renderer, saveButtonPos.x, saveButtonPos.y, "assets/fonts/Sans.ttf", 32, "Save", {255,255,255}, saveButtonPos.w, saveButtonPos.h );
     buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), saveLabel, saveButtonPos, renderer, []( Game* game ){  } ) );

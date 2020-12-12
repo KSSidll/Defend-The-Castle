@@ -47,7 +47,7 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
 
     enemy = new Enemy( textureManager->GetTexture( objectsDoc["enemy"]["textureSrc"] ), objectsDoc["enemy"], renderer );
 
-    userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, textureManager, this );
+    userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, textureManager, this, player );
 }
 
 void Game::HandleEvents()
@@ -85,6 +85,7 @@ void Game::Update()
         player->Update();
         summonDungeon->Update();
         enemy->Update();
+        userInterface->Update();
 
         ++updateframe;
     }
