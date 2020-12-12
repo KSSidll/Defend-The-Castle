@@ -9,7 +9,8 @@ private:
     SDL_Color color;
     TTF_Font* font;
     int fontSize;
-    bool centered;
+    bool wCentered = false;
+    bool hCentered = false;
     std::string text;
 
     SDL_Texture* texture;

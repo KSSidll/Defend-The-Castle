@@ -9,7 +9,6 @@ UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPa
     this->font = font;
     this->fontSize = fontSize;
     this->text = text;
-    this->centered = centered;
 
     this->font = TTF_OpenFont( fontPath, fontSize );
 
@@ -24,17 +23,27 @@ UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPa
 
 UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPath, int fontSize, std::string text, SDL_Color color, int labelWidth ) : UILabel ( renderer, xPos, yPos, fontPath, fontSize, text, color )
 {
-    if( labelWidth != 0 )
+    if( labelWidth > 0 )
+    {
         position.x += ( labelWidth - position.w ) / 2;
+        wCentered = true;
+    }
 }
 
 UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPath, int fontSize, std::string text, SDL_Color color, int labelWidth, int labelHeight ) : UILabel ( renderer, xPos, yPos, fontPath, fontSize, text, color, labelWidth )
 {
-    position.y += ( labelHeight - position.h ) / 2;
+    if( labelHeight > 0 )
+    {
+        position.y += ( labelHeight - position.h ) / 2;
+        hCentered = true;
+    }
 }
 
 void UILabel::ChangeText( std::string text )
 {
+    int wRef = position.w;
+    int hRef = position.h;
+
     TTF_SizeText( font, text.c_str(), &position.w, &position.h );
 
     SDL_Surface* surfaceText = TTF_RenderText_Blended_Wrapped( font, text.c_str(), color, position.w );
@@ -42,6 +51,12 @@ void UILabel::ChangeText( std::string text )
     SDL_FreeSurface( surfaceText );
 
     SDL_QueryTexture( texture, NULL, NULL, &position.w, &position.h );
+
+    if( wCentered )
+        position.x += (position.w - wRef) / 2;
+    
+    if( hCentered )
+        position.y += (position.h - hRef) / 2;
 }
 
 void UILabel::Render()

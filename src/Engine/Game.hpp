@@ -13,7 +13,7 @@ class Game
 {
 private:
     float enemyStatsLevelMultiplier = 1.1;
-    int level = 0;
+    int level;
     bool isPaused = true;
     bool mainMenu = true;
     bool difficultyMenu = false;

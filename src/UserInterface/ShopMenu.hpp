@@ -1,4 +1,5 @@
 #pragma once
+#include "../Managers/Player.hpp"
 #include "Button.hpp"
 #include <deque>
 
@@ -11,9 +12,11 @@ class ShopMenu
         Game* game;
         std::deque<Button*> buttons;
         SDL_Renderer* renderer;
+        Player* player;
         SceneObject* background;
         UILabel* label;
 
+        UILabel* playerInfoLabel;
         UILabel* warriorLabel;
         UILabel* tankLabel;
         UILabel* archerLabel;
@@ -21,9 +24,10 @@ class ShopMenu
         SDL_Rect backButtonPos = { 10, 10, 150, 100 };
         
     public:
-        ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager );
+        ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, Player* player );
         ~ShopMenu(){};
 
+        void Update();
         void Render();
         void HandleEvents( SDL_Event* event );
 };

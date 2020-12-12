@@ -78,6 +78,8 @@ void Game::HandleEvents()
 int updateframe = 0;
 void Game::Update()
 {
+    userInterface->Update();
+
     if( !isPaused )
     {
         HandleCollisions();
@@ -85,7 +87,6 @@ void Game::Update()
         player->Update();
         summonDungeon->Update();
         enemy->Update();
-        userInterface->Update();
 
         ++updateframe;
     }
@@ -176,7 +177,9 @@ void Game::LoseGame()
 
 void Game::NewGame()
 {
+    level = 0;
     ResetMenus();
+    Reset();
     isPaused = true;
     difficultyMenu = true;
 }
