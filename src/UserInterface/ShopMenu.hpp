@@ -1,5 +1,6 @@
 #pragma once
 #include "../Managers/Player.hpp"
+#include "../Managers/Shop.hpp"
 #include "Button.hpp"
 #include <deque>
 
@@ -10,6 +11,7 @@ class ShopMenu
 {
     private:
         Game* game;
+        Shop shop;
         std::deque<Button*> buttons;
         SDL_Renderer* renderer;
         Player* player;

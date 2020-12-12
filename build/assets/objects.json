@@ -1,10 +1,10 @@
 {
     "textures":[
         "assets/prototypes/background.jpg",
-        "assets/prototypes/satyr_1.png",
-        "assets/prototypes/satyr_2.png",
-        "assets/prototypes/satyr_3.png",
-        "assets/prototypes/golem_reversed.png"
+        "assets/prototypes/warrior.png",
+        "assets/prototypes/tank.png",
+        "assets/prototypes/archer.png",
+        "assets/prototypes/enemy.png"
     ],
 
     "background":{
@@ -13,7 +13,7 @@
 
     "summons":{
         "warrior":{
-            "textureSrc": "assets/prototypes/satyr_1.png",
+            "textureSrc": "assets/prototypes/warrior.png",
             "srcRectX": 0,
             "srcRectY": 0,
             "srcRectH": 420,
@@ -30,7 +30,7 @@
             "positions" : [18,12,12,15]
         },
         "tank":{
-            "textureSrc": "assets/prototypes/satyr_2.png",
+            "textureSrc": "assets/prototypes/tank.png",
             "srcRectX": 0,
             "srcRectY": 0,
             "srcRectH": 420,
@@ -47,7 +47,7 @@
             "positions" : [18,12,12,15]
         },
         "archer":{
-            "textureSrc": "assets/prototypes/satyr_3.png",
+            "textureSrc": "assets/prototypes/archer.png",
             "srcRectX": 0,
             "srcRectY": 0,
             "srcRectH": 420,
@@ -66,7 +66,7 @@
     },
 
     "enemy":{
-        "textureSrc": "assets/prototypes/golem_reversed.png",
+        "textureSrc": "assets/prototypes/enemy.png",
         "srcRectX": 2880,
         "srcRectY": 0,
         "srcRectH": 480,
