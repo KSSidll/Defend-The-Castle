@@ -16,7 +16,7 @@ void Player::Update()
     {
         if( fujika != fujikaLimit )
         {
-            if( fujika + fukoGain > fujikaLimit ) fujika = fujikaLimit;
+            if( fujika + fujikaGain > fujikaLimit ) fujika = fujikaLimit;
             else fujika += fujikaGain;
         } 
         else if ( fuko != fukoLimit )

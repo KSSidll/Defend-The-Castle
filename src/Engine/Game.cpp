@@ -163,6 +163,7 @@ void Game::ResetMenus()
     difficultyMenu = false;
     winMenu = false;
     loseMenu = false;
+    shopMenu = false;
 }
 
 void Game::LoseGame()
@@ -197,5 +198,12 @@ void Game::WinMenu()
     Reset();
     ResetMenus();
     winMenu = true;
+    isPaused = true;
+}
+
+void Game::ShopMenu()
+{
+    ResetMenus();
+    shopMenu = true;
     isPaused = true;
 }

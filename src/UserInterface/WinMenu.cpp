@@ -13,7 +13,7 @@ WinMenu::WinMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureMan
     buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), saveLabel, saveButtonPos, renderer, []( Game* game ){  } ) );
 
     UILabel* shopLabel = new UILabel( renderer, shopButtonPos.x, shopButtonPos.y, "assets/fonts/Sans.ttf", 32, "Shop", {255,255,255}, shopButtonPos.w, shopButtonPos.h );
-    buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), shopLabel, shopButtonPos, renderer, []( Game* game ){  } ) );
+    buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), shopLabel, shopButtonPos, renderer, []( Game* game ){ game->ShopMenu(); } ) );
 
     UILabel* nextLevelLabel = new UILabel( renderer, nextLevelButtonPos.x, nextLevelButtonPos.y, "assets/fonts/Sans.ttf", 32, "Next Level", {255,255,255}, nextLevelButtonPos.w, nextLevelButtonPos.h );
     buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), nextLevelLabel, nextLevelButtonPos, renderer, []( Game* game ){ game->IncreaseLevel(); } ) );

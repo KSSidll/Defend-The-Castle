@@ -19,6 +19,7 @@ private:
     bool difficultyMenu = false;
     bool winMenu = false;
     bool loseMenu = false;
+    bool shopMenu = false;
     bool isRunning;
 
     SDL_Window *window;
@@ -62,9 +63,11 @@ public:
     void Start();
     void MainMenu();
     void WinMenu();
+    void ShopMenu();
 
     bool isMainMenu() { return mainMenu; };
     bool isDifficultyMenu() { return difficultyMenu; };
     bool isWinMenu() { return winMenu; };
     bool isLoseMenu() { return loseMenu; };
+    bool isShopMenu() { return shopMenu; };
 };

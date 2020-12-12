@@ -10,6 +10,7 @@ UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SD
     difficultySelectionMenu = new DifficultySelectionMenu( renderer, game, textureManager, json );
     winMenu = new WinMenu( renderer, game, textureManager );
     loseMenu = new LoseMenu( renderer, game, textureManager );
+    shopMenu = new ShopMenu( renderer, game, textureManager );
 }
 
 void UserInterface::Update()
@@ -31,6 +32,9 @@ void UserInterface::Render()
     else if( game->isLoseMenu() )
         loseMenu->Render();
 
+    else if( game->isShopMenu() )
+        shopMenu->Render();
+
     else if( game->Paused() )
         pauseMenu->Render();
 
@@ -51,6 +55,9 @@ void UserInterface::HandleEvents( SDL_Event* event )
 
     else if( game->isLoseMenu() )
         loseMenu->HandleEvents( event );
+
+    else if( game->isShopMenu() )
+        shopMenu->HandleEvents( event );
         
     else if( game->Paused() )
         pauseMenu->HandleEvents( event );
