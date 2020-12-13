@@ -6,6 +6,7 @@ Shop::Shop( Player* player, rapidjson::Value* json )
     this->json = json;
 
     Item* spear = new Item();
+    spear->itemCost = 3;
     spear->unit = "warrior";
     spear->stats.insert({ "attackDamage", 1 });
     spear->stats.insert({ "attackSpeed", -1 });
@@ -16,12 +17,14 @@ Shop::Shop( Player* player, rapidjson::Value* json )
     items.insert({ "spear", spear });
 
     Item* armor = new Item();
+    armor->itemCost = 4;
     armor->unit = "tank";
     armor->stats.insert({ "health", 15 });
     armor->stats.insert({ "movementSpeed", -1 });
     items.insert({ "armor", armor });
 
     Item* bow = new Item();
+    bow->itemCost = 5;
     bow->unit = "archer";
     bow->stats.insert({ "attackDamage", 2 });
     bow->stats.insert({ "attackSpeed", -1 });

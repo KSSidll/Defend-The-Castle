@@ -53,10 +53,20 @@ void UILabel::ChangeText( std::string text )
     SDL_QueryTexture( texture, NULL, NULL, &position.w, &position.h );
 
     if( wCentered )
-        position.x += (position.w - wRef) / 2;
+    {
+        if( position.w < wRef )
+            position.x -= (position.w - wRef) / 2;
+        else
+            position.x += (position.w - wRef) / 2;
+    }
     
     if( hCentered )
-        position.y += (position.h - hRef) / 2;
+    {
+        if( position.h < hRef )
+            position.y -= (position.h - hRef) / 2;
+        else
+            position.y += (position.h - hRef) / 2;
+    }
 }
 
 void UILabel::Render()

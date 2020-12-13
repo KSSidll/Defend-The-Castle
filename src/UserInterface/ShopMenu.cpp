@@ -90,6 +90,7 @@ void ShopMenu::Update()
 
     // easy to optimise once this... thing.. above is made normally and update is made to be called only when there is a change
     std::string spearItemText = "";
+    spearItemText.append( "\n Cost " + std::to_string( spear->itemCost ) );
     spearItemText.append( "\n Level " + std::to_string( spear->level ) );
     for( auto stat : spear->stats )
     {
@@ -100,6 +101,7 @@ void ShopMenu::Update()
     spearItemLabel->ChangeText( spearItemText );
 
     std::string armorItemText = "";
+    armorItemText.append( "\n Cost " + std::to_string( armor->itemCost ) );
     armorItemText.append( "\n Level " + std::to_string( armor->level ) );
     for( auto stat : armor->stats )
     {
@@ -110,6 +112,7 @@ void ShopMenu::Update()
     armorItemLabel->ChangeText( armorItemText );
 
     std::string bowItemText = "";
+    bowItemText.append( "\n Cost " + std::to_string( bow->itemCost ) );
     bowItemText.append( "\n Level " + std::to_string( bow->level ) );
     for( auto stat : bow->stats )
     {
