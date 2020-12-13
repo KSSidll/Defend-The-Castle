@@ -19,7 +19,7 @@ class GameMenu
     private:
         std::deque<Button*> summonButtons;
         // std::deque<SummonButton*> summonButtons;
-        rapidjson::Value json;
+        rapidjson::Value* json;
         SDL_Renderer* renderer;
         SummonDungeon* dungeon;
         
@@ -55,7 +55,7 @@ class GameMenu
         SceneObject* enemyLabelBackground;
 
     public:
-        GameMenu( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Player* player, Game* game );
+        GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Player* player, Game* game );
         ~GameMenu(){};
 
         void Render();

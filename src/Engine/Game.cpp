@@ -5,10 +5,12 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
     int flags = 0;
     if( fullscreen ) flags = SDL_WINDOW_FULLSCREEN;
 
+    objectsDoc = new rapidjson::Document();
+
     FILE* objectsJsonFile = fopen( "assets/objects.json", "r" );
     char* readBuffer = new char[65536];
     rapidjson::FileReadStream objectsJson( objectsJsonFile, readBuffer, sizeof( readBuffer ) );
-    objectsDoc.ParseStream( objectsJson );
+    objectsDoc->ParseStream( objectsJson );
     delete[] readBuffer;
     fclose( objectsJsonFile );
 
@@ -33,7 +35,7 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
     player = new Player();
     textureManager = new TextureManager( renderer );
 
-    for ( auto& texture : objectsDoc["textures"].GetArray() )
+    for ( auto& texture : (*objectsDoc)["textures"].GetArray() )
         textureManager->LoadTexture( texture );
 
     textureManager->LoadTexture( "enemyLabelBackground", "assets/prototypes/button2.png" );
@@ -41,11 +43,11 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
     textureManager->LoadButtonTexture( "button1", "assets/prototypes/button1.png", "assets/prototypes/button1-over.png", "assets/prototypes/button1-down.png" );
     textureManager->LoadButtonTexture( "button2", "assets/prototypes/button2.png", "assets/prototypes/button2-over.png", "assets/prototypes/button2-down.png" );
     
-    background = new SceneObject( textureManager->GetTexture(objectsDoc["background"]["textureSrc"]), renderer );
+    background = new SceneObject( textureManager->GetTexture( (*objectsDoc)["background"]["textureSrc"]), renderer );
 
     summonDungeon = new SummonDungeon( textureManager, renderer, player );
 
-    enemy = new Enemy( textureManager->GetTexture( objectsDoc["enemy"]["textureSrc"] ), objectsDoc["enemy"], renderer );
+    enemy = new Enemy( textureManager->GetTexture( (*objectsDoc)["enemy"]["textureSrc"] ), (*objectsDoc)["enemy"], renderer );
 
     userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, textureManager, this, player );
 }

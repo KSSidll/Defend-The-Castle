@@ -25,8 +25,10 @@ public:
 
     int GetFujika() { return fujika; };
     int GetFujikaLimit() { return fujikaLimit; };
+
     int GetFuko() { return fuko; };
     int GetFukoLimit() { return fukoLimit; };
+    void ReturnFuko( int value ) { fuko += value; };
 
     void Update();
     void Reset();

@@ -12,7 +12,6 @@ class MainMenu
         SDL_Renderer* renderer;
         std::deque<Button*> buttons;
         SceneObject* background;
-        rapidjson::Value* json;
 
         UILabel* mainMenuLabel;
 
@@ -21,7 +20,7 @@ class MainMenu
         SDL_Rect quitButtonPos = { 412,600,200,100 };
 
     public:
-        MainMenu( SDL_Renderer* renderer, TextureManager* textureManager, Game* game, rapidjson::Value& json );
+        MainMenu( SDL_Renderer* renderer, TextureManager* textureManager, Game* game );
         ~MainMenu(){};
 
         void Render();

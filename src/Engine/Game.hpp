@@ -24,7 +24,7 @@ private:
 
     SDL_Window *window;
     SDL_Renderer *renderer;
-    rapidjson::Document objectsDoc;
+    rapidjson::Document* objectsDoc;
     SummonDungeon* summonDungeon;
     UserInterface* userInterface;
     SceneObject* background;

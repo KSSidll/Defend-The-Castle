@@ -1,10 +1,9 @@
 #include "MainMenu.hpp"
 
-MainMenu::MainMenu( SDL_Renderer* renderer, TextureManager* textureManager, Game* game, rapidjson::Value& json )
+MainMenu::MainMenu( SDL_Renderer* renderer, TextureManager* textureManager, Game* game )
 {
     this->renderer = renderer;
     this->game = game;
-    this->json = &json;
 
     background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
 

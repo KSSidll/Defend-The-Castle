@@ -40,7 +40,7 @@ class ShopMenu
         SDL_Rect returnButtonPos = { 10, 10, 150, 100 };
         
     public:
-        ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, Player* player, rapidjson::Value& json );
+        ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, Player* player, rapidjson::Value* json );
         ~ShopMenu(){};
 
         void Update();

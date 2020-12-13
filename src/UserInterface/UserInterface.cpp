@@ -1,12 +1,12 @@
 #include "UserInterface.hpp"
 
-UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Game* game, Player* player )
+UserInterface::UserInterface( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Game* game, Player* player )
 {
     this->game = game;
 
     gameMenu = new GameMenu( json, dungeon, renderer, textureManager, player, game );
     pauseMenu = new PauseMenu( renderer, game, textureManager );
-    mainMenu = new MainMenu( renderer, textureManager, game, json );
+    mainMenu = new MainMenu( renderer, textureManager, game );
     difficultySelectionMenu = new DifficultySelectionMenu( renderer, game, textureManager );
     winMenu = new WinMenu( renderer, game, textureManager );
     loseMenu = new LoseMenu( renderer, game, textureManager );

@@ -1,7 +1,7 @@
 #include "ShopMenu.hpp"
 #include "unordered_map"
 
-ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, Player* player, rapidjson::Value& json )
+ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, Player* player, rapidjson::Value* json )
 {
     dictionary.emplace( "cost", "Cost" );
     dictionary.emplace( "health", "Health" );

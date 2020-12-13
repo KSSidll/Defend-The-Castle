@@ -32,7 +32,7 @@ private:
     ShopMenu* shopMenu;
 
 public:
-    UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Game* game, Player* player );
+    UserInterface( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Game* game, Player* player );
     ~UserInterface();
 
     void Update();

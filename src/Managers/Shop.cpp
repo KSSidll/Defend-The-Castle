@@ -1,11 +1,9 @@
 #include "Shop.hpp"
-#include "rapidjson/document.h"
-#include "rapidjson/filereadstream.h"
 
-Shop::Shop( Player* player, rapidjson::Value& json )
+Shop::Shop( Player* player, rapidjson::Value* json )
 {
     this->player = player;
-    this->json = &json;
+    this->json = json;
 
     Item* spear = new Item();
     spear->unit = "warrior";
@@ -36,15 +34,26 @@ Shop::Shop( Player* player, rapidjson::Value& json )
 
 void Shop::Buy( const char* itemName )
 {
-    rapidjson::Value& test = *json;
     if( player->Buy( items.at( itemName )->itemCost ) )
     {
+        bool isValid = true;
+
         for( auto stat : items.at( itemName )->stats )
         {
-            auto statb = test["summons"]["warrior"]["cost"].GetInt();
-            //auto stata = test["summons"][ items.at( itemName )->unit ][ *stat.first.c_str() ].SetInt( stat.second );
+            int previousValue = (*json)["summons"][ items.at( itemName )->unit ][ stat.first.c_str() ].GetInt();
+
+            if( previousValue + stat.second <= 0 ) isValid = false;
+            else (*json)["summons"][ items.at( itemName )->unit ][ stat.first.c_str() ].SetInt( previousValue + stat.second );
+
+            if( isValid && items.at( itemName )->specialEffect && items.at( itemName )->specialEffectLevelReq - 1 == items.at( itemName )->level )
+            {
+                previousValue = (*json)["summons"][ items.at( itemName )->unit ][ items.at( itemName )->specialEffectStat.c_str() ].GetInt();
+                (*json)["summons"][ items.at( itemName )->unit ][ items.at( itemName )->specialEffectStat.c_str() ].SetInt( previousValue + items.at( itemName )->specialEffectStatIncrese );
+                items.at( itemName )->specialEffect = false;
+            }
         }
 
-        ++items.at( itemName )->level;
+        if( isValid )
+            ++items.at( itemName )->level;
     }
 }
