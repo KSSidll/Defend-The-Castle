@@ -13,7 +13,7 @@ LoseMenu::LoseMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
     buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), exitButtonLabel, exitButtonPos, renderer, []( Game* game ){ game->MainMenu(); } ) );
 
     UILabel* loadButtonLabel = new UILabel( renderer, loadButtonPos.x, loadButtonPos.y, "assets/fonts/Sans.ttf", 32, "Load Previous Save", {255,255,255}, loadButtonPos.w, loadButtonPos.h );
-    buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), loadButtonLabel, loadButtonPos, renderer, []( Game* game ){  } ) );
+    buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), loadButtonLabel, loadButtonPos, renderer, []( Game* game ){ game->Load(); } ) );
 }
 
 void LoseMenu::Render()
