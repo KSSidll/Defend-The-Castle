@@ -7,10 +7,10 @@ UserInterface::UserInterface( rapidjson::Value& json, SummonDungeon* dungeon, SD
     gameMenu = new GameMenu( json, dungeon, renderer, textureManager, player, game );
     pauseMenu = new PauseMenu( renderer, game, textureManager );
     mainMenu = new MainMenu( renderer, textureManager, game, json );
-    difficultySelectionMenu = new DifficultySelectionMenu( renderer, game, textureManager, json );
+    difficultySelectionMenu = new DifficultySelectionMenu( renderer, game, textureManager );
     winMenu = new WinMenu( renderer, game, textureManager );
     loseMenu = new LoseMenu( renderer, game, textureManager );
-    shopMenu = new ShopMenu( renderer, game, textureManager, player );
+    shopMenu = new ShopMenu( renderer, game, textureManager, player, json );
 }
 
 void UserInterface::Update()

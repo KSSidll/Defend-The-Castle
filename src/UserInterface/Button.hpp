@@ -1,6 +1,7 @@
 #pragma once
 #include "../Managers/SummonDungeon.hpp"
 #include "../Managers/TextureManager.hpp"
+#include "../Managers/Shop.hpp"
 #include "UILabel.hpp"
 #include "../Engine/Game.hpp"
 
@@ -23,6 +24,7 @@ public:
     Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer );
     Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json ) );
     Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*game)( Game* game ) );
+    Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*item)( Shop* shop ) );
     ~Button(){};
 
     void Render();
@@ -30,4 +32,5 @@ public:
 
     void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json );
     void (*game)( Game* game );
+    void (*item)( Shop* shop );
 };

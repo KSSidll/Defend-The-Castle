@@ -24,6 +24,11 @@ Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Rend
     this->game = game;
 }
 
+Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*item)( Shop* shop ) ) : Button( textures, label, rect, renderer )
+{
+    this->item = item;
+}
+
 void Button::Render()
 {
 

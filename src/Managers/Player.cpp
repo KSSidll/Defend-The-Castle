@@ -10,6 +10,16 @@ bool Player::Summon( int cost )
     }
 }
 
+bool Player::Buy( int cost )
+{
+    if( cost > fuko ) return false;
+    else
+    {
+        fuko -= cost;
+        return true;
+    }
+}
+
 void Player::Update()
 {
     if( frameCounter == FPS )

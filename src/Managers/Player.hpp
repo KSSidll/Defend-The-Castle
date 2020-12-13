@@ -21,6 +21,7 @@ public:
     ~Player(){};
 
     bool Summon( int cost );
+    bool Buy( int cost );
 
     int GetFujika() { return fujika; };
     int GetFujikaLimit() { return fujikaLimit; };

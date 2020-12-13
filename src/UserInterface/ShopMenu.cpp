@@ -1,7 +1,7 @@
 #include "ShopMenu.hpp"
 #include "unordered_map"
 
-ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, Player* player )
+ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, Player* player, rapidjson::Value& json )
 {
     dictionary.emplace( "cost", "Cost" );
     dictionary.emplace( "health", "Health" );
@@ -14,7 +14,7 @@ ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
     this->game = game;
     this->player = player;
 
-    shop = new Shop();
+    shop = new Shop( player, json );
     background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
     label = new UILabel( renderer, 0, 50, "assets/fonts/Sans.ttf", 48, "Item Shop", {255,255,255}, 1024 );
 
@@ -34,7 +34,7 @@ ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
 
     int spearCoord = 0;
     SDL_Rect spearItemButtonPos = { (1024 / rows * 0) + 10, ((768 - (warriorLabel->GetPosition().y + warriorLabel->GetPosition().h)) / columns * spearCoord) + warriorLabel->GetPosition().y + warriorLabel->GetPosition().h + 20, (1024 / rows) - 20, ((768 - (warriorLabel->GetPosition().y + warriorLabel->GetPosition().h)) / columns) - 20 };
-    Item* spear = shop->GetItem( "spear" );
+    spear = shop->GetItem( "spear" );
     std::string spearItemText = "";
     spearItemText.append( "\n Level " + std::to_string( spear->level ) );
     for( auto stat : spear->stats )
@@ -45,13 +45,13 @@ ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
         spearItemText.append( "\n " + std::to_string( spear->specialEffectStatIncrese ) + " to " + spear->specialEffectStat + " at level " +  std::to_string( spear->specialEffectLevelReq ));
     
     spearItemName = new UILabel( renderer, warriorLabel->GetPosition().x , spearItemButtonPos.y, "assets/fonts/Sans.ttf", 20, "Spear", {255,255,255}, warriorLabel->GetPosition().w );
-    UILabel* spearItemLabel = new UILabel( renderer, spearItemButtonPos.x , spearItemButtonPos.y, "assets/fonts/Sans.ttf", 18, spearItemText, {255,255,255} );
-    buttons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), spearItemLabel, spearItemButtonPos, renderer, []( Game* game ){  } ) );
+    spearItemLabel = new UILabel( renderer, spearItemButtonPos.x , spearItemButtonPos.y, "assets/fonts/Sans.ttf", 18, spearItemText, {255,255,255} );
+    buttons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), spearItemLabel, spearItemButtonPos, renderer, []( Shop* shop ){ shop->Buy( "spear" ); } ) );
 
 
     int armorCoord = 0;
     SDL_Rect armorItemButtonPos = { (1024 / rows * 1) + 10, ((768 - (tankLabel->GetPosition().y + tankLabel->GetPosition().h)) / columns * armorCoord) + tankLabel->GetPosition().y + tankLabel->GetPosition().h + 20, (1024 / rows) - 20, ((768 - (tankLabel->GetPosition().y + tankLabel->GetPosition().h)) / columns) - 20 };
-    Item* armor = shop->GetItem( "armor" );
+    armor = shop->GetItem( "armor" );
     std::string armorItemText = "";
     armorItemText.append( "\n Level " + std::to_string( armor->level ) );
     for( auto stat : armor->stats )
@@ -62,13 +62,13 @@ ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
         armorItemText.append( "\n " + std::to_string( armor->specialEffectStatIncrese ) + " to " + armor->specialEffectStat + " at level " +  std::to_string( armor->specialEffectLevelReq ));
     
     armorItemName = new UILabel( renderer, tankLabel->GetPosition().x , armorItemButtonPos.y, "assets/fonts/Sans.ttf", 20, "Armor", {255,255,255}, tankLabel->GetPosition().w );
-    UILabel* armorItemLabel = new UILabel( renderer, armorItemButtonPos.x , armorItemButtonPos.y, "assets/fonts/Sans.ttf", 18, armorItemText, {255,255,255} );
-    buttons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), armorItemLabel, armorItemButtonPos, renderer, []( Game* game ){  } ) );
+    armorItemLabel = new UILabel( renderer, armorItemButtonPos.x , armorItemButtonPos.y, "assets/fonts/Sans.ttf", 18, armorItemText, {255,255,255} );
+    buttons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), armorItemLabel, armorItemButtonPos, renderer, []( Shop* shop ){ shop->Buy( "armor" ); } ) );
 
 
     int bowCoord = 0;
     SDL_Rect bowItemButtonPos = { (1024 / rows * 2) + 10, ((768 - (archerLabel->GetPosition().y + archerLabel->GetPosition().h)) / columns * bowCoord) + archerLabel->GetPosition().y + archerLabel->GetPosition().h + 20, (1024 / rows) - 20, ((768 - (archerLabel->GetPosition().y + archerLabel->GetPosition().h)) / columns) - 20 };
-    Item* bow = shop->GetItem( "bow" );
+    bow = shop->GetItem( "bow" );
     std::string bowItemText = "";
     bowItemText.append( "\n Level " + std::to_string( bow->level ) );
     for( auto stat : bow->stats )
@@ -79,14 +79,45 @@ ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
         bowItemText.append( "\n " + std::to_string( bow->specialEffectStatIncrese ) + " to " + bow->specialEffectStat + " at level " +  std::to_string( bow->specialEffectLevelReq ));
     
     bowItemName = new UILabel( renderer, archerLabel->GetPosition().x , bowItemButtonPos.y, "assets/fonts/Sans.ttf", 20, "Bow", {255,255,255}, archerLabel->GetPosition().w );
-    UILabel* bowItemLabel = new UILabel( renderer, bowItemButtonPos.x , bowItemButtonPos.y, "assets/fonts/Sans.ttf", 18, bowItemText, {255,255,255} );
-    buttons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), bowItemLabel, bowItemButtonPos, renderer, []( Game* game ){  } ) );
+    bowItemLabel = new UILabel( renderer, bowItemButtonPos.x , bowItemButtonPos.y, "assets/fonts/Sans.ttf", 18, bowItemText, {255,255,255} );
+    buttons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), bowItemLabel, bowItemButtonPos, renderer, []( Shop* shop ){ shop->Buy( "bow" ); } ) );
 
 }
 
 void ShopMenu::Update()
 {
     playerInfoLabel->ChangeText( "Fuko: " + std::to_string( player->GetFuko() ) );
+
+    // easy to optimise once this... thing.. above is made normally and update is made to be called only when there is a change
+    std::string spearItemText = "";
+    spearItemText.append( "\n Level " + std::to_string( spear->level ) );
+    for( auto stat : spear->stats )
+    {
+        spearItemText.append( "\n " + dictionary.at( stat.first ) + ": " + std::to_string( stat.second ) + " per Level" );
+    }
+    if( spear->specialEffect )
+        spearItemText.append( "\n " + std::to_string( spear->specialEffectStatIncrese ) + " to " + spear->specialEffectStat + " at level " +  std::to_string( spear->specialEffectLevelReq ));
+    spearItemLabel->ChangeText( spearItemText );
+
+    std::string armorItemText = "";
+    armorItemText.append( "\n Level " + std::to_string( armor->level ) );
+    for( auto stat : armor->stats )
+    {
+        armorItemText.append( "\n " + dictionary.at( stat.first ) + ": " + std::to_string( stat.second ) + " per Level" );
+    }
+    if( armor->specialEffect )
+        armorItemText.append( "\n " + std::to_string( armor->specialEffectStatIncrese ) + " to " + armor->specialEffectStat + " at level " +  std::to_string( armor->specialEffectLevelReq ));
+    armorItemLabel->ChangeText( armorItemText );
+
+    std::string bowItemText = "";
+    bowItemText.append( "\n Level " + std::to_string( bow->level ) );
+    for( auto stat : bow->stats )
+    {
+        bowItemText.append( "\n " + dictionary.at( stat.first ) + ": " + std::to_string( stat.second ) + " per Level" );
+    }
+    if( bow->specialEffect )
+        bowItemText.append( "\n " + std::to_string( bow->specialEffectStatIncrese ) + " to " + bow->specialEffectStat + " at level " +  std::to_string( bow->specialEffectLevelReq ));
+    bowItemLabel->ChangeText( bowItemText );
 }
 
 void ShopMenu::Render()
@@ -118,6 +149,6 @@ void ShopMenu::HandleEvents( SDL_Event* event )
     for( const auto& button : buttons )
     {
         if( button->HandleEvents( event ) )
-            button->game( game );
+            button->item( shop );
     }
 }

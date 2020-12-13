@@ -1,10 +1,9 @@
 #include "DifficultySelectionMenu.hpp"
 
-DifficultySelectionMenu::DifficultySelectionMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, rapidjson::Value& json )
+DifficultySelectionMenu::DifficultySelectionMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager )
 {
     this->renderer = renderer;
     this->game = game;
-    this->json = json;
 
     background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
     label = new UILabel( renderer, 0, 50, "assets/fonts/Sans.ttf", 48, "Select Difficulty", {255,255,255}, 1024 );

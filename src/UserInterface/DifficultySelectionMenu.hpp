@@ -8,7 +8,6 @@ class Game;
 class DifficultySelectionMenu
 {
     private:
-        rapidjson::Value json;
         Game* game;
         std::deque<Button*> buttons;
         SDL_Renderer* renderer;
@@ -20,7 +19,7 @@ class DifficultySelectionMenu
         SDL_Rect hardButtonPos = {412,600,200,100};
         
     public:
-        DifficultySelectionMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, rapidjson::Value& json );
+        DifficultySelectionMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager );
         ~DifficultySelectionMenu(){};
 
         void Render();

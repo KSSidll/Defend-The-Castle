@@ -28,11 +28,19 @@ class ShopMenu
         UILabel* armorItemName;
         UILabel* bowItemName;
 
+        UILabel* spearItemLabel;
+        UILabel* armorItemLabel;
+        UILabel* bowItemLabel;
+
+        Item* spear;
+        Item* armor;
+        Item* bow;
+
         Button* returnButton;
         SDL_Rect returnButtonPos = { 10, 10, 150, 100 };
         
     public:
-        ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, Player* player );
+        ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, Player* player, rapidjson::Value& json );
         ~ShopMenu(){};
 
         void Update();
