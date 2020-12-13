@@ -74,3 +74,13 @@ void UserInterface::Reset( float multiplier )
 {
     gameMenu->Reset( multiplier );
 }
+
+void UserInterface::Save( rapidjson::Document* saveJson )
+{
+    shopMenu->Save( saveJson );
+}
+
+void UserInterface::Load( rapidjson::Value* saveJson )
+{
+    shopMenu->Load( saveJson );
+}

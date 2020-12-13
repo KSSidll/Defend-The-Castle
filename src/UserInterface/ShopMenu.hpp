@@ -46,4 +46,6 @@ class ShopMenu
         void Update();
         void Render();
         void HandleEvents( SDL_Event* event );
+        void Save( rapidjson::Document* saveJson );
+        void Load( rapidjson::Value* saveJson );
 };

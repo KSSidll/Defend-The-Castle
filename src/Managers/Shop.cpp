@@ -55,5 +55,49 @@ void Shop::Buy( const char* itemName )
 
         if( isValid )
             ++items.at( itemName )->level;
+        else player->ReturnFuko( items.at( itemName )->itemCost );
+    }
+}
+
+void Shop::Save( rapidjson::Document* saveJson )
+{
+    rapidjson::Value object( rapidjson::kObjectType );
+    object.AddMember( "spearLevel", items.at( "spear" )->level , saveJson->GetAllocator() );
+    object.AddMember( "armorLevel", items.at( "armor" )->level , saveJson->GetAllocator() );
+    object.AddMember( "bowLevel", items.at( "bow" )->level , saveJson->GetAllocator() );
+
+    saveJson->AddMember( "shop", object, saveJson->GetAllocator() );
+}
+
+void Shop::Load( rapidjson::Value* saveJson )
+{
+    std::unordered_map< std::string, int > levels;
+    levels.emplace( "spear", (*saveJson)["shop"]["spearLevel"].GetInt() );
+    levels.emplace( "armor", (*saveJson)["shop"]["armorLevel"].GetInt() );
+    levels.emplace( "bow", (*saveJson)["shop"]["bowLevel"].GetInt() );
+
+    for( auto item : levels )
+    {
+        for( int it = 0; it < item.second; ++it )
+        {
+            bool isValid = true;
+            for( auto stat : items.at( item.first )->stats )
+            {
+                int previousValue = (*json)["summons"][ items.at( item.first )->unit ][ stat.first.c_str() ].GetInt();
+
+                if( previousValue + stat.second <= 0 ) isValid = false;
+                else (*json)["summons"][ items.at( item.first )->unit ][ stat.first.c_str() ].SetInt( previousValue + stat.second );
+
+                if( isValid && items.at( item.first )->specialEffect && items.at( item.first )->specialEffectLevelReq - 1 == items.at( item.first )->level )
+                {
+                    previousValue = (*json)["summons"][ items.at( item.first )->unit ][ items.at( item.first )->specialEffectStat.c_str() ].GetInt();
+                    (*json)["summons"][ items.at( item.first )->unit ][ items.at( item.first )->specialEffectStat.c_str() ].SetInt( previousValue + items.at( item.first )->specialEffectStatIncrese );
+                    items.at( item.first )->specialEffect = false;
+                }
+            }
+            if( isValid )
+                ++items.at( item.first )->level;
+            else break;
+        }
     }
 }

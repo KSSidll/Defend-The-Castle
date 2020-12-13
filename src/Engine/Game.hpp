@@ -7,6 +7,9 @@
 #include "../Managers/TextureManager.hpp"
 #include "../Managers/Player.hpp"
 
+#include "rapidjson/filewritestream.h"
+#include <rapidjson/writer.h>
+
 class UserInterface;
 
 class Game
@@ -25,6 +28,7 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
     rapidjson::Document* objectsDoc;
+    rapidjson::Document* saveDoc;
     SummonDungeon* summonDungeon;
     UserInterface* userInterface;
     SceneObject* background;
@@ -46,6 +50,8 @@ public:
     void Clean();
     void HandleCollisions();
     void Reset();
+    void Save();
+    void Load();
     
     void Pause() { isPaused = true; };
     void UnPause() { isPaused = false; };

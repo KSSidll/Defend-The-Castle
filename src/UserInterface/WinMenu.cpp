@@ -10,7 +10,7 @@ WinMenu::WinMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureMan
     label = new UILabel( renderer, 0, 20, "assets/fonts/Sans.ttf", 72, "Level Cleared", {255,255,255}, 1024 );
 
     UILabel* saveLabel = new UILabel( renderer, saveButtonPos.x, saveButtonPos.y, "assets/fonts/Sans.ttf", 32, "Save", {255,255,255}, saveButtonPos.w, saveButtonPos.h );
-    buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), saveLabel, saveButtonPos, renderer, []( Game* game ){  } ) );
+    buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), saveLabel, saveButtonPos, renderer, []( Game* game ){ game->Save(); } ) );
 
     UILabel* shopLabel = new UILabel( renderer, shopButtonPos.x, shopButtonPos.y, "assets/fonts/Sans.ttf", 32, "Shop", {255,255,255}, shopButtonPos.w, shopButtonPos.h );
     buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), shopLabel, shopButtonPos, renderer, []( Game* game ){ game->ShopMenu(); } ) );

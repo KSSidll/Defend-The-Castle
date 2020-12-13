@@ -33,4 +33,7 @@ public:
     void IncreaseLevel( const char* itemName ){ ++items.at( itemName )->level; };
     void Buy( const char* itemName );
     void Buy( const char* itemName, rapidjson::Value& json );
+
+    void Save( rapidjson::Document* saveJson );
+    void Load( rapidjson::Value* saveJson );
 };

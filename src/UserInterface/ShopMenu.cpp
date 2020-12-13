@@ -152,3 +152,13 @@ void ShopMenu::HandleEvents( SDL_Event* event )
             button->item( shop );
     }
 }
+
+void ShopMenu::Save( rapidjson::Document* saveJson )
+{
+    shop->Save( saveJson );
+}
+
+void ShopMenu::Load( rapidjson::Value* saveJson )
+{
+    shop->Load( saveJson );
+}

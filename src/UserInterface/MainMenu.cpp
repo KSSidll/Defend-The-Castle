@@ -13,7 +13,7 @@ MainMenu::MainMenu( SDL_Renderer* renderer, TextureManager* textureManager, Game
     buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), newGameLabel, newGameButtonPos, renderer, []( Game* game ){ game->NewGame(); } ) );
 
     UILabel* continueLabel = new UILabel( renderer, continueButtonPos.x, continueButtonPos.y, "assets/fonts/Sans.ttf", 48, "Continue", {255,255,255}, continueButtonPos.w, continueButtonPos.h );
-    buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), continueLabel, continueButtonPos, renderer, []( Game* game ){  } ) );
+    buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), continueLabel, continueButtonPos, renderer, []( Game* game ){ game->Load(); } ) );
 
     UILabel* quitLabel = new UILabel( renderer, quitButtonPos.x, quitButtonPos.y, "assets/fonts/Sans.ttf", 32, "Quit", {255,255,255}, quitButtonPos.w, quitButtonPos.h );
     buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), quitLabel, quitButtonPos, renderer, []( Game* game ){ game->Quit(); } ) );

@@ -46,3 +46,16 @@ void Player::Reset()
     fujika = 0;
     frameCounter = 0;
 }
+
+void Player::Save( rapidjson::Document* saveJson )
+{
+    rapidjson::Value object( rapidjson::kObjectType );
+    object.AddMember( "fuko", fuko, saveJson->GetAllocator() );
+
+    saveJson->AddMember( "player", object, saveJson->GetAllocator() );
+}
+
+void Player::Load( rapidjson::Value* saveJson )
+{
+    fuko = (*saveJson)["player"]["fuko"].GetInt();
+}

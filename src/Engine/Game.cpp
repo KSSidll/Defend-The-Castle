@@ -14,6 +14,8 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
     delete[] readBuffer;
     fclose( objectsJsonFile );
 
+    saveDoc = new rapidjson::Document();
+
     if( !SDL_Init( SDL_INIT_EVERYTHING ) )
     {
         window = SDL_CreateWindow( title, SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, width, height, flags );
@@ -77,7 +79,7 @@ void Game::HandleEvents()
 
     userInterface->HandleEvents( &event );
 }
-int updateframe = 0;
+
 void Game::Update()
 {
     userInterface->Update();
@@ -89,8 +91,6 @@ void Game::Update()
         player->Update();
         summonDungeon->Update();
         enemy->Update();
-
-        ++updateframe;
     }
 
     if( enemy->KillPending() )
@@ -138,6 +138,56 @@ void Game::HandleCollisions()
     }
 }
 
+void Game::Reset()
+{
+    enemy->Reset( powf(enemyStatsLevelMultiplier, level) );
+    summonDungeon->Reset();
+    userInterface->Reset( powf(enemyStatsLevelMultiplier, level) );
+    player->Reset();
+    UnPause();
+}
+
+void Game::Save()
+{
+    FILE* saveFile = fopen( "assets/save.json", "w" );
+
+    char writeBuffer[65536];
+    rapidjson::FileWriteStream saveStream( saveFile, writeBuffer, sizeof(writeBuffer) );
+    saveDoc->SetObject();
+
+    rapidjson::Value object( rapidjson::kObjectType );
+    object.AddMember( "enemyStatsLevelMultiplier", enemyStatsLevelMultiplier, saveDoc->GetAllocator() );
+    object.AddMember( "level", level, saveDoc->GetAllocator() );
+    saveDoc->AddMember( "game", object, saveDoc->GetAllocator() );
+
+    player->Save( saveDoc );
+    userInterface->Save( saveDoc );
+
+    rapidjson::Writer< rapidjson::FileWriteStream > writer( saveStream );
+    saveDoc->Accept( writer );
+
+    fclose( saveFile );
+}
+
+void Game::Load()
+{
+    FILE* saveJsonFile = fopen( "assets/save.json", "r" );
+    char* readBuffer = new char[65536];
+    rapidjson::FileReadStream saveJson( saveJsonFile, readBuffer, sizeof( readBuffer ) );
+    saveDoc->ParseStream( saveJson );
+    delete[] readBuffer;
+    fclose( saveJsonFile );
+
+    enemyStatsLevelMultiplier = (*(rapidjson::Value*)(saveDoc))["game"]["enemyStatsLevelMultiplier"].GetFloat();
+    level = (*(rapidjson::Value*)(saveDoc))["game"]["level"].GetInt();
+
+    player->Load( saveDoc );
+    userInterface->Load( saveDoc );
+
+    Reset();
+    Start();
+}
+
 void Game::IncreaseLevel()
 {
     ++level;
@@ -148,25 +198,6 @@ void Game::ChangeEnemyLevelMultiplier( float multiplier )
 {
     enemyStatsLevelMultiplier = multiplier;
     Start();
-}
-
-void Game::Reset()
-{
-    enemy->Reset( powf(enemyStatsLevelMultiplier, level) );
-    summonDungeon->Reset();
-    userInterface->Reset( powf(enemyStatsLevelMultiplier, level) );
-    player->Reset();
-    UnPause();
-}
-
-void Game::ResetMenus()
-{
-    mainMenu = false;
-    isPaused = false;
-    difficultyMenu = false;
-    winMenu = false;
-    loseMenu = false;
-    shopMenu = false;
 }
 
 void Game::LoseGame()
@@ -211,4 +242,14 @@ void Game::ShopMenu()
     ResetMenus();
     shopMenu = true;
     isPaused = true;
+}
+
+void Game::ResetMenus()
+{
+    mainMenu = false;
+    isPaused = false;
+    difficultyMenu = false;
+    winMenu = false;
+    loseMenu = false;
+    shopMenu = false;
 }

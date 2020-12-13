@@ -1,5 +1,6 @@
 #pragma once
 #include "../Engine/Global.hpp"
+#include "rapidjson/document.h"
 
 class Player
 {
@@ -32,4 +33,6 @@ public:
 
     void Update();
     void Reset();
+    void Save( rapidjson::Document* saveJson );
+    void Load( rapidjson::Value* saveJson );
 };
