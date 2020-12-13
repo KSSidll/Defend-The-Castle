@@ -111,16 +111,4 @@ void GameMenu::Update()
     playerFujika->ChangeText( "Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() ) );
     levelInfo->ChangeText( "Level " + std::to_string( game->Level() +1 ) );
     playerFuko->ChangeText( "Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() ) );
-
-    warriorLabelText = "";
-    warriorLabelText.append( "Fujika Cost: " + std::to_string( this->json["summons"]["warrior"]["cost"].GetInt() ) );
-    warriorLabelText.append( "\nHealth: " + std::to_string( this->json["summons"]["warrior"]["health"].GetInt() ) );
-    warriorLabelText.append( "\nAttack Damage: " + std::to_string( this->json["summons"]["warrior"]["attackDamage"].GetInt() ) );
-    warriorLabelText.append( "\nMovement Speed: " + std::to_string( this->json["summons"]["warrior"]["movementSpeed"].GetInt() ) );
-    warriorLabelText.append( "\nAttack Speed: " + std::to_string( this->json["summons"]["warrior"]["attackSpeed"].GetInt() ) );
-    warriorLabelText.append( "\nRange: " + std::to_string( this->json["summons"]["warrior"]["range"].GetInt() ) );
-    warriorLabel->ChangeText( warriorLabelText );
-
-    auto member = &json["summons"]["warrior"]["cost"];
-    member->SetInt( 7 );
 }
