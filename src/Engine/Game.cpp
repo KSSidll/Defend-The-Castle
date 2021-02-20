@@ -186,6 +186,7 @@ void Game::Load()
 
     Reset();
     Start();
+    ShopMenu();
 }
 
 void Game::IncreaseLevel()

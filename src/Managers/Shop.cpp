@@ -1,3 +1,4 @@
+#define RAPIDJSON_HAS_STDSTRING 1
 #include "Shop.hpp"
 
 Shop::Shop( Player* player, rapidjson::Value* json )
@@ -65,42 +66,71 @@ void Shop::Buy( const char* itemName )
 void Shop::Save( rapidjson::Document* saveJson )
 {
     rapidjson::Value object( rapidjson::kObjectType );
-    object.AddMember( "spearLevel", items.at( "spear" )->level , saveJson->GetAllocator() );
-    object.AddMember( "armorLevel", items.at( "armor" )->level , saveJson->GetAllocator() );
-    object.AddMember( "bowLevel", items.at( "bow" )->level , saveJson->GetAllocator() );
+
+    for( auto& item : items )
+    {
+        object.AddMember( rapidjson::Value(item.first + "Level", saveJson->GetAllocator()).Move(), item.second->level, saveJson->GetAllocator() );
+    }
 
     saveJson->AddMember( "shop", object, saveJson->GetAllocator() );
 }
 
 void Shop::Load( rapidjson::Value* saveJson )
 {
-    std::unordered_map< std::string, int > levels;
-    levels.emplace( "spear", (*saveJson)["shop"]["spearLevel"].GetInt() );
-    levels.emplace( "armor", (*saveJson)["shop"]["armorLevel"].GetInt() );
-    levels.emplace( "bow", (*saveJson)["shop"]["bowLevel"].GetInt() );
+    // std::unordered_map< std::string, int > levels;
+    // for( auto& item : items)
+    // {
+    //     levels.emplace( item.first, (*saveJson)["shop"][item.first + "level"].GetInt() );
+    // }
 
-    for( auto item : levels )
+    //
+    for( auto& item : items)
     {
-        for( int it = 0; it < item.second; ++it )
+        for( int it = 0; it < (*saveJson)["shop"][item.first + "Level"].GetInt(); ++it)
         {
             bool isValid = true;
-            for( auto stat : items.at( item.first )->stats )
+            for( auto& stat : item.second->stats)
             {
-                int previousValue = (*json)["summons"][ items.at( item.first )->unit ][ stat.first.c_str() ].GetInt();
-
+                int previousValue = (*json)["summons"][ item.second->unit ][ stat.first.c_str() ].GetInt();
                 if( previousValue + stat.second <= 0 ) isValid = false;
-                else (*json)["summons"][ items.at( item.first )->unit ][ stat.first.c_str() ].SetInt( previousValue + stat.second );
+                else (*json)["summons"][item.second->unit][ stat.first.c_str() ].SetInt( previousValue + stat.second );
 
-                if( isValid && items.at( item.first )->specialEffect && items.at( item.first )->specialEffectLevelReq - 1 == items.at( item.first )->level )
+                if( isValid && item.second->specialEffect && item.second->specialEffectLevelReq - 1 == item.second->level )
                 {
-                    previousValue = (*json)["summons"][ items.at( item.first )->unit ][ items.at( item.first )->specialEffectStat.c_str() ].GetInt();
-                    (*json)["summons"][ items.at( item.first )->unit ][ items.at( item.first )->specialEffectStat.c_str() ].SetInt( previousValue + items.at( item.first )->specialEffectStatIncrese );
-                    items.at( item.first )->specialEffect = false;
+                    previousValue = (*json)["summons"][item.second->unit][ item.second->specialEffectStat.c_str() ].GetInt();
+                    (*json)["summons"][item.second->unit][ item.second->specialEffectStat.c_str() ].SetInt( previousValue + item.second->specialEffectStatIncrese );
+                    item.second->specialEffect = false;
                 }
             }
             if( isValid )
-                ++items.at( item.first )->level;
+                ++item.second->level;
             else break;
         }
     }
+    //
+
+    // for( auto& item : levels )
+    // {
+    //     for( int it = 0; it < item.second; ++it )
+    //     {
+    //         bool isValid = true;
+    //         for( auto stat : items.at( item.first )->stats )
+    //         {
+    //             int previousValue = (*json)["summons"][ items.at( item.first )->unit ][ stat.first.c_str() ].GetInt();
+
+    //             if( previousValue + stat.second <= 0 ) isValid = false;
+    //             else (*json)["summons"][ items.at( item.first )->unit ][ stat.first.c_str() ].SetInt( previousValue + stat.second );
+
+    //             if( isValid && items.at( item.first )->specialEffect && items.at( item.first )->specialEffectLevelReq - 1 == items.at( item.first )->level )
+    //             {
+    //                 previousValue = (*json)["summons"][ items.at( item.first )->unit ][ items.at( item.first )->specialEffectStat.c_str() ].GetInt();
+    //                 (*json)["summons"][ items.at( item.first )->unit ][ items.at( item.first )->specialEffectStat.c_str() ].SetInt( previousValue + items.at( item.first )->specialEffectStatIncrese );
+    //                 items.at( item.first )->specialEffect = false;
+    //             }
+    //         }
+    //         if( isValid )
+    //             ++items.at( item.first )->level;
+    //         else break;
+    //     }
+    // }
 }
