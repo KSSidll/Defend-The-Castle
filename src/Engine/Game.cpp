@@ -68,7 +68,7 @@ void Game::HandleEvents()
         switch ( event.key.keysym.sym )
         {
         case SDLK_ESCAPE:
-            if( isPaused )
+            if( isPaused && !menuFlag )
                 UnPause();
             else
                 Pause();
@@ -206,6 +206,7 @@ void Game::LoseGame()
     Reset();
     loseMenu = true;
     isPaused = true;
+    menuFlag = true;
 }
 
 void Game::NewGame()
@@ -215,6 +216,7 @@ void Game::NewGame()
     Reset();
     isPaused = true;
     difficultyMenu = true;
+    menuFlag = true;
 }
 
 void Game::Start()
@@ -227,6 +229,7 @@ void Game::MainMenu()
     ResetMenus();
     mainMenu = true;
     isPaused = true;
+    menuFlag = true;
 }
 
 void Game::WinMenu()
@@ -235,6 +238,7 @@ void Game::WinMenu()
     ResetMenus();
     winMenu = true;
     isPaused = true;
+    menuFlag = true;
 }
 
 void Game::ShopMenu()
@@ -242,6 +246,7 @@ void Game::ShopMenu()
     ResetMenus();
     shopMenu = true;
     isPaused = true;
+    menuFlag = true;
 }
 
 void Game::ResetMenus()
@@ -252,4 +257,5 @@ void Game::ResetMenus()
     winMenu = false;
     loseMenu = false;
     shopMenu = false;
+    menuFlag = false;
 }
