@@ -6,19 +6,18 @@
 class Button;
 class Game;
 
-// TBD - Make this modular 
-// struct SummonButton
-// {
-//     SDL_Rect Position;
-//     UILabel* NameLabel;
-//     std::deque<UILabel*> Labels;
-// };
+struct EntityMenu
+{
+    UILabel* NameLabel;
+    Button* Button;
+};
 
 class GameMenu
 {
     private:
-        std::deque<Button*> summonButtons;
-        // std::deque<SummonButton*> summonButtons;
+        std::unordered_map<std::string, std::string> EntityStatsDict;
+        std::unordered_map<std::string, std::string> EntityNameDict;
+        std::deque<EntityMenu*> EntityMenus;
         rapidjson::Value* json;
         SDL_Renderer* renderer;
         SummonDungeon* dungeon;
@@ -31,28 +30,9 @@ class GameMenu
         UILabel* playerFujika;
         UILabel* playerFuko;
 
-        int summonButtonWidth = 256;
-
-        SDL_Rect warriorRect = { 0 * summonButtonWidth, 543, summonButtonWidth, 225 };
-        std::string warriorLabelText = "";
-        UILabel* warriorNameLabel;
-        UILabel* warriorLabel;
-
-        SDL_Rect tankRect = { 1 * summonButtonWidth, 543, summonButtonWidth, 225 };
-        std::string tankLabelText = "";
-        UILabel* tankNameLabel;
-        UILabel* tankLabel;
-
-        SDL_Rect archerRect = { 2 * summonButtonWidth, 543, summonButtonWidth, 225 };
-        std::string archerLabelText = "";
-        UILabel* archerNameLabel;
-        UILabel* archerLabel;
-        
-        SDL_Rect enemyRect = { 3 * summonButtonWidth, 543, summonButtonWidth, 225 };
-        std::string enemyLabelText = "";
+        SceneObject* enemyInfoBackground;
         UILabel* enemyNameLabel;
-        UILabel* enemyLabel;
-        SceneObject* enemyLabelBackground;
+        UILabel* enemyInfoLabel;
 
     public:
         GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Player* player, Game* game );

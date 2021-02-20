@@ -86,7 +86,7 @@ ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
 
 void ShopMenu::Update()
 {
-    playerInfoLabel->ChangeText( "Fuko: " + std::to_string( player->GetFuko() ) );
+    playerInfoLabel->ChangeText( ("Fuko: " + std::to_string( player->GetFuko() )).c_str() );
 
     // easy to optimise once this... thing.. above is made normally and update is made to be called only when there is a change
     std::string spearItemText = "";
@@ -98,7 +98,7 @@ void ShopMenu::Update()
     }
     if( spear->specialEffect )
         spearItemText.append( "\n " + std::to_string( spear->specialEffectStatIncrese ) + " to " + spear->specialEffectStat + " at level " +  std::to_string( spear->specialEffectLevelReq ));
-    spearItemLabel->ChangeText( spearItemText );
+    spearItemLabel->ChangeText( spearItemText.c_str() );
 
     std::string armorItemText = "";
     armorItemText.append( "\n Cost " + std::to_string( armor->itemCost ) );
@@ -109,7 +109,7 @@ void ShopMenu::Update()
     }
     if( armor->specialEffect )
         armorItemText.append( "\n " + std::to_string( armor->specialEffectStatIncrese ) + " to " + armor->specialEffectStat + " at level " +  std::to_string( armor->specialEffectLevelReq ));
-    armorItemLabel->ChangeText( armorItemText );
+    armorItemLabel->ChangeText( armorItemText.c_str() );
 
     std::string bowItemText = "";
     bowItemText.append( "\n Cost " + std::to_string( bow->itemCost ) );
@@ -120,7 +120,7 @@ void ShopMenu::Update()
     }
     if( bow->specialEffect )
         bowItemText.append( "\n " + std::to_string( bow->specialEffectStatIncrese ) + " to " + bow->specialEffectStat + " at level " +  std::to_string( bow->specialEffectLevelReq ));
-    bowItemLabel->ChangeText( bowItemText );
+    bowItemLabel->ChangeText( bowItemText.c_str() );
 }
 
 void ShopMenu::Render()

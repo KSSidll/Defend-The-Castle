@@ -39,14 +39,14 @@ UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPa
     }
 }
 
-void UILabel::ChangeText( std::string text )
+void UILabel::ChangeText( const char* text )
 {
     int wRef = position.w;
     int hRef = position.h;
 
-    TTF_SizeText( font, text.c_str(), &position.w, &position.h );
+    TTF_SizeText( font, text, &position.w, &position.h );
 
-    SDL_Surface* surfaceText = TTF_RenderText_Blended_Wrapped( font, text.c_str(), color, position.w );
+    SDL_Surface* surfaceText = TTF_RenderText_Blended_Wrapped( font, text, color, position.w );
     texture = SDL_CreateTextureFromSurface( renderer, surfaceText );
     SDL_FreeSurface( surfaceText );
 

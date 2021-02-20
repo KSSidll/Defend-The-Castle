@@ -14,8 +14,9 @@ Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Rend
     this->textures = textures;
 }
 
-Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json ) ) : Button( textures, label, rect, renderer )
+Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, const char* type, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ) ) : Button( textures, label, rect, renderer )
 {
+    this->SummonType = type;
     this->summon = summon;
 }
 
@@ -48,6 +49,11 @@ void Button::Render()
     }
 
     label->Render();
+}
+
+void Button::ChangeText(const char* text)
+{
+    label->ChangeText(text);
 }
 
 bool Button::HandleEvents( SDL_Event* event )

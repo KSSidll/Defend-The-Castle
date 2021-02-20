@@ -10,134 +10,120 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
 
     gameInfoBackground = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer, gameInfoBackgroundPos );
 
-    playerFujika = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 0), gameInfoBackgroundPos.y, "assets/fonts/Sans.ttf", 24, "Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
-    levelInfo = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 1), gameInfoBackgroundPos.y, "assets/fonts/Sans.ttf", 24, "Level " + std::to_string( game->Level() +1 ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
-    playerFuko = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 2), gameInfoBackgroundPos.y, "assets/fonts/Sans.ttf", 24, "Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
+    playerFujika = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 0), gameInfoBackgroundPos.y, FONT_SANS, 24, "Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
+    levelInfo = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 1), gameInfoBackgroundPos.y, FONT_SANS, 24, "Level " + std::to_string( game->Level() +1 ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
+    playerFuko = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 2), gameInfoBackgroundPos.y, FONT_SANS, 24, "Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
 
-    warriorLabelText.append( "Fujika Cost: " + std::to_string( (*json)["summons"]["warrior"]["cost"].GetInt() ) );
-    warriorLabelText.append( "\nHealth: " + std::to_string( (*json)["summons"]["warrior"]["health"].GetInt() ) );
-    warriorLabelText.append( "\nAttack Damage: " + std::to_string( (*json)["summons"]["warrior"]["attackDamage"].GetInt() ) );
-    warriorLabelText.append( "\nMovement Speed: " + std::to_string( (*json)["summons"]["warrior"]["movementSpeed"].GetInt() ) );
-    warriorLabelText.append( "\nAttack Speed: " + std::to_string( (*json)["summons"]["warrior"]["attackSpeed"].GetInt() ) );
-    warriorLabelText.append( "\nRange: " + std::to_string( (*json)["summons"]["warrior"]["range"].GetInt() ) );
+    EntityStatsDict.emplace("cost", "Fujika Cost");
+    EntityStatsDict.emplace("health", "Health");
+    EntityStatsDict.emplace("attackDamage", "Attack Damage");
+    EntityStatsDict.emplace("movementSpeed", "Movement Speed");
+    EntityStatsDict.emplace("attackSpeed", "Attack Speed");
+    EntityStatsDict.emplace("range", "Range");
 
-    warriorNameLabel = new UILabel( renderer, warriorRect.x + 5, warriorRect.y + 5, "assets/fonts/Sans.ttf", 24, "Warrior", {255,255,255}, warriorRect.w );
-    warriorLabel = new UILabel( renderer, warriorRect.x + 5, warriorRect.y + warriorNameLabel->GetPosition().h + 5, "assets/fonts/Sans.ttf", 16, warriorLabelText, {255,255,255} );
-    summonButtons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), warriorLabel, warriorRect, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json ){ dungeon->SummonObject( json["summons"]["warrior"] ); } ) );
+    int entityCounter = 0;
+    int rectW = gameInfoBackgroundPos.w / ((*json)["summons"].MemberCount() + 1);
+    SDL_Rect tmp_rect = { 0, 543, rectW, 225 };
 
+    for( auto& entity : (*json)["summons"].GetObject())
+    {
+        std::string tmp_statText = "";
+        for( auto& stat : entity.value.GetObject() )
+        {
+            if( EntityStatsDict.find(stat.name.GetString()) != EntityStatsDict.end() )
+            {
+                tmp_statText.append( EntityStatsDict.at(stat.name.GetString()) + ": " + std::to_string(stat.value.GetInt()) );
+                tmp_statText.append( "\n" );
+            }
+        }
+        std::string tmp_name = entity.name.GetString();
+        tmp_name[0] = toupper(tmp_name[0]);
+        UILabel* tmp_uiNameLabel = new UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24, tmp_name, {255,255,255}, tmp_rect.w );
+        UILabel* tmp_uiStatsLabel = new UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + tmp_uiNameLabel->GetPosition().h + 5, FONT_SANS, 16, tmp_statText, {255,255,255} );
+        Button* tmp_button = new Button(  textureManager->GetButtonTexture( "button2" ), tmp_uiStatsLabel, tmp_rect, renderer, entity.name.GetString(), []( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ){ dungeon->SummonObject( json["summons"][type] ); } );
+        
+        EntityMenus.push_back( new EntityMenu({tmp_uiNameLabel, tmp_button}) );
 
-    tankLabelText.append( "Fujika Cost: " + std::to_string( (*json)["summons"]["tank"]["cost"].GetInt() ) );
-    tankLabelText.append( "\nHealth: " + std::to_string( (*json)["summons"]["tank"]["health"].GetInt() ) );
-    tankLabelText.append( "\nAttack Damage: " + std::to_string( (*json)["summons"]["tank"]["attackDamage"].GetInt() ) );
-    tankLabelText.append( "\nMovement Speed: " +  std::to_string( (*json)["summons"]["tank"]["movementSpeed"].GetInt() ) );
-    tankLabelText.append( "\nAttack Speed: " + std::to_string( (*json)["summons"]["tank"]["attackSpeed"].GetInt() ) );
-    tankLabelText.append( "\nRange: " + std::to_string( (*json)["summons"]["tank"]["range"].GetInt() ) );
+        ++entityCounter;
+        tmp_rect.x = entityCounter * rectW;
+    }
 
-    tankNameLabel = new UILabel( renderer, tankRect.x + 5, tankRect.y + 5, "assets/fonts/Sans.ttf", 24, "Tank", {255,255,255}, tankRect.w );
-    tankLabel = new UILabel( renderer, tankRect.x + 5, tankRect.y + tankNameLabel->GetPosition().h + 5, "assets/fonts/Sans.ttf", 16, tankLabelText, {255,255,255} );
-    summonButtons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), tankLabel, tankRect, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json ){ dungeon->SummonObject( json["summons"]["tank"] ); } ) );
+    enemyInfoBackground = new SceneObject(textureManager->GetTexture("darkBackground"), renderer, tmp_rect);
+    enemyNameLabel = new UILabel(renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24, "Enemy", {255,255,255}, tmp_rect.w);
+    {
+        std::string tmp_statText = "";
+        for( auto& stat : (*json)["enemy"].GetObject() )
+        {
+            if( EntityStatsDict.find(stat.name.GetString()) != EntityStatsDict.end() )
+            {
+                tmp_statText.append( "\n" );
+                tmp_statText.append( EntityStatsDict.at(stat.name.GetString()) + ": " + std::to_string(stat.value.GetInt()) );
+            }
+        }
+        enemyInfoLabel = new UILabel(renderer, tmp_rect.x + 5, tmp_rect.y + enemyNameLabel->GetPosition().h, FONT_SANS, 16, tmp_statText, {255,255,255});
+    }
 
-
-    archerLabelText.append( "Fujika Cost: " + std::to_string( (*json)["summons"]["archer"]["cost"].GetInt() ) );
-    archerLabelText.append( "\nHealth: " + std::to_string( (*json)["summons"]["archer"]["health"].GetInt() ) );
-    archerLabelText.append( "\nAttack Damage: " + std::to_string( (*json)["summons"]["archer"]["attackDamage"].GetInt() ) );
-    archerLabelText.append( "\nMovement Speed: " + std::to_string( (*json)["summons"]["archer"]["movementSpeed"].GetInt() ) );
-    archerLabelText.append( "\nAttack Speed: " + std::to_string( (*json)["summons"]["archer"]["attackSpeed"].GetInt() ) );
-    archerLabelText.append( "\nRange: " + std::to_string( (*json)["summons"]["archer"]["range"].GetInt() ) );
-
-    archerNameLabel = new UILabel( renderer, archerRect.x + 5, archerRect.y + 5, "assets/fonts/Sans.ttf", 24, "Archer", {255,255,255}, archerRect.w );
-    archerLabel = new UILabel( renderer, archerRect.x + 5, archerRect.y + archerNameLabel->GetPosition().h + 5, "assets/fonts/Sans.ttf", 16, archerLabelText, {255,255,255} );
-    summonButtons.push_back( new Button( textureManager->GetButtonTexture( "button2" ), archerLabel, archerRect, renderer, []( SummonDungeon* dungeon, rapidjson::Value& json ){ dungeon->SummonObject( json["summons"]["archer"] ); } ) );
-
-
-    enemyLabelText.append( "\nHealth: " + std::to_string( (*json)["enemy"]["health"].GetInt() ) );
-    enemyLabelText.append( "\nAttack Damage: " + std::to_string( (*json)["enemy"]["attackDamage"].GetInt() ) );
-    enemyLabelText.append( "\nMovement Speed: " + std::to_string( (*json)["enemy"]["movementSpeed"].GetInt() ) );
-    enemyLabelText.append( "\nAttack Speed: " + std::to_string( (*json)["enemy"]["attackSpeed"].GetInt() ) );
-    enemyLabelText.append( "\nRange: " + std::to_string( (*json)["enemy"]["range"].GetInt() ) );
-
-    enemyNameLabel = new UILabel( renderer, enemyRect.x + 5, enemyRect.y + 5, "assets/fonts/Sans.ttf", 24, "Enemy", {255,255,255}, enemyRect.w );
-    enemyLabel = new UILabel( renderer, enemyRect.x + 5, enemyRect.y + enemyNameLabel->GetPosition().h + 5, "assets/fonts/Sans.ttf", 16, enemyLabelText, {255,255,255} );
-    enemyLabelBackground = new SceneObject( textureManager->GetTexture( "enemyLabelBackground" ), renderer, enemyRect );
-    
 }
 
 void GameMenu::Render()
 {
-    for( auto button : summonButtons )
+    for( auto& entity : EntityMenus )
     {
-        button->Render();
+        entity->Button->Render();
+        entity->NameLabel->Render();
     }
 
     gameInfoBackground->Render();
+    enemyInfoBackground->Render();
+    enemyNameLabel->Render();
+    enemyInfoLabel->Render();
+
     levelInfo->Render();
     playerFujika->Render();
     playerFuko->Render();
-
-    enemyLabelBackground->Render();
-    enemyLabel->Render();
-    enemyNameLabel->Render();
-
-    warriorNameLabel->Render();
-
-    tankNameLabel->Render();
-
-    archerNameLabel->Render();
 }
 
 void GameMenu::HandleEvents( SDL_Event* event )
 {
-    for( auto button : summonButtons )
+    for( auto& entity : EntityMenus )
     {
-        if( button->HandleEvents( event ) )
-            button->summon( dungeon, (*json) );
+        if( entity->Button->HandleEvents( event ) )
+            entity->Button->summon( dungeon, (*json), entity->Button->GetType() );
     }
 }
 
 void GameMenu::Reset( float multiplier )
 {
-    enemyLabelText = "";
-    enemyLabelText.append( "\nHealth: " + std::to_string( (int)((*json)["enemy"]["health"].GetInt() * multiplier) ) );
-    enemyLabelText.append( "\nAttack Damage: " + std::to_string( (int)((*json)["enemy"]["attackDamage"].GetInt() * multiplier) ) );
-    enemyLabelText.append( "\nMovement Speed: " + std::to_string( (int)((*json)["enemy"]["movementSpeed"].GetInt() * multiplier) ) );
-    enemyLabelText.append( "\nAttack Speed: " + std::to_string( (int)((*json)["enemy"]["attackSpeed"].GetInt() * multiplier) ) );
-    enemyLabelText.append( "\nRange: " + std::to_string( (*json)["enemy"]["range"].GetInt() ) );
-
-    enemyLabel->ChangeText( enemyLabelText );
+    std::string tmp_statText = "";
+    for( auto& stat : (*json)["enemy"].GetObject() )
+    {
+        if( EntityStatsDict.find(stat.name.GetString()) != EntityStatsDict.end() )
+        {
+            tmp_statText.append( "\n" );
+            tmp_statText.append( EntityStatsDict.at(stat.name.GetString()) + ": " + std::to_string((int)(stat.value.GetInt() * multiplier)));
+        }
+    }
+    enemyInfoLabel->ChangeText( tmp_statText.c_str() );
 }
 
 void GameMenu::Update()
 {
-    playerFujika->ChangeText( "Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() ) );
-    levelInfo->ChangeText( "Level " + std::to_string( game->Level() +1 ) );
-    playerFuko->ChangeText( "Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() ) );
+    playerFujika->ChangeText( ("Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() )).c_str() );
+    levelInfo->ChangeText( ("Level " + std::to_string( game->Level() +1 )).c_str() );
+    playerFuko->ChangeText( ("Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() )).c_str() );
 
-    warriorLabelText = "";
-    warriorLabelText.append( "Fujika Cost: " + std::to_string( (*json)["summons"]["warrior"]["cost"].GetInt() ) );
-    warriorLabelText.append( "\nHealth: " + std::to_string( (*json)["summons"]["warrior"]["health"].GetInt() ) );
-    warriorLabelText.append( "\nAttack Damage: " + std::to_string( (*json)["summons"]["warrior"]["attackDamage"].GetInt() ) );
-    warriorLabelText.append( "\nMovement Speed: " + std::to_string( (*json)["summons"]["warrior"]["movementSpeed"].GetInt() ) );
-    warriorLabelText.append( "\nAttack Speed: " + std::to_string( (*json)["summons"]["warrior"]["attackSpeed"].GetInt() ) );
-    warriorLabelText.append( "\nRange: " + std::to_string( (*json)["summons"]["warrior"]["range"].GetInt() ) );
-    warriorLabel->ChangeText( warriorLabelText );
+    for( auto& entity : EntityMenus )
+    {
+        std::string tmp_statText = "";
+        for( auto& stat : (*json)["summons"][entity->Button->GetType()].GetObject() )
+        {
+            if( EntityStatsDict.find(stat.name.GetString()) != EntityStatsDict.end() )
+            {
+                tmp_statText.append( EntityStatsDict.at(stat.name.GetString()) + ": " + std::to_string(stat.value.GetInt()) );
+                tmp_statText.append( "\n" );
+            }
+        }
 
-
-    tankLabelText = "";
-    tankLabelText.append( "Fujika Cost: " + std::to_string( (*json)["summons"]["tank"]["cost"].GetInt() ) );
-    tankLabelText.append( "\nHealth: " + std::to_string( (*json)["summons"]["tank"]["health"].GetInt() ) );
-    tankLabelText.append( "\nAttack Damage: " + std::to_string( (*json)["summons"]["tank"]["attackDamage"].GetInt() ) );
-    tankLabelText.append( "\nMovement Speed: " +  std::to_string( (*json)["summons"]["tank"]["movementSpeed"].GetInt() ) );
-    tankLabelText.append( "\nAttack Speed: " + std::to_string( (*json)["summons"]["tank"]["attackSpeed"].GetInt() ) );
-    tankLabelText.append( "\nRange: " + std::to_string( (*json)["summons"]["tank"]["range"].GetInt() ) );
-    tankLabel->ChangeText( tankLabelText );
-
-
-    archerLabelText = "";
-    archerLabelText.append( "Fujika Cost: " + std::to_string( (*json)["summons"]["archer"]["cost"].GetInt() ) );
-    archerLabelText.append( "\nHealth: " + std::to_string( (*json)["summons"]["archer"]["health"].GetInt() ) );
-    archerLabelText.append( "\nAttack Damage: " + std::to_string( (*json)["summons"]["archer"]["attackDamage"].GetInt() ) );
-    archerLabelText.append( "\nMovement Speed: " + std::to_string( (*json)["summons"]["archer"]["movementSpeed"].GetInt() ) );
-    archerLabelText.append( "\nAttack Speed: " + std::to_string( (*json)["summons"]["archer"]["attackSpeed"].GetInt() ) );
-    archerLabelText.append( "\nRange: " + std::to_string( (*json)["summons"]["archer"]["range"].GetInt() ) );
-    archerLabel->ChangeText( archerLabelText );
+        entity->Button->ChangeText(tmp_statText.c_str());
+    }
 }

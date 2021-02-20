@@ -21,7 +21,7 @@ public:
     UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPath, int fontSize, std::string text, SDL_Color color, int labelWidth, int labelHeight );
     ~UILabel(){};
 
-    void ChangeText( std::string text );
+    void ChangeText( const char* text );
     void Render();
 
     SDL_Rect GetPosition(){ return position; };
