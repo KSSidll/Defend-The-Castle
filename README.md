@@ -1,8 +1,7 @@
 # What is the game about
 A little game where you have to kill the enemy by sending units in its direction.
 
-Mechanics
--
+## Mechanics
 When you start the program, you can either start a new game or continue.
 You can pause the game by pressing ESC key
 
