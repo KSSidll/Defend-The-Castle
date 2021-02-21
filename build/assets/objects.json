@@ -13,7 +13,11 @@
         "assets/prototypes/warrior.png",
         "assets/prototypes/tank.png",
         "assets/prototypes/archer.png",
-        "assets/prototypes/enemy.png"
+        "assets/prototypes/enemy.png",
+        "assets/prototypes/arrow-up.png",
+        "assets/prototypes/arrow-down.png",
+        "assets/prototypes/arrow-left.png",
+        "assets/prototypes/arrow-right.png"
     ],
 
     "background":{
