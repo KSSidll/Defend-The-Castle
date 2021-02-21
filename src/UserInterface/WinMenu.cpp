@@ -23,7 +23,7 @@ WinMenu::WinMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureMan
 
     buttons.push_back({
         UILabel( renderer, saveButtonPos.x, saveButtonPos.y, "assets/fonts/Sans.ttf", 32, "Save", {255,255,255}, saveButtonPos.w, saveButtonPos.h ),
-        new Button( textureManager->GetButtonTexture( "button1" ), saveButtonPos, renderer, []( Game* game ){ game->Save(); } )
+        new Button( textureManager->GetButtonTexture( "button1" ), saveButtonPos, renderer, []( Game* game ){ game->Save(true); } )
     });
 
     buttons.push_back({

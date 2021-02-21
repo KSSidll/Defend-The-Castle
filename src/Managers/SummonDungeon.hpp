@@ -12,12 +12,12 @@ class SummonDungeon
         Player* player;
 
         std::deque<PlayerSummon> objectArray;
-        std::deque<PlayerSummon> pendingKills;
+        std::deque<PlayerSummon*> pendingKills;
 
         int id = 0;
 
         void KillPending();
-        void KillSummonObject( PlayerSummon summon );
+        void KillSummonObject( PlayerSummon* summon );
 
     public:
         SummonDungeon();

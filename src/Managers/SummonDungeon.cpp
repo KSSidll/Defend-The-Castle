@@ -20,21 +20,28 @@ SummonDungeon::~SummonDungeon()
 
 void SummonDungeon::KillPending()
 {
+    std::vector<int> enitityID;
     for( auto& summon : pendingKills )
     {
         for( int i = 0; i != objectArray.size(); ++i )
         {
-            if( objectArray[i].GetId() == summon.GetId() )
+            if( objectArray[i].GetId() == summon->GetId() )
             {
-                objectArray.erase( objectArray.begin() + i );
-                --i;  
-                pendingKills.pop_front();
+                enitityID.push_back(i);
             }
         }
     }
+
+    for( auto id : enitityID )
+    {
+        objectArray[id] = objectArray.back();
+        objectArray.pop_back();
+    }
+
+    pendingKills.clear();
 }
 
-void SummonDungeon::KillSummonObject( PlayerSummon summon )
+void SummonDungeon::KillSummonObject( PlayerSummon* summon )
 {
     pendingKills.push_back( summon );
 }
@@ -53,7 +60,7 @@ void SummonDungeon::Update()
     for( auto& summon : objectArray )
     {
         summon.Update();
-        if( summon.KillPending() ) KillSummonObject( summon );
+        if( summon.KillPending() ) KillSummonObject( &summon );
     }
 }
 
@@ -67,8 +74,9 @@ void SummonDungeon::Render()
 
 void SummonDungeon::Reset()
 {
-    objectArray.erase( objectArray.begin(), objectArray.end() );
-    pendingKills.erase( pendingKills.begin(), pendingKills.end() );
+    objectArray.clear();
+    pendingKills.clear();
+    id = 0;
 }
 
 void SummonDungeon::SummonObject( rapidjson::Value& object )

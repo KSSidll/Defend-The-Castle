@@ -171,7 +171,7 @@ void Game::Reset()
     UnPause();
 }
 
-void Game::Save()
+void Game::Save(bool incrementLevel)
 {
     FILE* saveFile = fopen( "assets/save.json", "w" );
 
@@ -181,7 +181,7 @@ void Game::Save()
 
     rapidjson::Value object( rapidjson::kObjectType );
     object.AddMember( "enemyStatsLevelMultiplier", enemyStatsLevelMultiplier, saveDoc->GetAllocator() );
-    object.AddMember( "level", level, saveDoc->GetAllocator() );
+    object.AddMember( "level", level + incrementLevel, saveDoc->GetAllocator() );
     saveDoc->AddMember( "game", object, saveDoc->GetAllocator() );
 
     player->Save( saveDoc );

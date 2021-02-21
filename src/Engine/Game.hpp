@@ -53,7 +53,7 @@ public:
     void Clean();
     void HandleCollisions();
     void Reset();
-    void Save();
+    void Save(bool incrementLevel = false);
     void Load();
     
     void Pause() { isPaused = true; };
