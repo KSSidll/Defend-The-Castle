@@ -4,7 +4,7 @@
 
 class PlayerSummon;
 
-class Enemy : virtual public EntityObject 
+class Enemy : public EntityObject 
 {
     private:
         float speedReference;
@@ -14,6 +14,7 @@ class Enemy : virtual public EntityObject
     public:
         Enemy(){};
         ~Enemy(){};
+        
         Enemy( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer );
 
         void Update();

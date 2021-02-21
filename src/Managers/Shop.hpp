@@ -23,14 +23,17 @@ class Shop
 private:
     rapidjson::Value* json;
     Player* player;
-    std::unordered_map< std::string, Item* > items;
+    
+    std::unordered_map< std::string, Item > items;
 
 public:
-    Shop( Player* player, rapidjson::Value* json );
-    ~Shop(){};
+    Shop();
+    ~Shop();
 
-    Item* GetItem( const char* itemName ){ return items.at( itemName ); };
-    void IncreaseLevel( const char* itemName ){ ++items.at( itemName )->level; };
+    Shop( Player* player, rapidjson::Value* json );
+
+    Item GetItem( const char* itemName ){ return items.at( itemName ); };
+    void IncreaseLevel( const char* itemName ){ ++items.at( itemName ).level; };
     void Buy( const char* itemName );
     void Buy( const char* itemName, rapidjson::Value& json );
 

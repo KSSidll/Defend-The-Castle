@@ -19,6 +19,7 @@ class EntityObject : public MovableObject
     public:
         EntityObject(){};
         ~EntityObject(){};
+        
         EntityObject( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer );
 
         void Kill();

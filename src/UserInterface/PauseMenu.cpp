@@ -1,35 +1,51 @@
 #include "PauseMenu.hpp"
 
+PauseMenu::PauseMenu()
+{
+    this->game = nullptr;
+    this->renderer = nullptr;
+}
+
+PauseMenu::~PauseMenu()
+{
+    this->renderer = nullptr;
+    this->game = nullptr;
+}
+
 PauseMenu::PauseMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager )
 {
-    this->renderer = renderer;
     this->game = game;
+    this->renderer = renderer;
 
-    background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
-    label = new UILabel( renderer, 0, 50, "assets/fonts/Sans.ttf", 48, "Paused", {255,255,255}, 1024 );
+    background = SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
+    label = UILabel( renderer, 0, 50, "assets/fonts/Sans.ttf", 48, "Paused", {255,255,255}, 1024 );
 
-    UILabel* resumeLabel = new UILabel( renderer, resumeButtonPos.x, resumeButtonPos.y, "assets/fonts/Sans.ttf", 32, "Resume", {255,255,255}, resumeButtonPos.w, resumeButtonPos.h );
-    buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), resumeLabel, resumeButtonPos, renderer, []( Game* game ){ game->UnPause(); } ) );
-
-    UILabel* exitLabel = new UILabel( renderer, exitButtonPos.x, exitButtonPos.y, "assets/fonts/Sans.ttf", 32, "Exit", {255,255,255}, exitButtonPos.w, exitButtonPos.h );
-    buttons.push_back( new Button( textureManager->GetButtonTexture( "button1" ), exitLabel, exitButtonPos, renderer, []( Game* game ){ game->MainMenu(); } ) );
+    buttons.push_back({
+        UILabel( renderer, resumeButtonPos.x, resumeButtonPos.y, "assets/fonts/Sans.ttf", 32, "Resume", {255,255,255}, resumeButtonPos.w, resumeButtonPos.h ),
+        new Button( textureManager->GetButtonTexture( "button1" ), resumeButtonPos, renderer, []( Game* game ){ game->UnPause(); } ) 
+    });
+    buttons.push_back({
+        UILabel( renderer, exitButtonPos.x, exitButtonPos.y, "assets/fonts/Sans.ttf", 32, "Exit", {255,255,255}, exitButtonPos.w, exitButtonPos.h ),
+        new Button( textureManager->GetButtonTexture( "button1" ), exitButtonPos, renderer, []( Game* game ){ game->MainMenu(); } ) 
+    });
 }
 
 void PauseMenu::Render()
 {
-    background->Render();
-    label->Render();
-    for( const auto& button : buttons )
+    background.Render();
+    label.Render();
+    for( auto& button : buttons )
     {
-        button->Render();
+        button.button->Render();
+        button.label.Render();
     }
 }
 
 void PauseMenu::HandleEvents( SDL_Event* event )
 {
-    for( const auto& button : buttons )
+    for( auto& button : buttons )
     {
-        if( button->HandleEvents( event ) )
-            button->game( game );
+        if( button.button->HandleEvents( event ) )
+            button.button->game( game );
     }
 }

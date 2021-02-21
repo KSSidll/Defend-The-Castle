@@ -1,18 +1,36 @@
 #include "GameMenu.hpp"
 
+GameMenu::GameMenu()
+{
+    this->json = nullptr;
+    this->renderer = nullptr;
+    this->dungeon = nullptr;
+    this->player = nullptr;
+    this->game = nullptr;
+}
+
+GameMenu::~GameMenu()
+{
+    this->game = nullptr;
+    this->player = nullptr;
+    this->dungeon = nullptr;
+    this->renderer = nullptr;
+    this->json = nullptr;
+}
+
 GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Player* player, Game* game )
 {
     this->json = json;
-    this->dungeon = dungeon;
     this->renderer = renderer;
+    this->dungeon = dungeon;
     this->player = player;
     this->game = game;
 
-    gameInfoBackground = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer, gameInfoBackgroundPos );
+    gameInfoBackground = SceneObject( textureManager->GetTexture( "darkBackground" ), renderer, gameInfoBackgroundPos );
 
-    playerFujika = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 0), gameInfoBackgroundPos.y, FONT_SANS, 24, "Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
-    levelInfo = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 1), gameInfoBackgroundPos.y, FONT_SANS, 24, "Level " + std::to_string( game->Level() +1 ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
-    playerFuko = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 2), gameInfoBackgroundPos.y, FONT_SANS, 24, "Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
+    playerFujika = UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 0), gameInfoBackgroundPos.y, FONT_SANS, 24, "Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
+    levelInfo = UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 1), gameInfoBackgroundPos.y, FONT_SANS, 24, "Level " + std::to_string( game->Level() +1 ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
+    playerFuko = UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 2), gameInfoBackgroundPos.y, FONT_SANS, 24, "Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
 
     EntityStatsDict.emplace("cost", "Fujika Cost");
     EntityStatsDict.emplace("health", "Health");
@@ -38,18 +56,18 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
         }
         std::string tmp_name = entity.name.GetString();
         tmp_name[0] = toupper(tmp_name[0]);
-        UILabel* tmp_uiNameLabel = new UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24, tmp_name, {255,255,255}, tmp_rect.w );
-        UILabel* tmp_uiStatsLabel = new UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + tmp_uiNameLabel->GetPosition().h + 5, FONT_SANS, 16, tmp_statText, {255,255,255} );
-        Button* tmp_button = new Button(  textureManager->GetButtonTexture( "button2" ), tmp_uiStatsLabel, tmp_rect, renderer, entity.name.GetString(), []( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ){ dungeon->SummonObject( json["summons"][type] ); } );
+        UILabel NameLabel = UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24, tmp_name, {255,255,255}, tmp_rect.w );
+        UILabel StatsLabel = UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + NameLabel.GetPosition().h + 5, FONT_SANS, 16, tmp_statText, {255,255,255} );
+        Button* button = new Button( textureManager->GetButtonTexture( "button2" ), tmp_rect, renderer, entity.name.GetString(), []( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ){ dungeon->SummonObject( json["summons"][type] ); } );
         
-        EntityMenus.push_back( new EntityMenu({tmp_uiNameLabel, tmp_button}) );
+        EntityMenus.push_back({NameLabel, StatsLabel, button});
 
         ++entityCounter;
         tmp_rect.x = entityCounter * rectW;
     }
 
-    enemyInfoBackground = new SceneObject(textureManager->GetTexture("darkBackground"), renderer, tmp_rect);
-    enemyNameLabel = new UILabel(renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24, "Enemy", {255,255,255}, tmp_rect.w);
+    enemyStatsBackground = SceneObject(textureManager->GetTexture("darkBackground"), renderer, tmp_rect);
+    enemyNameLabel = UILabel(renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24, "Enemy", {255,255,255}, tmp_rect.w);
     {
         std::string tmp_statText = "";
         for( auto& stat : (*json)["enemy"].GetObject() )
@@ -60,7 +78,7 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
                 tmp_statText.append( EntityStatsDict.at(stat.name.GetString()) + ": " + std::to_string(stat.value.GetInt()) );
             }
         }
-        enemyInfoLabel = new UILabel(renderer, tmp_rect.x + 5, tmp_rect.y + enemyNameLabel->GetPosition().h, FONT_SANS, 16, tmp_statText, {255,255,255});
+        enemyStatsLabel = UILabel(renderer, tmp_rect.x + 5, tmp_rect.y + enemyNameLabel.GetPosition().h, FONT_SANS, 16, tmp_statText, {255,255,255});
     }
 
 }
@@ -69,26 +87,27 @@ void GameMenu::Render()
 {
     for( auto& entity : EntityMenus )
     {
-        entity->Button->Render();
-        entity->NameLabel->Render();
+        entity.button->Render();
+        entity.nameLabel.Render();
+        entity.statsLabel.Render();
     }
 
-    gameInfoBackground->Render();
-    enemyInfoBackground->Render();
-    enemyNameLabel->Render();
-    enemyInfoLabel->Render();
+    gameInfoBackground.Render();
+    enemyStatsBackground.Render();
+    enemyNameLabel.Render();
+    enemyStatsLabel.Render();
 
-    levelInfo->Render();
-    playerFujika->Render();
-    playerFuko->Render();
+    levelInfo.Render();
+    playerFujika.Render();
+    playerFuko.Render();
 }
 
 void GameMenu::HandleEvents( SDL_Event* event )
 {
     for( auto& entity : EntityMenus )
     {
-        if( entity->Button->HandleEvents( event ) )
-            entity->Button->summon( dungeon, (*json), entity->Button->GetType() );
+        if( entity.button->HandleEvents( event ) )
+            entity.button->summon( dungeon, (*json), entity.button->GetType() );
     }
 }
 
@@ -103,19 +122,19 @@ void GameMenu::Reset( float multiplier )
             tmp_statText.append( EntityStatsDict.at(stat.name.GetString()) + ": " + std::to_string((int)(stat.value.GetInt() * multiplier)));
         }
     }
-    enemyInfoLabel->ChangeText( tmp_statText.c_str() );
+    enemyStatsLabel.ChangeText( tmp_statText.c_str() );
 }
 
 void GameMenu::Update()
 {
-    playerFujika->ChangeText( ("Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() )).c_str() );
-    levelInfo->ChangeText( ("Level " + std::to_string( game->Level() +1 )).c_str() );
-    playerFuko->ChangeText( ("Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() )).c_str() );
+    playerFujika.ChangeText( ("Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() )).c_str() );
+    levelInfo.ChangeText( ("Level " + std::to_string( game->Level() +1 )).c_str() );
+    playerFuko.ChangeText( ("Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() )).c_str() );
 
     for( auto& entity : EntityMenus )
     {
         std::string tmp_statText = "";
-        for( auto& stat : (*json)["summons"][entity->Button->GetType()].GetObject() )
+        for( auto& stat : (*json)["summons"][entity.button->GetType()].GetObject() )
         {
             if( EntityStatsDict.find(stat.name.GetString()) != EntityStatsDict.end() )
             {
@@ -124,6 +143,6 @@ void GameMenu::Update()
             }
         }
 
-        entity->Button->ChangeText(tmp_statText.c_str());
+        entity.statsLabel.ChangeText(tmp_statText.c_str());
     }
 }

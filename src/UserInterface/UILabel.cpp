@@ -1,16 +1,31 @@
 #include "UILabel.hpp"
 
+UILabel::UILabel()
+{
+    renderer = nullptr;
+    font = nullptr;
+    texture = nullptr;
+}
+
+UILabel::~UILabel()
+{
+    texture = nullptr;
+    font = nullptr;
+    renderer = nullptr;
+}
+
 UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPath, int fontSize, std::string text, SDL_Color color )
 {
     this->renderer = renderer;
-    this->position.x = xPos;
-    this->position.y = yPos;
+    font = TTF_OpenFont( fontPath, fontSize );
+
     this->color = color;
-    this->font = font;
     this->fontSize = fontSize;
     this->text = text;
 
-    this->font = TTF_OpenFont( fontPath, fontSize );
+    position.x = xPos;
+    position.y = yPos;
+
 
     TTF_SizeText( font, text.c_str(), &position.w, &position.h );
 

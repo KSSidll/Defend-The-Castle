@@ -16,14 +16,17 @@ struct ButtonTextures
 class TextureManager
 {
     private:
+        SDL_Renderer* renderer;
+
         std::map< std::string, SDL_Texture* > textureArray;
         std::map< std::string, TTF_Font* > fontArray;
         std::map< std::string, ButtonTextures > buttonTextureArray;
-        SDL_Renderer* renderer;
 
     public:
+        TextureManager();
+        ~TextureManager();
+
         TextureManager( SDL_Renderer* renderer );
-        ~TextureManager(){};
         
         void LoadTexture( rapidjson::Value& texturePath );
         void LoadTexture( const char* key, const char* filePath );

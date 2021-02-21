@@ -1,5 +1,29 @@
 #include "UserInterface.hpp"
 
+UserInterface::UserInterface()
+{
+    game = nullptr;
+    gameMenu = nullptr;
+    pauseMenu = nullptr;
+    mainMenu = nullptr;
+    difficultySelectionMenu = nullptr;
+    winMenu = nullptr;
+    loseMenu = nullptr;
+    shopMenu = nullptr;
+}
+
+UserInterface::~UserInterface()
+{
+    shopMenu = nullptr;
+    loseMenu = nullptr;
+    winMenu = nullptr;
+    difficultySelectionMenu = nullptr;
+    mainMenu = nullptr;
+    pauseMenu = nullptr;
+    gameMenu = nullptr;
+    game = nullptr;
+}
+
 UserInterface::UserInterface( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Game* game, Player* player )
 {
     this->game = game;

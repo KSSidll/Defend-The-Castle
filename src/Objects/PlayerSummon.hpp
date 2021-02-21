@@ -12,6 +12,7 @@ class PlayerSummon : virtual public EntityObject
     public:
         PlayerSummon(){};
         ~PlayerSummon(){};
+        
         PlayerSummon( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer );
         PlayerSummon( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer, int id );
         

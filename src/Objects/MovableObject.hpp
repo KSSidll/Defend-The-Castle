@@ -28,8 +28,9 @@ class MovableObject : public SceneObject
         void Move();
         
     public:
-        MovableObject(){};
-        ~MovableObject(){};
+        MovableObject();
+        ~MovableObject();
+        
         MovableObject( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer );
 
         void SetObjectValues( rapidjson::Value& object );

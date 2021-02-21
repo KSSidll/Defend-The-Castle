@@ -4,24 +4,37 @@
 #include <string_view>
 #include <bits/stdc++.h>
 
+SummonDungeon::SummonDungeon()
+{
+    textureManager = nullptr;
+    renderer = nullptr;
+    player = nullptr;
+}
+
+SummonDungeon::~SummonDungeon()
+{
+    player = nullptr;
+    renderer = nullptr;
+    textureManager = nullptr;
+}
+
 void SummonDungeon::KillPending()
 {
-    for( auto const summon : pendingKills )
+    for( auto& summon : pendingKills )
     {
         for( int i = 0; i != objectArray.size(); ++i )
         {
-            if( objectArray[i]->GetId() == summon->GetId() )
+            if( objectArray[i].GetId() == summon.GetId() )
             {
                 objectArray.erase( objectArray.begin() + i );
                 --i;  
                 pendingKills.pop_front();
             }
         }
-        delete summon;
     }
 }
 
-void SummonDungeon::KillSummonObject( PlayerSummon* summon )
+void SummonDungeon::KillSummonObject( PlayerSummon summon )
 {
     pendingKills.push_back( summon );
 }
@@ -37,28 +50,23 @@ void SummonDungeon::Update()
 {
     KillPending();
 
-    for( auto summon : objectArray )
+    for( auto& summon : objectArray )
     {
-        summon->Update();
-        if( summon->KillPending() ) KillSummonObject( summon );
+        summon.Update();
+        if( summon.KillPending() ) KillSummonObject( summon );
     }
 }
 
 void SummonDungeon::Render()
 {
-    for( auto summon : objectArray )
+    for( auto& summon : objectArray )
     {
-        summon->Render();
+        summon.Render();
     }
 }
 
 void SummonDungeon::Reset()
 {
-    for( auto summon : objectArray )
-    {
-        delete summon;
-    }
-
     objectArray.erase( objectArray.begin(), objectArray.end() );
     pendingKills.erase( pendingKills.begin(), pendingKills.end() );
 }
@@ -67,8 +75,7 @@ void SummonDungeon::SummonObject( rapidjson::Value& object )
 {
     if( player->Summon( object["cost"].GetInt() ) )
     {
-        PlayerSummon *summon = new PlayerSummon( textureManager->GetTexture( object["textureSrc"] ), object, renderer, id );
-        objectArray.push_back( summon );
+        objectArray.push_back({textureManager->GetTexture( object["textureSrc"] ), object, renderer, id});
         ++id;
     }
 }

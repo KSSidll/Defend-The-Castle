@@ -15,8 +15,21 @@ class UserInterface;
 class Game
 {
 private:
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+    rapidjson::Document* objectsDoc;
+    rapidjson::Document* saveDoc;
+    SummonDungeon* summonDungeon;
+    TextureManager* textureManager;
+    UserInterface* userInterface;
+    Player* player;
+
+    Enemy enemy;
+    SceneObject background;
+
     float enemyStatsLevelMultiplier = 1.1;
     int level;
+
     bool menuFlag = true;
     bool isPaused = true;
     bool mainMenu = true;
@@ -26,22 +39,11 @@ private:
     bool shopMenu = false;
     bool isRunning;
 
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-    rapidjson::Document* objectsDoc;
-    rapidjson::Document* saveDoc;
-    SummonDungeon* summonDungeon;
-    UserInterface* userInterface;
-    SceneObject* background;
-    Enemy* enemy;
-    TextureManager* textureManager;
-    Player* player;
-
     void ResetMenus();
 
 public:
-    Game(){};
-    ~Game(){};
+    Game();
+    ~Game();
 
     void Init( const char* title, int width, int height, bool fullscreen );
     

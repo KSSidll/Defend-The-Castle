@@ -10,13 +10,30 @@ class Game;
 class ShopMenu
 {
     private:
+        struct ShopMenuButton
+        {
+            UILabel label;
+            Button* button;
+        };
+
+        struct ShopItemButton
+        {
+            UILabel nameLabel;
+            UILabel label;
+            Button* button;
+        };
+
         Game* game;
-        Shop* shop;
-        std::deque<Button*> buttons;
         SDL_Renderer* renderer;
         Player* player;
-        SceneObject* background;
-        UILabel* label;
+        Shop* shop;
+
+        std::deque<ShopMenuButton> buttons;
+        std::deque<ShopMenuButton> itemButtons;
+        std::deque<UILabel> labels;
+        UILabel mainLabel;
+        SceneObject background;
+
         std::unordered_map< std::string, std::string > dictionary;
 
         UILabel* playerInfoLabel;
@@ -40,8 +57,10 @@ class ShopMenu
         SDL_Rect returnButtonPos = { 10, 10, 150, 100 };
         
     public:
+        ShopMenu();
+        ~ShopMenu();
+
         ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, Player* player, rapidjson::Value* json );
-        ~ShopMenu(){};
 
         void Update();
         void Render();

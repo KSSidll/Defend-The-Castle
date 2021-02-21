@@ -8,18 +8,27 @@ class Game;
 class LoseMenu
 {
     private:
+        struct LoseMenuButton
+        {
+            UILabel label;
+            Button* button;
+        };
+
         Game* game;
-        std::deque<Button*> buttons;
         SDL_Renderer* renderer;
-        SceneObject* background;
-        UILabel* label;
+
+        std::deque<LoseMenuButton> buttons;
+        SceneObject background;
+        UILabel label;
 
         SDL_Rect exitButtonPos = { 362,300,300,150 };
         SDL_Rect loadButtonPos = { 362,600,300,100 };
         
     public:
+        LoseMenu();
+        ~LoseMenu();
+
         LoseMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager );
-        ~LoseMenu(){};
 
         void Render();
         void HandleEvents( SDL_Event* event );

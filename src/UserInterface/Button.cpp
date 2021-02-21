@@ -1,6 +1,20 @@
 #include "Button.hpp"
 
-Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer )
+Button::Button()
+{
+    renderer = nullptr;
+}
+
+Button::~Button()
+{
+    summon = nullptr;
+    game = nullptr;
+    item = nullptr;
+    SummonType = nullptr;
+    renderer = nullptr;
+}
+
+Button::Button( ButtonTextures textures, SDL_Rect rect, SDL_Renderer* renderer )
 {   
     this->rect.x = rect.x;
     this->rect.y = rect.y;
@@ -9,23 +23,21 @@ Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Rend
 
     this->renderer = renderer;
 
-    this->label = label;
-
     this->textures = textures;
 }
 
-Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, const char* type, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ) ) : Button( textures, label, rect, renderer )
+Button::Button( ButtonTextures textures, SDL_Rect rect, SDL_Renderer* renderer, const char* type, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ) ) : Button( textures, rect, renderer )
 {
-    this->SummonType = type;
+    SummonType = type;
     this->summon = summon;
 }
 
-Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*game)( Game* game ) ) : Button( textures, label, rect, renderer )
+Button::Button( ButtonTextures textures, SDL_Rect rect, SDL_Renderer* renderer, void (*game)( Game* game ) ) : Button( textures, rect, renderer )
 {
     this->game = game;
 }
 
-Button::Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*item)( Shop* shop ) ) : Button( textures, label, rect, renderer )
+Button::Button( ButtonTextures textures, SDL_Rect rect, SDL_Renderer* renderer, void (*item)( Shop* shop ) ) : Button( textures, rect, renderer )
 {
     this->item = item;
 }
@@ -47,13 +59,6 @@ void Button::Render()
         SDL_RenderCopy( renderer, textures.down, NULL, &rect );
         break;
     }
-
-    label->Render();
-}
-
-void Button::ChangeText(const char* text)
-{
-    label->ChangeText(text);
 }
 
 bool Button::HandleEvents( SDL_Event* event )

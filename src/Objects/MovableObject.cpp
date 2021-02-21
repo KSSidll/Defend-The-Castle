@@ -1,5 +1,15 @@
 #include "MovableObject.hpp"
 
+MovableObject::MovableObject()
+{
+    originalJsonValues = nullptr;
+}
+
+MovableObject::~MovableObject()
+{
+    originalJsonValues = nullptr;
+}
+
 void MovableObject::Move()
 {
     destRect.x += (int)xShift * movementVector;

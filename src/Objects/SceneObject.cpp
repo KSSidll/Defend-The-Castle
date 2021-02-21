@@ -1,5 +1,17 @@
 #include "SceneObject.hpp"
 
+SceneObject::SceneObject()
+{
+    this->objTexture = nullptr;
+    this->renderer = nullptr;
+}
+
+SceneObject::~SceneObject()
+{
+    this->renderer = nullptr;
+    this->objTexture = nullptr;
+}
+
 SceneObject::SceneObject( SDL_Texture* objTexture, SDL_Renderer* renderer )
 {
     this->renderer = renderer;

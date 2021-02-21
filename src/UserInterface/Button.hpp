@@ -17,25 +17,25 @@ private:
     SDL_Renderer* renderer;
     SDL_Rect rect;
 
-    UILabel* label;
     ButtonTextures textures;
 
-    const char* SummonType;
+    const char* SummonType = nullptr;
 
 public:
-    Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer );
-    Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, const char* type, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ) );
-    Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*game)( Game* game ) );
-    Button( ButtonTextures textures, UILabel* label, SDL_Rect rect, SDL_Renderer* renderer, void (*item)( Shop* shop ) );
-    ~Button(){};
+    Button();
+    ~Button();
+    
+    Button( ButtonTextures textures, SDL_Rect rect, SDL_Renderer* renderer );
+    Button( ButtonTextures textures, SDL_Rect rect, SDL_Renderer* renderer, const char* type, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ) );
+    Button( ButtonTextures textures, SDL_Rect rect, SDL_Renderer* renderer, void (*game)( Game* game ) );
+    Button( ButtonTextures textures, SDL_Rect rect, SDL_Renderer* renderer, void (*item)( Shop* shop ) );
 
     void Render();
-    void ChangeText(const char* text);
     bool HandleEvents( SDL_Event* event );
 
     const char* GetType(){ return SummonType; };
 
-    void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type);
-    void (*game)( Game* game );
-    void (*item)( Shop* shop );
+    void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type) = nullptr;
+    void (*game)( Game* game ) = nullptr;
+    void (*item)( Shop* shop ) = nullptr;
 };

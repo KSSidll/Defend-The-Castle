@@ -1,5 +1,15 @@
 #include "TextureManager.hpp"
 
+TextureManager::TextureManager()
+{
+    renderer = nullptr;
+}
+
+TextureManager::~TextureManager()
+{
+    renderer = nullptr;
+}
+
 TextureManager::TextureManager( SDL_Renderer* renderer )
 {
     TTF_Init();

@@ -8,18 +8,27 @@ class Game;
 class PauseMenu
 {
     private:
+        struct PauseMenuButton
+        {
+            UILabel label;
+            Button* button;
+        };
+
         Game* game;
-        std::deque<Button*> buttons;
         SDL_Renderer* renderer;
-        SceneObject* background;
-        UILabel* label;
+
+        std::deque<PauseMenuButton> buttons;
+        SceneObject background;
+        UILabel label;
 
         SDL_Rect resumeButtonPos = {412,200,200,100};
         SDL_Rect exitButtonPos = {412,400,200,100};
         
     public:
+        PauseMenu();
+        ~PauseMenu();
+
         PauseMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager );
-        ~PauseMenu(){};
 
         void Render();
         void HandleEvents( SDL_Event* event );
