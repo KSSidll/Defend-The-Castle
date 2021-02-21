@@ -4,20 +4,15 @@
 
 class Button;
 class Game;
+struct LabeledButton;
 
 class DifficultySelectionMenu
 {
     private:
-        struct DifficultySelectionButton
-        {
-            Button* button;
-            UILabel label;
-        };
-
         Game* game;
         SDL_Renderer* renderer;
         
-        std::deque<DifficultySelectionButton> buttons;
+        std::deque<LabeledButton> buttons;
         SceneObject background;
         UILabel label;
 

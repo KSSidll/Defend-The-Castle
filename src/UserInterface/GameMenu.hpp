@@ -5,26 +5,18 @@
 
 class Button;
 class Game;
+struct LabeledButton;
 
 class GameMenu
 {
     private:
-        struct EntityMenu
-        {
-            UILabel nameLabel;
-            UILabel statsLabel;
-            Button* button;
-        };
-
         rapidjson::Value* json;
         SDL_Renderer* renderer;
         SummonDungeon* dungeon;
         Player* player;
         Game* game;
 
-        std::unordered_map<std::string, std::string> EntityStatsDict;
-        std::unordered_map<std::string, std::string> EntityNameDict;
-        std::deque<EntityMenu> EntityMenus;
+        std::deque<LabeledButton> buttons;
         
         SDL_Rect gameInfoBackgroundPos = { 0, 0, 1024, 100 };
         SceneObject gameInfoBackground;

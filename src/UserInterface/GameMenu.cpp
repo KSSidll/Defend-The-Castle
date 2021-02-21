@@ -32,13 +32,6 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
     levelInfo = UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 1), gameInfoBackgroundPos.y, FONT_SANS, 24, "Level " + std::to_string( game->Level() +1 ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
     playerFuko = UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 2), gameInfoBackgroundPos.y, FONT_SANS, 24, "Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
 
-    EntityStatsDict.emplace("cost", "Fujika Cost");
-    EntityStatsDict.emplace("health", "Health");
-    EntityStatsDict.emplace("attackDamage", "Attack Damage");
-    EntityStatsDict.emplace("movementSpeed", "Movement Speed");
-    EntityStatsDict.emplace("attackSpeed", "Attack Speed");
-    EntityStatsDict.emplace("range", "Range");
-
     int entityCounter = 0;
     int rectW = gameInfoBackgroundPos.w / ((*json)["summons"].MemberCount() + 1);
     SDL_Rect tmp_rect = { 0, 543, rectW, 225 };
@@ -48,9 +41,10 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
         std::string tmp_statText = "";
         for( auto& stat : entity.value.GetObject() )
         {
-            if( EntityStatsDict.find(stat.name.GetString()) != EntityStatsDict.end() )
+            auto itr = (*json)["lang"].FindMember(stat.name.GetString());
+            if( itr != (*json)["lang"].MemberEnd() )
             {
-                tmp_statText.append( EntityStatsDict.at(stat.name.GetString()) + ": " + std::to_string(stat.value.GetInt()) );
+                tmp_statText.append( std::string(itr->value.GetString()) + ": " + std::to_string(stat.value.GetInt()) );
                 tmp_statText.append( "\n" );
             }
         }
@@ -58,9 +52,15 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
         tmp_name[0] = toupper(tmp_name[0]);
         UILabel NameLabel = UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24, tmp_name, {255,255,255}, tmp_rect.w );
         UILabel StatsLabel = UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + NameLabel.GetPosition().h + 5, FONT_SANS, 16, tmp_statText, {255,255,255} );
-        Button* button = new Button( textureManager->GetButtonTexture( "button2" ), tmp_rect, renderer, entity.name.GetString(), []( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ){ dungeon->SummonObject( json["summons"][type] ); } );
+        Button button = Button( textureManager->GetButtonTexture( "button2" ), tmp_rect, renderer, entity.name.GetString(), []( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ){ dungeon->SummonObject( json["summons"][type] ); } );
         
-        EntityMenus.push_back({NameLabel, StatsLabel, button});
+        buttons.push_back({
+            button,
+            {
+                {"name", NameLabel},
+                {"stats", StatsLabel}
+            }
+        });
 
         ++entityCounter;
         tmp_rect.x = entityCounter * rectW;
@@ -72,10 +72,11 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
         std::string tmp_statText = "";
         for( auto& stat : (*json)["enemy"].GetObject() )
         {
-            if( EntityStatsDict.find(stat.name.GetString()) != EntityStatsDict.end() )
+            auto itr = (*json)["lang"].FindMember(stat.name.GetString());
+            if( itr != (*json)["lang"].MemberEnd() )
             {
+                tmp_statText.append( std::string(itr->value.GetString()) + ": " + std::to_string(stat.value.GetInt()) );
                 tmp_statText.append( "\n" );
-                tmp_statText.append( EntityStatsDict.at(stat.name.GetString()) + ": " + std::to_string(stat.value.GetInt()) );
             }
         }
         enemyStatsLabel = UILabel(renderer, tmp_rect.x + 5, tmp_rect.y + enemyNameLabel.GetPosition().h, FONT_SANS, 16, tmp_statText, {255,255,255});
@@ -85,11 +86,9 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
 
 void GameMenu::Render()
 {
-    for( auto& entity : EntityMenus )
+    for( auto& button : buttons )
     {
-        entity.button->Render();
-        entity.nameLabel.Render();
-        entity.statsLabel.Render();
+        button.Render();
     }
 
     gameInfoBackground.Render();
@@ -104,10 +103,10 @@ void GameMenu::Render()
 
 void GameMenu::HandleEvents( SDL_Event* event )
 {
-    for( auto& entity : EntityMenus )
+    for( auto& button : buttons )
     {
-        if( entity.button->HandleEvents( event ) )
-            entity.button->summon( dungeon, (*json), entity.button->GetType() );
+        if( button.HandleEvents( event ) )
+            button.button.summon( dungeon, (*json), button.GetType() );
     }
 }
 
@@ -116,10 +115,11 @@ void GameMenu::Reset( float multiplier )
     std::string tmp_statText = "";
     for( auto& stat : (*json)["enemy"].GetObject() )
     {
-        if( EntityStatsDict.find(stat.name.GetString()) != EntityStatsDict.end() )
+        auto itr = (*json)["lang"].FindMember(stat.name.GetString());
+        if( itr != (*json)["lang"].MemberEnd() )
         {
+            tmp_statText.append( std::string(itr->value.GetString()) + ": " + std::to_string((int)(stat.value.GetInt() * multiplier)) );
             tmp_statText.append( "\n" );
-            tmp_statText.append( EntityStatsDict.at(stat.name.GetString()) + ": " + std::to_string((int)(stat.value.GetInt() * multiplier)));
         }
     }
     enemyStatsLabel.ChangeText( tmp_statText.c_str() );
@@ -131,18 +131,19 @@ void GameMenu::Update()
     levelInfo.ChangeText( ("Level " + std::to_string( game->Level() +1 )).c_str() );
     playerFuko.ChangeText( ("Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() )).c_str() );
 
-    for( auto& entity : EntityMenus )
+    for( auto& button : buttons )
     {
         std::string tmp_statText = "";
-        for( auto& stat : (*json)["summons"][entity.button->GetType()].GetObject() )
+        for( auto& stat : (*json)["summons"][button.GetType()].GetObject() )
         {
-            if( EntityStatsDict.find(stat.name.GetString()) != EntityStatsDict.end() )
+            auto itr = (*json)["lang"].FindMember(stat.name.GetString());
+            if( itr != (*json)["lang"].MemberEnd() )
             {
-                tmp_statText.append( EntityStatsDict.at(stat.name.GetString()) + ": " + std::to_string(stat.value.GetInt()) );
+                tmp_statText.append( std::string(itr->value.GetString()) + ": " + std::to_string(stat.value.GetInt()) );
                 tmp_statText.append( "\n" );
             }
         }
 
-        entity.statsLabel.ChangeText(tmp_statText.c_str());
+        button.ChangeText("stats" ,tmp_statText.c_str());
     }
 }

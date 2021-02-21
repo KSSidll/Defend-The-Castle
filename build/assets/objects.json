@@ -1,4 +1,13 @@
 {
+    "lang":{
+        "cost": "Cost",
+        "health": "Health",
+        "attackDamage": "Attack Damage",
+        "movementSpeed": "Movement Speed",
+        "attackSpeed": "Attack Speed",
+        "range": "Range"
+    },
+    
     "textures":[
         "assets/prototypes/background.jpg",
         "assets/prototypes/warrior.png",

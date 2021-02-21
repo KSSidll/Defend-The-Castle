@@ -22,16 +22,16 @@ MainMenu::MainMenu( SDL_Renderer* renderer, TextureManager* textureManager, Game
     mainMenuLabel = UILabel( renderer, 0, 20, "assets/fonts/Sans.ttf", 72, "Defend The Castle", {255,255,255}, 1024 );
 
     buttons.push_back({
-        UILabel( renderer, newGameButtonPos.x, newGameButtonPos.y, "assets/fonts/Sans.ttf", 48, "New Game", {255,255,255}, newGameButtonPos.w, newGameButtonPos.h ),
-        new Button( textureManager->GetButtonTexture( "button1" ), newGameButtonPos, renderer, []( Game* game ){ game->NewGame(); } ) 
+        Button( textureManager->GetButtonTexture( "button1" ), newGameButtonPos, renderer, []( Game* game ){ game->NewGame(); } ),
+        {{"", UILabel( renderer, newGameButtonPos.x, newGameButtonPos.y, "assets/fonts/Sans.ttf", 48, "New Game", {255,255,255}, newGameButtonPos.w, newGameButtonPos.h )}}
     });
     buttons.push_back({
-        UILabel( renderer, continueButtonPos.x, continueButtonPos.y, "assets/fonts/Sans.ttf", 48, "Continue", {255,255,255}, continueButtonPos.w, continueButtonPos.h ),
-        new Button( textureManager->GetButtonTexture( "button1" ), continueButtonPos, renderer, []( Game* game ){ game->Load(); } ) 
+        Button( textureManager->GetButtonTexture( "button1" ), continueButtonPos, renderer, []( Game* game ){ game->Load(); } ),
+        {{"", UILabel( renderer, continueButtonPos.x, continueButtonPos.y, "assets/fonts/Sans.ttf", 48, "Continue", {255,255,255}, continueButtonPos.w, continueButtonPos.h )}}
     });
     buttons.push_back({
-        UILabel( renderer, quitButtonPos.x, quitButtonPos.y, "assets/fonts/Sans.ttf", 32, "Quit", {255,255,255}, quitButtonPos.w, quitButtonPos.h ),
-        new Button( textureManager->GetButtonTexture( "button1" ), quitButtonPos, renderer, []( Game* game ){ game->Quit(); } ) 
+        Button( textureManager->GetButtonTexture( "button1" ), quitButtonPos, renderer, []( Game* game ){ game->Quit(); } ),
+        {{"", UILabel( renderer, quitButtonPos.x, quitButtonPos.y, "assets/fonts/Sans.ttf", 32, "Quit", {255,255,255}, quitButtonPos.w, quitButtonPos.h )}}
     });
 }
 
@@ -41,8 +41,7 @@ void MainMenu::Render()
     mainMenuLabel.Render();
     for( auto& button : buttons )
     {
-        button.button->Render();
-        button.label.Render();
+        button.Render();
     }
 }
 
@@ -50,7 +49,7 @@ void MainMenu::HandleEvents( SDL_Event* event )
 {
     for( auto& button : buttons )
     {
-        if( button.button->HandleEvents( event ) )
-            button.button->game( game );
+        if( button.HandleEvents( event ) )
+            button.button.game( game );
     }
 }

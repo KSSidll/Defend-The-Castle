@@ -4,20 +4,15 @@
 
 class Button;
 class Game;
+struct LabeledButton;
 
 class LoseMenu
 {
     private:
-        struct LoseMenuButton
-        {
-            UILabel label;
-            Button* button;
-        };
-
         Game* game;
         SDL_Renderer* renderer;
 
-        std::deque<LoseMenuButton> buttons;
+        std::deque<LabeledButton> buttons;
         SceneObject background;
         UILabel label;
 

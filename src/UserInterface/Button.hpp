@@ -39,3 +39,33 @@ public:
     void (*game)( Game* game ) = nullptr;
     void (*item)( Shop* shop ) = nullptr;
 };
+
+struct LabeledButton
+{
+    Button button;
+    std::unordered_map<std::string, UILabel> labels;
+
+    void Render()
+    {
+        button.Render();
+        for( auto& label : labels )
+        {
+            label.second.Render();
+        }
+    }
+
+    bool HandleEvents( SDL_Event* event )
+    {
+        return button.HandleEvents( event );
+    }
+
+    void ChangeText( std::string labelKey, const char* text )
+    {
+        labels.at( labelKey ).ChangeText( text );
+    }
+
+    const char* GetType()
+    {
+        return button.GetType();
+    }
+};
