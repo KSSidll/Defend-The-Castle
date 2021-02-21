@@ -18,34 +18,28 @@ Shop::Shop( Player* player, rapidjson::Value* json )
     this->player = player;
     this->json = json;
 
-    Item spear;
-    spear.itemCost = 3;
-    spear.unit = "warrior";
-    spear.stats.insert({ "attackDamage", 1 });
-    spear.stats.insert({ "attackSpeed", -1 });
-    spear.specialEffect = true;
-    spear.specialEffectLevelReq = 5;
-    spear.specialEffectStat = "range";
-    spear.specialEffectStatIncrese = 50;
-    items.insert({ "spear", spear });
+    for( auto& itemData : (*json)["items"].GetObject() )
+    {
+        Item tmp_item;
+        tmp_item.itemCost = itemData.value["itemCost"].GetInt();
+        tmp_item.unit = itemData.value["unit"].GetString();
+        for( auto& stat : itemData.value["stats"].GetObject() )
+        {
+            tmp_item.stats.emplace( stat.name.GetString(), stat.value.GetInt() );
+        }
 
-    Item armor;
-    armor.itemCost = 4;
-    armor.unit = "tank";
-    armor.stats.insert({ "health", 15 });
-    armor.stats.insert({ "movementSpeed", -1 });
-    items.insert({ "armor", armor });
-
-    Item bow;
-    bow.itemCost = 5;
-    bow.unit = "archer";
-    bow.stats.insert({ "attackDamage", 2 });
-    bow.stats.insert({ "attackSpeed", -1 });
-    bow.specialEffect = true;
-    bow.specialEffectLevelReq = 5;
-    bow.specialEffectStat = "cost";
-    bow.specialEffectStatIncrese = -1;
-    items.insert({ "bow", bow });
+        auto itr = itemData.value.FindMember("specialEffect");
+        if( itr != itemData.value.MemberEnd() )
+        {
+            tmp_item.specialEffect = true;
+            tmp_item.specialEffectLevelReq = itr->value["levelReq"].GetInt();
+            for( auto& stat : itr->value["stats"].GetObject() )
+            {
+                tmp_item.specialEffectStats.emplace( stat.name.GetString(), stat.value.GetInt() );
+            }
+        }
+        items.emplace( itemData.name.GetString(), tmp_item );
+    }
 }
 
 void Shop::Buy( const char* itemName )
@@ -63,9 +57,12 @@ void Shop::Buy( const char* itemName )
 
             if( isValid && items.at( itemName ).specialEffect && items.at( itemName ).specialEffectLevelReq - 1 == items.at( itemName ).level )
             {
-                previousValue = (*json)["summons"][ items.at( itemName ).unit ][ items.at( itemName ).specialEffectStat.c_str() ].GetInt();
-                (*json)["summons"][ items.at( itemName ).unit ][ items.at( itemName ).specialEffectStat.c_str() ].SetInt( previousValue + items.at( itemName ).specialEffectStatIncrese );
-                items.at( itemName ).specialEffect = false;
+                for( auto& stat : items.at( itemName ).specialEffectStats )
+                {
+                    previousValue = (*json)["summons"][ items.at( itemName ).unit ][ stat.first.c_str() ].GetInt();
+                    (*json)["summons"][ items.at( itemName ).unit ][ stat.first.c_str() ].SetInt( previousValue + stat.second );
+                    items.at( itemName ).specialEffect = false;
+                }
             }
         }
 
@@ -91,7 +88,8 @@ void Shop::Load( rapidjson::Value* saveJson )
 {
     for( auto& item : items)
     {
-        for( int it = 0; it < (*saveJson)["shop"][item.first + "Level"].GetInt(); ++it)
+        if( (*saveJson)["shop"].HasMember(item.first + "Level") )
+        for( int it = 0; it < (*saveJson)["shop"][item.first + "Level"].GetInt(); ++it )
         {
             bool isValid = true;
             for( auto& stat : item.second.stats)
@@ -102,9 +100,12 @@ void Shop::Load( rapidjson::Value* saveJson )
 
                 if( isValid && item.second.specialEffect && item.second.specialEffectLevelReq - 1 == item.second.level )
                 {
-                    previousValue = (*json)["summons"][item.second.unit][ item.second.specialEffectStat.c_str() ].GetInt();
-                    (*json)["summons"][item.second.unit][ item.second.specialEffectStat.c_str() ].SetInt( previousValue + item.second.specialEffectStatIncrese );
-                    item.second.specialEffect = false;
+                    for( auto& stat : items.at( item.first ).specialEffectStats )
+                    {
+                        previousValue = (*json)["summons"][ items.at( item.first ).unit ][ stat.first.c_str() ].GetInt();
+                        (*json)["summons"][ items.at( item.first ).unit ][ stat.first.c_str() ].SetInt( previousValue + stat.second );
+                        items.at( item.first ).specialEffect = false;
+                    }
                 }
             }
             if( isValid )

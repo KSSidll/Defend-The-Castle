@@ -74,6 +74,49 @@
         }
     },
 
+    "items":{
+        "spear":{
+            "unit": "warrior",
+            "itemCost": 3,
+            "stats":{
+                "attackDamage": 1,
+                "attackSpeed": -1
+            },
+
+            "specialEffect":{
+                "levelReq": 5,
+                "stats":{
+                    "range": 50
+                }
+            }
+        },
+
+        "armor":{
+            "unit": "tank",
+            "itemCost": 4,
+            "stats":{
+                "health": 15,
+                "movementSpeed": -1
+            }
+        },
+
+        "bow":{
+            "unit": "archer",
+            "itemCost": 5,
+            "stats":{
+                "attackDamage": 2,
+                "attackSpeed": -1
+            },
+
+            "specialEffect":{
+                "levelReq": 5,
+                "stats":{
+                    "cost": -1
+                }
+            }
+        }
+    },
+
     "enemy":{
         "textureSrc": "assets/prototypes/enemy.png",
         "srcRectX": 2880,

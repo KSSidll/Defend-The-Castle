@@ -9,13 +9,11 @@ struct Item
     const char* unit;
     int level = 0;
     int itemCost = 0;
-
     std::unordered_map< std::string, int > stats;
 
     bool specialEffect = false;
     int specialEffectLevelReq;
-    std::string specialEffectStat;
-    int specialEffectStatIncrese;
+    std::unordered_map< std::string, int > specialEffectStats;
 };
 
 class Shop
