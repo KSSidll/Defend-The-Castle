@@ -59,7 +59,7 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
         tmp_name[0] = toupper(tmp_name[0]);
         UILabel NameLabel = UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24, tmp_name, {255,255,255}, tmp_rect.w );
         UILabel StatsLabel = UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + NameLabel.GetPosition().h + 5, FONT_SANS, 16, tmp_statText, {255,255,255} );
-        Button button = Button( textureManager->GetButtonTexture( "button2" ), tmp_rect, renderer, entity.name.GetString(), []( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ){ dungeon->SummonObject( json["summons"][type] ); } );
+        Button button = Button( textureManager->GetButtonTexture( "button2" ), tmp_rect, renderer, (void*)(entity.name.GetString()), []( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ){ dungeon->SummonObject( json["summons"][type] ); } );
         
         buttons.push_back({
             button,
@@ -113,7 +113,7 @@ void GameMenu::HandleEvents( SDL_Event* event )
     for( auto& button : buttons )
     {
         if( button.HandleEvents( event ) )
-            button.button.summon( dungeon, (*json), button.GetType() );
+            button.button.summon( dungeon, (*json), (const char*)(button.GetArg()) );
     }
 }
 
@@ -141,7 +141,7 @@ void GameMenu::Update()
     for( auto& button : buttons )
     {
         std::string tmp_statText = "";
-        for( auto& stat : (*json)["summons"][button.GetType()].GetObject() )
+        for( auto& stat : (*json)["summons"][(const char*)(button.GetArg())].GetObject() )
         {
             auto itr = (*json)["lang"].FindMember(stat.name.GetString());
             if( itr != (*json)["lang"].MemberEnd() )

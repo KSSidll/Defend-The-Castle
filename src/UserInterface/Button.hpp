@@ -12,10 +12,10 @@ class Shop;
 
 enum BUTTON_STATE{ MOUSE_OUT = 0, MOUSE_OVER = 1, MOUSE_DOWN = 2, MOUSE_UP = 3 };
 
-
 class Button
 {
 private:
+    template<typename> struct Type;
     BUTTON_STATE BUTTON_STATE = MOUSE_OUT;
 
     SDL_Renderer* renderer;
@@ -23,24 +23,26 @@ private:
 
     ButtonTextures* textures;
 
-    const char* SummonType = nullptr;
+    const void* Arg = nullptr;
 
 public:
     Button();
     ~Button();
     
     Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer );
-    Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, const char* type, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ) );
+    Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void* type, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ) );
     Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void (*game)( Game* game ) );
+    Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void* number, void (*game)( Game* game, float* number ) );
     Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void (*item)( Shop* shop ) );
 
     void Render();
     bool HandleEvents( SDL_Event* event );
 
-    const char* GetType(){ return SummonType; };
+    const void* GetArg(){ return Arg; };
 
     void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type) = nullptr;
     void (*game)( Game* game ) = nullptr;
+    void (*game_numbered)( Game* game, float* number ) = nullptr;
     void (*item)( Shop* shop ) = nullptr;
 };
 
@@ -68,8 +70,8 @@ struct LabeledButton
         labels.at( labelKey ).ChangeText( text );
     }
 
-    const char* GetType()
+    const void* GetArg()
     {
-        return button.GetType();
+        return button.GetArg();
     }
 };

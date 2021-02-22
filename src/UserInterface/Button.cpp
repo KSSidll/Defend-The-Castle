@@ -17,7 +17,7 @@ Button::~Button()
     summon = nullptr;
     game = nullptr;
     item = nullptr;
-    SummonType = nullptr;
+    Arg = nullptr;
     renderer = nullptr;
 }
 
@@ -33,15 +33,21 @@ Button::Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer 
     this->textures = textures;
 }
 
-Button::Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, const char* type, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ) ) : Button( textures, rect, renderer )
+Button::Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void* type, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ) ) : Button( textures, rect, renderer )
 {
-    SummonType = type;
+    Arg = type;
     this->summon = summon;
 }
 
 Button::Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void (*game)( Game* game ) ) : Button( textures, rect, renderer )
 {
     this->game = game;
+}
+
+Button::Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void* number, void (*game)( Game* game, float* number ) ) : Button( textures, rect, renderer )
+{
+    Arg = number;
+    this->game_numbered = game;
 }
 
 Button::Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void (*item)( Shop* shop ) ) : Button( textures, rect, renderer )

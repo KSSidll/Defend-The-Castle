@@ -9,7 +9,6 @@ You can pause the game by pressing ESC key
   - Easy: multiplies enemy stats by 1.05 per cleared level
   - Medium: multiplies enemy stats by 1.1 per cleared level
   - Hard: multiplies enemy stats by 1.15 per cleared level
-    - The multiplier of each difficulty will be changable in [ assets/objects.json ] file in future update
 - Continuing will load data from [ assets/save.json ]
   - You can only have 1 active save so use it wisely
 

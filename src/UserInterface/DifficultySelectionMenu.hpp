@@ -20,6 +20,10 @@ class DifficultySelectionMenu
         SceneObject* background;
         UILabel* label;
 
+        float* easy;
+        float* medium;
+        float* hard;
+
         SDL_Rect easyButtonPos = {412,200,200,100};
         SDL_Rect mediumButtonPos = {412,400,200,100};
         SDL_Rect hardButtonPos = {412,600,200,100};
@@ -28,7 +32,7 @@ class DifficultySelectionMenu
         DifficultySelectionMenu();
         ~DifficultySelectionMenu();
 
-        DifficultySelectionMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager );
+        DifficultySelectionMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, rapidjson::Value* json );
 
         void Render();
         void HandleEvents( SDL_Event* event );
