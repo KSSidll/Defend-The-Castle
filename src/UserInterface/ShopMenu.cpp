@@ -1,6 +1,7 @@
 #include "../Managers/TextureManager.hpp"
 #include "../Managers/Shop.hpp"
 #include "../Objects/SceneObject.hpp"
+#include "Button.hpp"
 #include "ShopMenu.hpp"
 #include "UILabel.hpp"
 
@@ -194,3 +195,75 @@ void ShopMenu::Load( rapidjson::Value* saveJson )
 {
     shop->Load( saveJson );
 }
+
+struct ShopMenu::itemColumn
+{
+    UILabel label;
+    std::deque<LabeledButton> items;
+
+    int Pages(){ return items.size() / 3; }
+    void Render( int page )
+    {
+        label.Render();
+
+        int offset = 0;
+        if( (page * 3) + 3 > items.size() )
+        {
+            offset = ((page * 3) + 3) - items.size();
+        }
+
+        for( auto itr = page * 3; itr > ((page * 3) + 3) - offset ; ++itr )
+        {   
+            items[itr].Render();
+        }
+    }
+
+    void HandleEvents( int page, SDL_Event* event, Shop* shop )
+    {
+        int offset = 0;
+        if( (page * 3) + 3 > items.size() )
+        {
+            offset = ((page * 3) + 3) - items.size();
+        }
+
+        for( auto itr = page * 3; itr > ((page * 3) + 3) - offset ; ++itr )
+        {
+            if( items[itr].HandleEvents( event ) )
+                items[itr].button.item( shop );
+        }
+    }
+};
+
+struct ShopMenu::itemPage
+{
+    std::deque<itemColumn> columns;
+
+    int Pages(){ return columns.size() / 3; }
+    void Render( int columnPage, int itemPage )
+    {
+        int offset = 0;
+        if( (itemPage * 3) + 3 > columns.size() )
+        {
+            offset = ((itemPage * 3) + 3) - columns.size();
+        }
+
+        for( auto itr = itemPage * 3; itr > ((itemPage * 3) + 3) - offset ; ++itr )
+        {
+            columns[itr].Render( columnPage );
+        }
+    }
+
+    void HandleEvents( int columnPage, int itemPage, SDL_Event* event, Shop* shop )
+    {
+        int offset = 0;
+        if( (itemPage * 3) + 3 > columns.size() )
+        {
+            offset = ((itemPage * 3) + 3) - columns.size();
+        }
+
+        for( auto itr = itemPage * 3; itr > ((itemPage * 3) + 3) - offset ; ++itr )
+        {
+            columns[itr].HandleEvents(columnPage, event, shop);
+        }
+    }
+};
