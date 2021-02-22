@@ -1,8 +1,7 @@
+#include "../Objects/PlayerSummon.hpp"
 #include "SummonDungeon.hpp"
-#include <iostream>
-#include <numeric>
-#include <string_view>
-#include <bits/stdc++.h>
+#include "Player.hpp"
+#include "TextureManager.hpp"
 
 SummonDungeon::SummonDungeon()
 {

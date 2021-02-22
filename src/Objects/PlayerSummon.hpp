@@ -1,6 +1,5 @@
 #pragma once
 #include "EntityObject.hpp"
-#include "Enemy.hpp"
 
 class Enemy;
 

@@ -1,9 +1,8 @@
 #pragma once
-#include "../Engine/Global.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "rapidjson/document.h"
-#include "rapidjson/filereadstream.h"
+#include "../Engine/Global.hpp"
 
 class SceneObject
 {

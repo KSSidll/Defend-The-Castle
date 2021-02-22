@@ -1,4 +1,9 @@
+#include "../Managers/TextureManager.hpp"
+#include "../Engine/Game.hpp"
+#include "../Objects/SceneObject.hpp"
 #include "MainMenu.hpp"
+#include "Button.hpp"
+#include "UILabel.hpp"
 
 MainMenu::MainMenu()
 {
@@ -17,9 +22,9 @@ MainMenu::MainMenu( SDL_Renderer* renderer, TextureManager* textureManager, Game
     this->game = game;
     this->renderer = renderer;
 
-    background = SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
+    background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
 
-    mainMenuLabel = UILabel( renderer, 0, 20, "assets/fonts/Sans.ttf", 72, "Defend The Castle", {255,255,255}, 1024 );
+    mainMenuLabel = new UILabel( renderer, 0, 20, "assets/fonts/Sans.ttf", 72, "Defend The Castle", {255,255,255}, 1024 );
 
     buttons.push_back({
         Button( textureManager->GetButtonTexture( "button1" ), newGameButtonPos, renderer, []( Game* game ){ game->NewGame(); } ),
@@ -37,8 +42,8 @@ MainMenu::MainMenu( SDL_Renderer* renderer, TextureManager* textureManager, Game
 
 void MainMenu::Render()
 {
-    background.Render();
-    mainMenuLabel.Render();
+    background->Render();
+    mainMenuLabel->Render();
     for( auto& button : buttons )
     {
         button.Render();

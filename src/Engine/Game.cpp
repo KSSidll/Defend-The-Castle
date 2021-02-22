@@ -1,5 +1,16 @@
 #include "Game.hpp"
- 
+
+#include "../Managers/SummonDungeon.hpp"
+#include "../Managers/TextureManager.hpp"
+#include "../Managers/Player.hpp"
+#include "../Objects/Enemy.hpp"
+#include "../Objects/PlayerSummon.hpp"
+#include "../UserInterface/UserInterface.hpp"
+#include <rapidjson/filereadstream.h>
+#include <rapidjson/filewritestream.h>
+#include <rapidjson/writer.h>
+#include <cmath>
+
 Game::Game()
 {
     window = nullptr;
@@ -10,10 +21,14 @@ Game::Game()
     textureManager = nullptr;
     userInterface = nullptr;
     player = nullptr;
+    enemy = nullptr;
+    background = nullptr;
 }
 
 Game::~Game()
 {
+    background = nullptr;
+    enemy = nullptr;
     player = nullptr;
     userInterface = nullptr;
     textureManager = nullptr;
@@ -69,11 +84,11 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
     textureManager->LoadButtonTexture( "button1", "assets/prototypes/button1.png", "assets/prototypes/button1-over.png", "assets/prototypes/button1-down.png" );
     textureManager->LoadButtonTexture( "button2", "assets/prototypes/button2.png", "assets/prototypes/button2-over.png", "assets/prototypes/button2-down.png" );
     
-    background = SceneObject( textureManager->GetTexture( (*objectsDoc)["background"]["textureSrc"]), renderer );
+    background = new SceneObject( textureManager->GetTexture( (*objectsDoc)["background"]["textureSrc"]), renderer );
 
     summonDungeon = new SummonDungeon( textureManager, renderer, player );
 
-    enemy = Enemy( textureManager->GetTexture( (*objectsDoc)["enemy"]["textureSrc"] ), (*objectsDoc)["enemy"], renderer );
+    enemy = new Enemy( textureManager->GetTexture( (*objectsDoc)["enemy"]["textureSrc"] ), (*objectsDoc)["enemy"], renderer );
 
     userInterface = new UserInterface( objectsDoc, summonDungeon, renderer, textureManager, this, player );
 }
@@ -114,23 +129,23 @@ void Game::Update()
 
         player->Update();
         summonDungeon->Update();
-        enemy.Update();
+        enemy->Update();
     }
 
-    if( enemy.KillPending() )
+    if( enemy->KillPending() )
         WinMenu();
 
-    if( enemy.GetPosition() <= 0 )
+    if( enemy->GetPosition() <= 0 )
         LoseGame();
 }
 
 void Game::Render()
 {
     SDL_RenderClear( renderer );
-    background.Render();
+    background->Render();
 
     summonDungeon->Render();
-    enemy.Render();
+    enemy->Render();
 
     userInterface->Render();
     SDL_RenderPresent( renderer );
@@ -145,18 +160,18 @@ void Game::Clean()
 
 void Game::HandleCollisions()
 {
-    if( enemy.Alive() )
+    if( enemy->Alive() )
     for( auto& summon : summonDungeon->getObjectArray() )
     {
         
-        if( summon.GetPosition() + summon.GetRange() > enemy.GetPosition() )
+        if( summon.GetPosition() + summon.GetRange() > enemy->GetPosition() )
         {
-            summon.HandleCollision( &enemy );
+            summon.HandleCollision( enemy );
         }
 
-        if( enemy.GetPosition() < summon.GetPosition() )
+        if( enemy->GetPosition() < summon.GetPosition() )
         {
-            enemy.HandleCollision( &summon );
+            enemy->HandleCollision( &summon );
         }
 
     }
@@ -164,7 +179,7 @@ void Game::HandleCollisions()
 
 void Game::Reset()
 {
-    enemy.Reset( powf(enemyStatsLevelMultiplier, level) );
+    enemy->Reset( powf(enemyStatsLevelMultiplier, level) );
     summonDungeon->Reset();
     userInterface->Reset( powf(enemyStatsLevelMultiplier, level) );
     player->Reset();

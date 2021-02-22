@@ -1,4 +1,9 @@
+#include "../Managers/TextureManager.hpp"
+#include "../Objects/SceneObject.hpp"
+#include "../Engine/Game.hpp"
 #include "LoseMenu.hpp"
+#include "Button.hpp"
+#include "UILabel.hpp"
 
 LoseMenu::LoseMenu()
 {
@@ -17,9 +22,9 @@ LoseMenu::LoseMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
     this->game = game;
     this->renderer = renderer;
 
-    background = SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
+    background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
 
-    label = UILabel( renderer, 0, 20, "assets/fonts/Sans.ttf", 72, "You Lost", {255,255,255}, 1024 );
+    label = new UILabel( renderer, 0, 20, "assets/fonts/Sans.ttf", 72, "You Lost", {255,255,255}, 1024 );
 
     buttons.push_back({
         Button( textureManager->GetButtonTexture( "button1" ), exitButtonPos, renderer, []( Game* game ){ game->MainMenu(); } ),
@@ -34,8 +39,8 @@ LoseMenu::LoseMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
 
 void LoseMenu::Render()
 {
-    background.Render();
-    label.Render();
+    background->Render();
+    label->Render();
     for( auto& button : buttons )
     {
         button.Render();

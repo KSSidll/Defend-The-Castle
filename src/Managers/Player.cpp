@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "../Engine/Global.hpp"
 
 bool Player::Summon( int cost )
 {

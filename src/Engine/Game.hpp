@@ -1,16 +1,14 @@
 #define SDL_MAIN_HANDLED
-
 #pragma once
-#include "Global.hpp"
-#include "../UserInterface/UserInterface.hpp"
-#include "../Objects/Enemy.hpp"
-#include "../Managers/TextureManager.hpp"
-#include "../Managers/Player.hpp"
+#include <SDL2/SDL.h>
+#include <rapidjson/document.h>
 
-#include "rapidjson/filewritestream.h"
-#include <rapidjson/writer.h>
-
+class SummonDungeon;
+class TextureManager;
 class UserInterface;
+class Player;
+class Enemy;
+class SceneObject;
 
 class Game
 {
@@ -23,9 +21,8 @@ private:
     TextureManager* textureManager;
     UserInterface* userInterface;
     Player* player;
-
-    Enemy enemy;
-    SceneObject background;
+    Enemy* enemy;
+    SceneObject* background;
 
     float enemyStatsLevelMultiplier = 1.1;
     int level;

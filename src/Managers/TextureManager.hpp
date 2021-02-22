@@ -1,10 +1,9 @@
 #pragma once
+#include <unordered_map>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include "rapidjson/document.h"
-#include "rapidjson/filereadstream.h"
-#include <bits/stdc++.h>
+#include <rapidjson/document.h>
 
 struct ButtonTextures
 {
@@ -18,9 +17,9 @@ class TextureManager
     private:
         SDL_Renderer* renderer;
 
-        std::map< std::string, SDL_Texture* > textureArray;
-        std::map< std::string, TTF_Font* > fontArray;
-        std::map< std::string, ButtonTextures > buttonTextureArray;
+        std::unordered_map< std::string, SDL_Texture* > textureArray;
+        std::unordered_map< std::string, TTF_Font* > fontArray;
+        std::unordered_map< std::string, ButtonTextures > buttonTextureArray;
 
     public:
         TextureManager();
@@ -34,5 +33,5 @@ class TextureManager
 
         SDL_Texture* GetTexture( rapidjson::Value& texturePath );
         SDL_Texture* GetTexture( const char* key );
-        ButtonTextures GetButtonTexture( const char* key );
+        ButtonTextures* GetButtonTexture( const char* key );
 };

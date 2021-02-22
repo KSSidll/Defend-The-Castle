@@ -1,8 +1,8 @@
 #pragma once
-#include "Player.hpp"
 #include "rapidjson/document.h"
-#include "rapidjson/filereadstream.h"
 #include "unordered_map"
+
+class Player;
 
 struct Item
 {
@@ -30,7 +30,6 @@ public:
 
     Shop( Player* player, rapidjson::Value* json );
 
-    Item GetItem( const char* itemName ){ return items.at( itemName ); };
     void IncreaseLevel( const char* itemName ){ ++items.at( itemName ).level; };
     void Buy( const char* itemName );
     void Buy( const char* itemName, rapidjson::Value& json );

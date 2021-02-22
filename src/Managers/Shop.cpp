@@ -1,22 +1,23 @@
 #define RAPIDJSON_HAS_STDSTRING 1
 #include "Shop.hpp"
+#include "Player.hpp"
 
 Shop::Shop()
 {
-    this->player = nullptr;
     this->json = nullptr;
+    this->player = nullptr;
 }
 
 Shop::~Shop()
 {
-    this->json = nullptr;
     this->player = nullptr;
+    this->json = nullptr;
 }
 
 Shop::Shop( Player* player, rapidjson::Value* json )
 {
-    this->player = player;
     this->json = json;
+    this->player = player;
 
     for( auto& itemData : (*json)["items"].GetObject() )
     {

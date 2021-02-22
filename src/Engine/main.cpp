@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "Global.hpp"
 
 int main()
 {

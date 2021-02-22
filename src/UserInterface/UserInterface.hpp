@@ -1,23 +1,13 @@
 #pragma once
-#include "../Managers/SummonDungeon.hpp"
-#include "../Managers/TextureManager.hpp"
-#include "../Managers/Player.hpp"
-#include "MainMenu.hpp"
-#include "GameMenu.hpp"
-#include "PauseMenu.hpp"
-#include "DifficultySelectionMenu.hpp"
-#include "WinMenu.hpp"
-#include "LoseMenu.hpp"
-#include "ShopMenu.hpp"
 
-class MainMenu;
+class Game;
 class GameMenu;
 class PauseMenu;
+class MainMenu;
 class DifficultySelectionMenu;
 class WinMenu;
 class LoseMenu;
 class ShopMenu;
-class Game;
 
 class UserInterface
 {

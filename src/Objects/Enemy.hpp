@@ -1,10 +1,9 @@
 #pragma once
 #include "EntityObject.hpp"
-#include "PlayerSummon.hpp"
 
 class PlayerSummon;
 
-class Enemy : public EntityObject 
+class Enemy : virtual public EntityObject 
 {
     private:
         float speedReference;

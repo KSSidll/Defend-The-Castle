@@ -1,5 +1,7 @@
 #pragma once
-#include "../Managers/TextureManager.hpp"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <string>
 
 class UILabel
 {

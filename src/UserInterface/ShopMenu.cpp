@@ -1,19 +1,22 @@
+#include "../Managers/TextureManager.hpp"
+#include "../Managers/Shop.hpp"
+#include "../Objects/SceneObject.hpp"
 #include "ShopMenu.hpp"
-#include "unordered_map"
+#include "UILabel.hpp"
 
 ShopMenu::ShopMenu()
 {
     this->game = nullptr;
-    this->renderer = nullptr;
     this->player = nullptr;
     this->shop = nullptr;
+    this->renderer = nullptr;
 }
 
 ShopMenu::~ShopMenu()
 {
+    this->renderer = nullptr;
     this->shop = nullptr;
     this->player = nullptr;
-    this->renderer = nullptr;
     this->game = nullptr;
 }
 
@@ -24,15 +27,19 @@ ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
     this->player = player;
     shop = new Shop( player, json );
 
-    dictionary.emplace( "cost", "Cost" );
-    dictionary.emplace( "health", "Health" );
-    dictionary.emplace( "attackDamage", "Attack Damage" );
-    dictionary.emplace( "movementSpeed", "Movement Speed" );
-    dictionary.emplace( "attackSpeed", "Attack Speed" );
-    dictionary.emplace( "range", "Range" );
+    background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
+    mainLabel = new UILabel( renderer, 0, 50, "assets/fonts/Sans.ttf", 48, "Item Shop", {255,255,255}, 1024 );
 
-    background = SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
-    mainLabel = UILabel( renderer, 0, 50, "assets/fonts/Sans.ttf", 48, "Item Shop", {255,255,255}, 1024 );
+    
+
+    for( auto& unit : (*json)["summons"].GetObject() )
+    {
+        for( auto& item : (*json)["items"].GetObject() )
+        {
+            
+        }
+    }
+    
 
     // labels.push_back(UILabel( renderer, mainLabel.GetPosition().x , mainLabel.GetPosition().y + mainLabel.GetPosition().h + 5, "assets/fonts/Sans.ttf", 24, "Fuko: " + std::to_string( player->GetFuko() ), {255,255,255}, mainLabel.GetPosition().w ));
     // labels.push_back(UILabel( renderer, 1024 / 3 * 0, 160, "assets/fonts/Sans.ttf", 24, "Warrior", {255,255,255}, 1024 / 3 ));

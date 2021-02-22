@@ -1,4 +1,9 @@
+#include "../Managers/TextureManager.hpp"
+#include "../Engine/Game.hpp"
+#include "../Objects/SceneObject.hpp"
 #include "WinMenu.hpp"
+#include "Button.hpp"
+#include "UILabel.hpp"
 
 WinMenu::WinMenu()
 {
@@ -17,9 +22,9 @@ WinMenu::WinMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureMan
     this->game = game;
     this->renderer = renderer;
 
-    background = SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
+    background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
 
-    label = UILabel( renderer, 0, 20, "assets/fonts/Sans.ttf", 72, "Level Cleared", {255,255,255}, 1024 );
+    label = new UILabel( renderer, 0, 20, "assets/fonts/Sans.ttf", 72, "Level Cleared", {255,255,255}, 1024 );
 
     buttons.push_back({
         Button( textureManager->GetButtonTexture( "button1" ), saveButtonPos, renderer, []( Game* game ){ game->Save(true); } ),
@@ -39,8 +44,8 @@ WinMenu::WinMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureMan
 
 void WinMenu::Render()
 {
-    background.Render();
-    label.Render();
+    background->Render();
+    label->Render();
     for( auto& button : buttons )
     {
         button.Render();

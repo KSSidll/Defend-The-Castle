@@ -1,8 +1,11 @@
 #pragma once
-#include "../Objects/PlayerSummon.hpp"
-#include "Player.hpp"
-#include "TextureManager.hpp"
+#include <SDL2/SDL.h>
+#include <rapidjson/document.h>
 #include <deque>
+
+class TextureManager;
+class Player;
+class PlayerSummon;
 
 class SummonDungeon
 {

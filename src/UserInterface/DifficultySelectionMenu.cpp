@@ -1,15 +1,24 @@
+#include "../Managers/TextureManager.hpp"
+#include "../Objects/SceneObject.hpp"
+#include "../Engine/Game.hpp"
 #include "DifficultySelectionMenu.hpp"
+#include "Button.hpp"
+#include "UILabel.hpp"
 
 DifficultySelectionMenu::DifficultySelectionMenu()
 {
-    this->game = nullptr;
-    this->renderer = nullptr;
+    game = nullptr;
+    renderer = nullptr;
+    background = nullptr;
+    label = nullptr;
 }
 
 DifficultySelectionMenu::~DifficultySelectionMenu()
 {
-    this->renderer = nullptr;
-    this->game = nullptr;
+    label = nullptr;
+    background = nullptr;
+    renderer = nullptr;
+    game = nullptr;
 }
 
 DifficultySelectionMenu::DifficultySelectionMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager )
@@ -17,8 +26,8 @@ DifficultySelectionMenu::DifficultySelectionMenu( SDL_Renderer* renderer, Game* 
     this->game = game;
     this->renderer = renderer;
 
-    background = SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
-    label = UILabel( renderer, 0, 50, "assets/fonts/Sans.ttf", 48, "Select Difficulty", {255,255,255}, 1024 );
+    background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
+    label = new UILabel( renderer, 0, 50, "assets/fonts/Sans.ttf", 48, "Select Difficulty", {255,255,255}, 1024 );
 
     buttons.push_back({
         Button( textureManager->GetButtonTexture( "button1" ), easyButtonPos, renderer, []( Game* game ){ game->ChangeEnemyLevelMultiplier( 1.05 ); } ),
@@ -38,8 +47,8 @@ DifficultySelectionMenu::DifficultySelectionMenu( SDL_Renderer* renderer, Game* 
 
 void DifficultySelectionMenu::Render()
 {
-    background.Render();
-    label.Render();
+    background->Render();
+    label->Render();
     for( auto& button : buttons )
     {
         button.Render();

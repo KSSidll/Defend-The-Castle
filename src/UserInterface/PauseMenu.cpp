@@ -1,4 +1,9 @@
+#include "../Managers/TextureManager.hpp"
+#include "../Engine/Game.hpp"
+#include "../Objects/SceneObject.hpp"
 #include "PauseMenu.hpp"
+#include "Button.hpp"
+#include "UILabel.hpp"
 
 PauseMenu::PauseMenu()
 {
@@ -17,8 +22,8 @@ PauseMenu::PauseMenu( SDL_Renderer* renderer, Game* game, TextureManager* textur
     this->game = game;
     this->renderer = renderer;
 
-    background = SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
-    label = UILabel( renderer, 0, 50, "assets/fonts/Sans.ttf", 48, "Paused", {255,255,255}, 1024 );
+    background = new SceneObject( textureManager->GetTexture( "darkBackground" ), renderer );
+    label = new UILabel( renderer, 0, 50, "assets/fonts/Sans.ttf", 48, "Paused", {255,255,255}, 1024 );
 
     buttons.push_back({
         Button( textureManager->GetButtonTexture( "button1" ), resumeButtonPos, renderer, []( Game* game ){ game->UnPause(); } ),
@@ -32,8 +37,8 @@ PauseMenu::PauseMenu( SDL_Renderer* renderer, Game* game, TextureManager* textur
 
 void PauseMenu::Render()
 {
-    background.Render();
-    label.Render();
+    background->Render();
+    label->Render();
     for( auto& button : buttons )
     {
         button.Render();

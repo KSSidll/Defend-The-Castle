@@ -1,11 +1,17 @@
 #pragma once
-#include "../Managers/Player.hpp"
-#include "Button.hpp"
+#include <SDL2/SDL.h>
+#include <rapidjson/document.h>
 #include <deque>
+
+struct LabeledButton;
 
 class Button;
 class Game;
-struct LabeledButton;
+class SummonDungeon;
+class Player;
+class TextureManager;
+class UILabel;
+class SceneObject;
 
 class GameMenu
 {
@@ -19,15 +25,15 @@ class GameMenu
         std::deque<LabeledButton> buttons;
         
         SDL_Rect gameInfoBackgroundPos = { 0, 0, 1024, 100 };
-        SceneObject gameInfoBackground;
+        SceneObject* gameInfoBackground;
         
-        UILabel levelInfo;
-        UILabel playerFujika;
-        UILabel playerFuko;
+        UILabel* levelInfo;
+        UILabel* playerFujika;
+        UILabel* playerFuko;
 
-        SceneObject enemyStatsBackground;
-        UILabel enemyNameLabel;
-        UILabel enemyStatsLabel;
+        SceneObject* enemyStatsBackground;
+        UILabel* enemyNameLabel;
+        UILabel* enemyStatsLabel;
 
     public:
         GameMenu();

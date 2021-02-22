@@ -1,5 +1,4 @@
 #pragma once
-#include "../Engine/Global.hpp"
 #include "rapidjson/document.h"
 
 class Player

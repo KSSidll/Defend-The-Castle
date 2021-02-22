@@ -75,7 +75,7 @@ SDL_Texture* TextureManager::GetTexture( const char* key )
     return textureArray.at( key );
 }
 
-ButtonTextures TextureManager::GetButtonTexture( const char* key )
+ButtonTextures* TextureManager::GetButtonTexture( const char* key )
 {
-    return buttonTextureArray.at( key );
+    return &buttonTextureArray.at( key );
 }

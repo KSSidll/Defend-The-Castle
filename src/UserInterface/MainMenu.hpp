@@ -1,10 +1,13 @@
 #pragma once
-#include "Button.hpp"
+#include <SDL2/SDL.h>
 #include <deque>
 
-class Button;
-class Game;
 struct LabeledButton;
+
+class Game;
+class SceneObject;
+class UILabel;
+class TextureManager;
 
 class MainMenu
 {
@@ -13,9 +16,9 @@ class MainMenu
         SDL_Renderer* renderer;
 
         std::deque<LabeledButton> buttons;
-        SceneObject background;
+        SceneObject* background;
 
-        UILabel mainMenuLabel;
+        UILabel* mainMenuLabel;
 
         SDL_Rect newGameButtonPos = { 362,200,300,150 };
         SDL_Rect continueButtonPos = { 362,400,300,150 };

@@ -1,4 +1,15 @@
+#include "../Managers/SummonDungeon.hpp"
+#include "../Managers/TextureManager.hpp"
+#include "../Managers/Player.hpp"
+#include "../Engine/Game.hpp"
 #include "UserInterface.hpp"
+#include "MainMenu.hpp"
+#include "GameMenu.hpp"
+#include "PauseMenu.hpp"
+#include "DifficultySelectionMenu.hpp"
+#include "WinMenu.hpp"
+#include "LoseMenu.hpp"
+#include "ShopMenu.hpp"
 
 UserInterface::UserInterface()
 {
