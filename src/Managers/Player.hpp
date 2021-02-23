@@ -32,6 +32,7 @@ public:
 
     void Update();
     void Reset();
+    void HardReset();
     void Save( rapidjson::Document* saveJson );
     void Load( rapidjson::Value* saveJson );
 };

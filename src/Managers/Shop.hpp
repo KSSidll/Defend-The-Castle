@@ -30,6 +30,11 @@ public:
 
     Shop( Player* player, rapidjson::Value* json );
 
+    Item GetItem( const char* key ){ return items.at(key); };
+    std::unordered_map< std::string, Item > GetItems(){ return items; };
+
+    void Reset();
+
     void IncreaseLevel( const char* itemName ){ ++items.at( itemName ).level; };
     void Buy( const char* itemName );
     void Buy( const char* itemName, rapidjson::Value& json );

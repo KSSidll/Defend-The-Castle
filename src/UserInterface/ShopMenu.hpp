@@ -18,20 +18,21 @@ class ShopMenu
         Player* player;
         Shop* shop;
         SDL_Renderer* renderer;
+        rapidjson::Value* json;
 
-        int iPage = 0;
-        int cPage = 0;
+        int begin_column = 0;
+        int begin_line = 0;
 
         struct itemColumn;
-        struct itemPage;
-        std::deque<itemPage> itemPages;
+        struct columnLine;
+        struct Page;
+        Page* fullPage;
 
-        std::deque<UILabel*> labels;
         UILabel* mainLabel;
-        SceneObject* background;
-
+        UILabel* playerInfoLabel;
+        UILabel* returnButtonLabel;
         Button* returnButton;
-        SDL_Rect returnButtonPos = { 10, 10, 150, 100 };
+        SceneObject* background;
         
     public:
         ShopMenu();
@@ -39,9 +40,11 @@ class ShopMenu
 
         ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager, Player* player, rapidjson::Value* json );
 
-        void Update();
+        void Reset();
+
+        void Update( bool bStatUpdate = false );
         void Render();
-        void HandleEvents( SDL_Event* event );
+        void HandleEvents( SDL_Event* event, bool* bUpdate );
         void Save( rapidjson::Document* saveJson );
         void Load( rapidjson::Value* saveJson );
 };

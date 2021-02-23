@@ -48,6 +48,13 @@ void Player::Reset()
     frameCounter = 0;
 }
 
+void Player::HardReset()
+{
+    fujika = 0;
+    fuko = 0;
+    frameCounter = 0;
+}
+
 void Player::Save( rapidjson::Document* saveJson )
 {
     rapidjson::Value object( rapidjson::kObjectType );

@@ -44,5 +44,5 @@ class GameMenu
         void Render();
         void HandleEvents( SDL_Event* event );
         void Reset( float multiplier );
-        void Update();
+        void Update( bool bStatUpdate = false );
 };

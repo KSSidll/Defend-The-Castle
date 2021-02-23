@@ -55,6 +55,14 @@ void UserInterface::Update()
 
     else if( !game->Paused() )
         gameMenu->Update();
+
+    if( bStatUpdate )
+    {
+        shopMenu->Update( true );
+        gameMenu->Update( true );
+        bStatUpdate = false;
+    }
+
 }
 
 void UserInterface::Render()
@@ -96,7 +104,7 @@ void UserInterface::HandleEvents( SDL_Event* event )
         loseMenu->HandleEvents( event );
 
     else if( game->isShopMenu() )
-        shopMenu->HandleEvents( event );
+        shopMenu->HandleEvents( event, &bStatUpdate );
         
     else if( game->Paused() )
         pauseMenu->HandleEvents( event );
@@ -108,6 +116,15 @@ void UserInterface::HandleEvents( SDL_Event* event )
 void UserInterface::Reset( float multiplier )
 {
     gameMenu->Reset( multiplier );
+}
+
+void UserInterface::HardReset()
+{
+    bStatUpdate = true;
+
+    shopMenu->Reset();
+    
+    Update();
 }
 
 void UserInterface::Save( rapidjson::Document* saveJson )

@@ -19,27 +19,38 @@ Shop::Shop( Player* player, rapidjson::Value* json )
     this->json = json;
     this->player = player;
 
-    for( auto& itemData : (*json)["items"].GetObject() )
+    for( auto& unit : (*json)["items"].GetObject() )
     {
-        Item tmp_item;
-        tmp_item.itemCost = itemData.value["itemCost"].GetInt();
-        tmp_item.unit = itemData.value["unit"].GetString();
-        for( auto& stat : itemData.value["stats"].GetObject() )
+        for( auto& itemData : unit.value.GetObject() )
         {
-            tmp_item.stats.emplace( stat.name.GetString(), stat.value.GetInt() );
-        }
-
-        auto itr = itemData.value.FindMember("specialEffect");
-        if( itr != itemData.value.MemberEnd() )
-        {
-            tmp_item.specialEffect = true;
-            tmp_item.specialEffectLevelReq = itr->value["levelReq"].GetInt();
-            for( auto& stat : itr->value["stats"].GetObject() )
+            Item tmp_item;
+            tmp_item.itemCost = itemData.value["itemCost"].GetInt();
+            tmp_item.unit = unit.name.GetString();
+            for( auto& stat : itemData.value["stats"].GetObject() )
             {
-                tmp_item.specialEffectStats.emplace( stat.name.GetString(), stat.value.GetInt() );
+                tmp_item.stats.emplace( stat.name.GetString(), stat.value.GetInt() );
             }
+
+            auto itr = itemData.value.FindMember("specialEffect");
+            if( itr != itemData.value.MemberEnd() )
+            {
+                tmp_item.specialEffect = true;
+                tmp_item.specialEffectLevelReq = itr->value["levelReq"].GetInt();
+                for( auto& stat : itr->value["stats"].GetObject() )
+                {
+                    tmp_item.specialEffectStats.emplace( stat.name.GetString(), stat.value.GetInt() );
+                }
+            }
+            items.emplace( itemData.name.GetString(), tmp_item );
         }
-        items.emplace( itemData.name.GetString(), tmp_item );
+    }
+}
+
+void Shop::Reset()
+{
+    for( auto& item: items )
+    {
+        item.second.level = 0;
     }
 }
 

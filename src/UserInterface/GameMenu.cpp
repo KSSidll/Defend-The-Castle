@@ -132,12 +132,13 @@ void GameMenu::Reset( float multiplier )
     enemyStatsLabel->ChangeText( tmp_statText.c_str() );
 }
 
-void GameMenu::Update()
+void GameMenu::Update( bool bStatUpdate )
 {
     playerFujika->ChangeText( ("Fujika " + std::to_string( player->GetFujika() ) + " / " + std::to_string( player->GetFujikaLimit() )).c_str() );
     levelInfo->ChangeText( ("Level " + std::to_string( game->Level() +1 )).c_str() );
     playerFuko->ChangeText( ("Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() )).c_str() );
 
+    if( bStatUpdate )
     for( auto& button : buttons )
     {
         std::string tmp_statText = "";

@@ -177,6 +177,20 @@ void Game::HandleCollisions()
     }
 }
 
+void Game::JsonReset()
+{
+    FILE* objectsJsonFile = fopen( "assets/objects.json", "r" );
+    char* readBuffer = new char[65536];
+    rapidjson::FileReadStream objectsJson( objectsJsonFile, readBuffer, sizeof( readBuffer ) );
+    objectsDoc->ParseStream( objectsJson );
+    delete[] readBuffer;
+    fclose( objectsJsonFile );
+
+    player->HardReset();
+    userInterface->HardReset();
+    
+}
+
 void Game::Reset()
 {
     enemy->Reset( powf(enemyStatsLevelMultiplier, level) );
@@ -225,6 +239,7 @@ void Game::Load()
 
     Reset();
     Start();
+    ShopMenu();
 }
 
 void Game::IncreaseLevel()
@@ -252,6 +267,7 @@ void Game::NewGame()
 {
     level = 0;
     ResetMenus();
+    JsonReset();
     Reset();
     isPaused = true;
     difficultyMenu = true;
@@ -266,6 +282,7 @@ void Game::Start()
 void Game::MainMenu()
 {
     ResetMenus();
+    JsonReset();
     mainMenu = true;
     isPaused = true;
     menuFlag = true;

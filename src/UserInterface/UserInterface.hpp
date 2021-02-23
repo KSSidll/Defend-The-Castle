@@ -21,6 +21,8 @@ private:
     LoseMenu* loseMenu;
     ShopMenu* shopMenu;
 
+    bool bStatUpdate = false;
+
 public:
     UserInterface();
     ~UserInterface();
@@ -31,6 +33,7 @@ public:
     void Render();
     void HandleEvents( SDL_Event* event );
     void Reset( float multiplier );
+    void HardReset();
     void Save( rapidjson::Document* saveJson );
     void Load( rapidjson::Value* saveJson );
 };

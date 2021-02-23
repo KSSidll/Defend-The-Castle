@@ -49,6 +49,7 @@ public:
     void Render();
     void Clean();
     void HandleCollisions();
+    void JsonReset();
     void Reset();
     void Save(bool incrementLevel = false);
     void Load();

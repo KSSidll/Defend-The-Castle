@@ -50,8 +50,9 @@ Button::Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer,
     this->game_numbered = game;
 }
 
-Button::Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void (*item)( Shop* shop ) ) : Button( textures, rect, renderer )
+Button::Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void* itemName, void (*item)( Shop* shop, const char* itemName ) ) : Button( textures, rect, renderer )
 {
+    Arg = itemName;
     this->item = item;
 }
 

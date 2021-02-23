@@ -33,7 +33,7 @@ public:
     Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void* type, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ) );
     Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void (*game)( Game* game ) );
     Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void* number, void (*game)( Game* game, float* number ) );
-    Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void (*item)( Shop* shop ) );
+    Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void* itemName, void (*item)( Shop* shop, const char* itemName ) );
 
     void Render();
     bool HandleEvents( SDL_Event* event );
@@ -43,7 +43,7 @@ public:
     void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type) = nullptr;
     void (*game)( Game* game ) = nullptr;
     void (*game_numbered)( Game* game, float* number ) = nullptr;
-    void (*item)( Shop* shop ) = nullptr;
+    void (*item)( Shop* shop, const char* itemName ) = nullptr;
 };
 
 struct LabeledButton
