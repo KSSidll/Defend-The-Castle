@@ -32,6 +32,13 @@ Equipement
 - The Equipement can be bought only when it doesn't decrease one of the stats of the unit to a value lower than 1
 - Buying the Equipement doesn't change its cost
 
+Enemy
+- Enemy has starting stats which can be edited in [ assets/objects.json ]
+- With each level enemy stats are multiplied 
+  - The stats are rounded down to integer
+- Enemy info label doesn't update, so the only way to guess current health is to see how fast it moves
+  - The lower the health, the lower the movement speed, capped at 6
+
 # Disclaimer
 This is a side project and there are no plans for further developement after the initial release
 
