@@ -221,22 +221,28 @@ void Game::Save(bool incrementLevel)
 void Game::Load()
 {
     HardReset();
-    FILE* saveJsonFile = fopen( "assets/save.json", "r" );
-    char* readBuffer = new char[65536];
-    rapidjson::FileReadStream saveJson( saveJsonFile, readBuffer, sizeof( readBuffer ) );
-    saveDoc->ParseStream( saveJson );
-    delete[] readBuffer;
-    fclose( saveJsonFile );
 
-    enemyStatsLevelMultiplier = (*(rapidjson::Value*)(saveDoc))["game"]["enemyStatsLevelMultiplier"].GetFloat();
-    level = (*(rapidjson::Value*)(saveDoc))["game"]["level"].GetInt();
+    if( FILE* saveJsonFile = fopen( "assets/save.json", "r" ) )
+    {
+        char* readBuffer = new char[65536];
+        rapidjson::FileReadStream saveJson( saveJsonFile, readBuffer, sizeof( readBuffer ) );
+        saveDoc->ParseStream( saveJson );
+        delete[] readBuffer;
+        fclose( saveJsonFile );
 
-    player->Load( saveDoc );
-    userInterface->Load( saveDoc );
+        enemyStatsLevelMultiplier = (*(rapidjson::Value*)(saveDoc))["game"]["enemyStatsLevelMultiplier"].GetFloat();
+        level = (*(rapidjson::Value*)(saveDoc))["game"]["level"].GetInt();
+
+        player->Load( saveDoc );
+        userInterface->Load( saveDoc );
+    }
+    else
+    {
+        Save();
+    }
 
     Reset();
     Start();
-    ShopMenu();
 }
 
 void Game::IncreaseLevel()

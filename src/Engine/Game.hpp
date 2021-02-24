@@ -25,7 +25,7 @@ private:
     SceneObject* background;
 
     float enemyStatsLevelMultiplier = 1.1;
-    int level;
+    int level = 0;
 
     bool menuFlag = true;
     bool isPaused = true;
