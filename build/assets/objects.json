@@ -125,6 +125,20 @@
                     "health": 15,
                     "movementSpeed": -1
                 }
+            },
+            "shield":{
+                "itemCost": 2,
+                "stats":{
+                    "health": 8
+                },
+    
+                "specialEffect":{
+                    "levelReq": 1,
+                    "stats":{
+                        "attackSpeed": -2,
+                        "movementSpeed": -2
+                    }
+                }
             }
         },
         
@@ -141,6 +155,12 @@
                     "stats":{
                         "cost": -1
                     }
+                }
+            },
+            "arrows":{
+                "itemCost": 25,
+                "stats":{
+                    "attackDamage": 1
                 }
             }
         }
