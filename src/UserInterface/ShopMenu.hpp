@@ -23,6 +23,9 @@ class ShopMenu
         int begin_column = 0;
         int begin_line = 0;
 
+        int column_count = 0;
+        int line_count = 0;
+
         struct itemColumn;
         struct columnLine;
         struct Page;
@@ -33,6 +36,11 @@ class ShopMenu
         UILabel* returnButtonLabel;
         Button* returnButton;
         SceneObject* background;
+
+        Button* col_incButton;
+        Button* col_decButton;
+        Button* line_incButton;
+        Button* line_decButton;
         
     public:
         ShopMenu();

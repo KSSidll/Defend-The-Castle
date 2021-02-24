@@ -13,11 +13,7 @@
         "assets/prototypes/warrior.png",
         "assets/prototypes/tank.png",
         "assets/prototypes/archer.png",
-        "assets/prototypes/enemy.png",
-        "assets/prototypes/arrow-up.png",
-        "assets/prototypes/arrow-down.png",
-        "assets/prototypes/arrow-left.png",
-        "assets/prototypes/arrow-right.png"
+        "assets/prototypes/enemy.png"
     ],
 
     "background":{
@@ -92,6 +88,32 @@
                     "stats":{
                         "range": 50
                     }
+                }
+            },
+            "sword":{
+                "itemCost": 7,
+                "stats":{
+                    "attackDamage": 1
+                }
+            },
+            "shield":{
+                "itemCost": 3,
+                "stats":{
+                    "health": 5
+                },
+    
+                "specialEffect":{
+                    "levelReq": 1,
+                    "stats":{
+                        "attackSpeed": -2
+                    }
+                }
+            },
+            "boots":{
+                "itemCost": 25,
+                "stats":{
+                    "movementSpeed": 1,
+                    "health": -50
                 }
             }
         },

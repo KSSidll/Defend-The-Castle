@@ -45,19 +45,31 @@ void TextureManager::LoadTexture( const char* key, const char* filePath )
 
 void TextureManager::LoadButtonTexture( const char* key, const char* none, const char* over, const char* down )
 {
+    SDL_Texture* texture_none = nullptr;
+    SDL_Texture* texture_over = nullptr;
+    SDL_Texture* texture_down = nullptr;
 
     SDL_Surface* tempSurface_none = IMG_Load( none );
-    SDL_Texture* texture_none = SDL_CreateTextureFromSurface( renderer, tempSurface_none );
+    texture_none = SDL_CreateTextureFromSurface( renderer, tempSurface_none );
     SDL_FreeSurface( tempSurface_none );
 
-    SDL_Surface* tempSurface_over = IMG_Load( over );
-    SDL_Texture* texture_over = SDL_CreateTextureFromSurface( renderer, tempSurface_over );
-    SDL_FreeSurface( tempSurface_over );
-
-    SDL_Surface* tempSurface_down = IMG_Load( down );
-    SDL_Texture* texture_down = SDL_CreateTextureFromSurface( renderer, tempSurface_down );
-    SDL_FreeSurface( tempSurface_down );
-
+    if( over == none )
+        texture_over = texture_none;
+    else
+    {
+        SDL_Surface* tempSurface_over = IMG_Load( over );
+        texture_over = SDL_CreateTextureFromSurface( renderer, tempSurface_over );
+        SDL_FreeSurface( tempSurface_over );
+    }
+    
+    if( down == over )
+        texture_down = texture_over;
+    else
+    {
+        SDL_Surface* tempSurface_down = IMG_Load( down );
+        texture_down = SDL_CreateTextureFromSurface( renderer, tempSurface_down );
+        SDL_FreeSurface( tempSurface_down );
+    }
 
     ButtonTextures textures = { texture_none, texture_over, texture_down };
 

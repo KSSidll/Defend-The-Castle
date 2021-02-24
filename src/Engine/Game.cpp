@@ -83,6 +83,10 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
 
     textureManager->LoadButtonTexture( "button1", "assets/prototypes/button1.png", "assets/prototypes/button1-over.png", "assets/prototypes/button1-down.png" );
     textureManager->LoadButtonTexture( "button2", "assets/prototypes/button2.png", "assets/prototypes/button2-over.png", "assets/prototypes/button2-down.png" );
+    textureManager->LoadButtonTexture( "button-arrow-up", "assets/prototypes/arrow-up.png", "assets/prototypes/arrow-up.png", "assets/prototypes/arrow-up.png" );
+    textureManager->LoadButtonTexture( "button-arrow-down", "assets/prototypes/arrow-down.png", "assets/prototypes/arrow-down.png", "assets/prototypes/arrow-down.png" );
+    textureManager->LoadButtonTexture( "button-arrow-left", "assets/prototypes/arrow-left.png", "assets/prototypes/arrow-left.png", "assets/prototypes/arrow-left.png" );
+    textureManager->LoadButtonTexture( "button-arrow-right", "assets/prototypes/arrow-right.png", "assets/prototypes/arrow-right.png", "assets/prototypes/arrow-right.png" );
     
     background = new SceneObject( textureManager->GetTexture( (*objectsDoc)["background"]["textureSrc"]), renderer );
 
