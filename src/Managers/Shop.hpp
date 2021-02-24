@@ -11,8 +11,9 @@ struct Item
     int itemCost = 0;
     std::unordered_map< std::string, int > stats;
 
-    bool specialEffect = false;
-    int specialEffectLevelReq;
+    bool drawSpecialEffect = false;
+    bool bSpecialEffectSet = false;
+    int specialEffectLevelReq = -1;
     std::unordered_map< std::string, int > specialEffectStats;
 };
 

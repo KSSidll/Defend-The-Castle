@@ -11,6 +11,7 @@ private:
     SDL_Texture* texture;
 
     SDL_Rect position;
+    SDL_Rect org_refPos;
     SDL_Color color;
     int fontSize;
     bool wCentered = false;

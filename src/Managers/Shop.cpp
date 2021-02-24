@@ -34,7 +34,7 @@ Shop::Shop( Player* player, rapidjson::Value* json )
             auto itr = itemData.value.FindMember("specialEffect");
             if( itr != itemData.value.MemberEnd() )
             {
-                tmp_item.specialEffect = true;
+                tmp_item.drawSpecialEffect = true;
                 tmp_item.specialEffectLevelReq = itr->value["levelReq"].GetInt();
                 for( auto& stat : itr->value["stats"].GetObject() )
                 {
@@ -48,9 +48,28 @@ Shop::Shop( Player* player, rapidjson::Value* json )
 
 void Shop::Reset()
 {
-    for( auto& item: items )
+    for( auto& item : items )
     {
-        item.second.level = 0;
+        if( item.second.level > 0 )
+        {
+            for( auto& stat : item.second.stats )
+            {
+                int preVal = (*json)["summons"][ item.second.unit ][ stat.first ].GetInt();
+                (*json)["summons"][ item.second.unit ][ stat.first ].SetInt( preVal - (stat.second * item.second.level) );
+            }
+            if( item.second.bSpecialEffectSet )
+            {
+                for( auto& stat : item.second.specialEffectStats )
+                {
+                    int preVal = (*json)["summons"][ item.second.unit ][ stat.first ].GetInt();
+                    (*json)["summons"][ item.second.unit ][ stat.first ].SetInt( preVal - stat.second );
+                }
+                item.second.bSpecialEffectSet = false;
+                item.second.drawSpecialEffect = true;
+            }
+        
+            item.second.level = 0;
+        }
     }
 }
 
@@ -67,13 +86,14 @@ void Shop::Buy( const char* itemName )
             if( previousValue + stat.second <= 0 ) isValid = false;
             else (*json)["summons"][ items.at( itemName ).unit ][ stat.first.c_str() ].SetInt( previousValue + stat.second );
 
-            if( isValid && items.at( itemName ).specialEffect && items.at( itemName ).specialEffectLevelReq - 1 == items.at( itemName ).level )
+            if( isValid && items.at( itemName ).drawSpecialEffect && items.at( itemName ).specialEffectLevelReq - 1 == items.at( itemName ).level )
             {
                 for( auto& stat : items.at( itemName ).specialEffectStats )
                 {
                     previousValue = (*json)["summons"][ items.at( itemName ).unit ][ stat.first.c_str() ].GetInt();
                     (*json)["summons"][ items.at( itemName ).unit ][ stat.first.c_str() ].SetInt( previousValue + stat.second );
-                    items.at( itemName ).specialEffect = false;
+                    items.at( itemName ).drawSpecialEffect = false;
+                    items.at( itemName ).bSpecialEffectSet = true;
                 }
             }
         }
@@ -110,13 +130,14 @@ void Shop::Load( rapidjson::Value* saveJson )
                 if( previousValue + stat.second <= 0 ) isValid = false;
                 else (*json)["summons"][item.second.unit][ stat.first.c_str() ].SetInt( previousValue + stat.second );
 
-                if( isValid && item.second.specialEffect && item.second.specialEffectLevelReq - 1 == item.second.level )
+                if( isValid && item.second.drawSpecialEffect && item.second.specialEffectLevelReq - 1 == item.second.level )
                 {
                     for( auto& stat : items.at( item.first ).specialEffectStats )
                     {
                         previousValue = (*json)["summons"][ items.at( item.first ).unit ][ stat.first.c_str() ].GetInt();
                         (*json)["summons"][ items.at( item.first ).unit ][ stat.first.c_str() ].SetInt( previousValue + stat.second );
-                        items.at( item.first ).specialEffect = false;
+                        items.at( item.first ).drawSpecialEffect = false;
+                        items.at( item.first ).bSpecialEffectSet = true;
                     }
                 }
             }

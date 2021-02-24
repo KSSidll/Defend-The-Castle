@@ -171,7 +171,7 @@ ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
                 }
             }
 
-            if( tmp_item.specialEffect )
+            if( tmp_item.drawSpecialEffect )
             for( auto& stat : tmp_item.specialEffectStats )
             {
                 auto itr = (*json)["lang"].FindMember(stat.first.c_str());
@@ -233,7 +233,7 @@ void ShopMenu::Update( bool bStatUpdate )
                     }
                 }
 
-                if( tmp_item.specialEffect )
+                if( tmp_item.drawSpecialEffect )
                 for( auto& stat : tmp_item.specialEffectStats )
                 {
                     auto itr = (*json)["lang"].FindMember(stat.first.c_str());

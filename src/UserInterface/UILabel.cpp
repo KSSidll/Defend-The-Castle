@@ -24,9 +24,8 @@ UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPa
     this->fontSize = fontSize;
     this->text = text;
 
-    position.x = xPos;
-    position.y = yPos;
-
+    org_refPos.x = position.x = xPos;
+    org_refPos.y = position.y = yPos;
 
     TTF_SizeText( font, text.c_str(), &position.w, &position.h );
 
@@ -41,6 +40,7 @@ UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPa
 {
     if( labelWidth > 0 )
     {
+        org_refPos.w = labelWidth;
         position.x += ( labelWidth - position.w ) / 2;
         wCentered = true;
     }
@@ -50,6 +50,7 @@ UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPa
 {
     if( labelHeight > 0 )
     {
+        org_refPos.h = labelHeight;
         position.y += ( labelHeight - position.h ) / 2;
         hCentered = true;
     }
@@ -57,8 +58,8 @@ UILabel::UILabel( SDL_Renderer* renderer, int xPos, int yPos, const char* fontPa
 
 void UILabel::ChangeText( const char* text )
 {
-    int wRef = position.w;
-    int hRef = position.h;
+    position.x = org_refPos.x;
+    position.y = org_refPos.y;
 
     TTF_SizeText( font, text, &position.w, &position.h );
 
@@ -70,18 +71,12 @@ void UILabel::ChangeText( const char* text )
 
     if( wCentered )
     {
-        if( position.w < wRef )
-            position.x -= (position.w - wRef) / 2;
-        else
-            position.x += (position.w - wRef) / 2;
+        position.x += ( org_refPos.w - position.w ) / 2;
     }
     
     if( hCentered )
     {
-        if( position.h < hRef )
-            position.y -= (position.h - hRef) / 2;
-        else
-            position.y += (position.h - hRef) / 2;
+        position.y += ( org_refPos.h - position.h ) / 2;
     }
 }
 
