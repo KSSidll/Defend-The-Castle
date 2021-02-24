@@ -12,7 +12,7 @@
         "assets/prototypes/background.jpg",
         "assets/prototypes/warrior.png",
         "assets/prototypes/tank.png",
-        "assets/prototypes/archer.png",
+        "assets/prototypes/mage.png",
         "assets/prototypes/enemy.png"
     ],
 
@@ -55,8 +55,8 @@
             "range": 30,
             "positions" : [18,12,12,15]
         },
-        "archer":{
-            "textureSrc": "assets/prototypes/archer.png",
+        "mage":{
+            "textureSrc": "assets/prototypes/mage.png",
             "srcRectX": 0,
             "srcRectY": 0,
             "srcRectH": 420,
@@ -142,8 +142,8 @@
             }
         },
         
-        "archer":{
-            "bow":{
+        "mage":{
+            "wand":{
                 "itemCost": 5,
                 "stats":{
                     "attackDamage": 2,
@@ -157,7 +157,7 @@
                     }
                 }
             },
-            "arrows":{
+            "magic ring":{
                 "itemCost": 25,
                 "stats":{
                     "attackDamage": 1

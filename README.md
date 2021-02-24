@@ -15,7 +15,7 @@ You can pause the game by pressing ESC key
 There are currently 3 different units that you can summon
 - Warrior
 - Tank
-- Archer - which doesn't have a custom texture yet and will most likely not have one even after initial release
+- Mage
 
 Each unit has different stats which you can modify by changing [ "summons" ] object in [ assets/objects.json ] file
 You can also add custom units by modifying that object
