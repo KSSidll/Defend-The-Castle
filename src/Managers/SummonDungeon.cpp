@@ -19,22 +19,18 @@ SummonDungeon::~SummonDungeon()
 
 void SummonDungeon::KillPending()
 {
-    std::vector<int> enitityID;
     for( auto& summon : pendingKills )
     {
         for( int i = 0; i != objectArray.size(); ++i )
         {
             if( objectArray[i].GetId() == summon->GetId() )
             {
-                enitityID.push_back(i);
+                objectArray[i] = objectArray.back();
+                objectArray.pop_back();
+                --i;
+                break;
             }
         }
-    }
-
-    for( auto id : enitityID )
-    {
-        objectArray[id] = objectArray.back();
-        objectArray.pop_back();
     }
 
     pendingKills.clear();

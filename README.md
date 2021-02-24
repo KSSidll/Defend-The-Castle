@@ -38,6 +38,9 @@ Enemy
   - The stats are rounded down to integer
 - Enemy info label doesn't update, so the only way to guess current health is to see how fast it moves
   - The lower the health, the lower the movement speed, capped at 6
+- Hits everyone within range
+  - Only starts hitting when directly next to at least one entity
+    - Doesn't stop hitting until every entity within range is dead
 
 # Disclaimer
 This is a side project and there are no plans for further developement after the initial release

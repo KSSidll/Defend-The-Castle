@@ -127,7 +127,11 @@ void GameMenu::Reset( float multiplier )
         auto itr = (*json)["lang"].FindMember(stat.name.GetString());
         if( itr != (*json)["lang"].MemberEnd() )
         {
-            tmp_statText.append( std::string(itr->value.GetString()) + ": " + std::to_string((int)(stat.value.GetInt() * multiplier)) );
+            if( std::string(stat.name.GetString()) == "range" )
+                tmp_statText.append( std::string(itr->value.GetString()) + ": " + std::to_string((int)(stat.value.GetInt() )) );
+            else
+                tmp_statText.append( std::string(itr->value.GetString()) + ": " + std::to_string((int)(stat.value.GetInt() * multiplier)) );
+
             tmp_statText.append( "\n" );
         }
     }

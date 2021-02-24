@@ -139,7 +139,7 @@ void Game::Update()
     if( enemy->KillPending() )
         WinMenu();
 
-    if( enemy->GetPosition() <= 0 )
+    if( enemy->GetPosition() <= -250 )
         LoseGame();
 }
 
@@ -164,10 +164,10 @@ void Game::Clean()
 
 void Game::HandleCollisions()
 {
+    bool bEnemyCollision = false;
     if( enemy->Alive() )
     for( auto& summon : summonDungeon->getObjectArray() )
     {
-        
         if( summon.GetPosition() + summon.GetRange() > enemy->GetPosition() )
         {
             summon.HandleCollision( enemy );
@@ -175,9 +175,17 @@ void Game::HandleCollisions()
 
         if( enemy->GetPosition() < summon.GetPosition() )
         {
+            bEnemyCollision = true;
+        }
+    }
+
+    if( bEnemyCollision )
+    for( auto& summon : summonDungeon->getObjectArray() )
+    {
+        if( enemy->GetPosition() - enemy->GetRange() < summon.GetPosition() )
+        {
             enemy->HandleCollision( &summon );
         }
-
     }
 }
 
