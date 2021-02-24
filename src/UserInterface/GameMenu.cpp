@@ -39,8 +39,6 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
     levelInfo = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 1), gameInfoBackgroundPos.y, FONT_SANS, 24, "Level " + std::to_string( game->Level() +1 ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
     playerFuko = new UILabel( renderer, (gameInfoBackgroundPos.w / 3 * 2), gameInfoBackgroundPos.y, FONT_SANS, 24, "Fuko " + std::to_string( player->GetFuko() ) + " / " + std::to_string( player->GetFukoLimit() ), {255,255,255}, gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h );
 
-    // check why labels aren't aligned properly when entity count > 3
-
     int entityCounter = 0;
     int rectW = gameInfoBackgroundPos.w / ((*json)["summons"].MemberCount() + 1);
     SDL_Rect tmp_rect = { 0, 543, rectW, 225 };
@@ -74,6 +72,8 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
         ++entityCounter;
         tmp_rect.x = entityCounter * rectW;
     }
+
+    tmp_rect.w = gameInfoBackgroundPos.w - (rectW * entityCounter);
 
     enemyStatsBackground = new SceneObject(textureManager->GetTexture("darkBackground"), renderer, tmp_rect);
     enemyNameLabel = new UILabel(renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24, "Enemy", {255,255,255}, tmp_rect.w);
