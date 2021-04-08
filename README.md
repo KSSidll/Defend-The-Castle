@@ -27,7 +27,7 @@ Currency
   - You can spend Fuko on equipement in Shop menu after you pass a level.
   
 Equipement
-- The equipement hasn't been made modular yet but will most likely be before initial release
+- You can add or modify equipement in [ assets/objects.json ] file by modifying [ "items" ] object
 - Each piece of Equipement has predefined cost
 - The Equipement can be bought only when it doesn't decrease one of the stats of the unit to a value lower than 1
 - Buying the Equipement doesn't change its cost
