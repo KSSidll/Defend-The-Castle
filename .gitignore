@@ -1,2 +1,5 @@
-#save file
-build/assets/save.json
+# build files
+build/
+
+# build scripts
+scripts/
