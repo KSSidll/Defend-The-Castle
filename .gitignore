@@ -3,3 +3,6 @@ build/
 
 # build scripts
 scripts/
+
+# clangd configuration
+compile_flags.txt
