@@ -1,11 +1,11 @@
-#include "../Managers/Player.hpp"
-#include "../Managers/TextureManager.hpp"
-#include "../Managers/SummonDungeon.hpp"
-#include "../Engine/Game.hpp"
-#include "../Engine/Global.hpp"
-#include "../Objects/SceneObject.hpp"
-#include "GameMenu.hpp"
-#include "Button.hpp"
+#include "../Managers/Player.h"
+#include "../Managers/TextureManager.h"
+#include "../Managers/SummonDungeon.h"
+#include "../Engine/Game.h"
+#include "../Engine/Global.h"
+#include "../Objects/SceneObject.h"
+#include "GameMenu.h"
+#include "Button.h"
 
 GameMenu::GameMenu()
 {
@@ -60,7 +60,7 @@ GameMenu::GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer
         UILabel NameLabel = UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24, tmp_name, {255,255,255}, tmp_rect.w );
         UILabel StatsLabel = UILabel( renderer, tmp_rect.x + 5, tmp_rect.y + NameLabel.GetPosition().h + 5, FONT_SANS, 16, tmp_statText, {255,255,255} );
         Button button = Button( textureManager->GetButtonTexture( "button2" ), tmp_rect, renderer, (void*)(entity.name.GetString()), []( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ){ dungeon->SummonObject( json["summons"][type] ); } );
-        
+
         buttons.push_back({
             button,
             {

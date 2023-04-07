@@ -1,9 +1,9 @@
-#include "../Managers/TextureManager.hpp"
-#include "../Engine/Game.hpp"
-#include "../Objects/SceneObject.hpp"
-#include "MainMenu.hpp"
-#include "Button.hpp"
-#include "UILabel.hpp"
+#include "../Managers/TextureManager.h"
+#include "../Engine/Game.h"
+#include "../Objects/SceneObject.h"
+#include "MainMenu.h"
+#include "Button.h"
+#include "UILabel.h"
 
 MainMenu::MainMenu()
 {

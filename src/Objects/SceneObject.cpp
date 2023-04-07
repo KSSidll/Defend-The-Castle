@@ -1,4 +1,4 @@
-#include "SceneObject.hpp"
+#include "SceneObject.h"
 
 SceneObject::SceneObject()
 {
@@ -32,4 +32,4 @@ void SceneObject::Render()
         SDL_RenderCopy( renderer, objTexture, NULL, NULL );
     else
         SDL_RenderCopy( renderer, objTexture, NULL, &position );
-}  
+}

@@ -1,9 +1,9 @@
-#include "../Managers/TextureManager.hpp"
-#include "../Engine/Game.hpp"
-#include "../Objects/SceneObject.hpp"
-#include "WinMenu.hpp"
-#include "Button.hpp"
-#include "UILabel.hpp"
+#include "../Managers/TextureManager.h"
+#include "../Engine/Game.h"
+#include "../Objects/SceneObject.h"
+#include "WinMenu.h"
+#include "Button.h"
+#include "UILabel.h"
 
 WinMenu::WinMenu()
 {
@@ -16,7 +16,7 @@ WinMenu::~WinMenu()
     renderer = nullptr;
     game = nullptr;
 }
-    
+
 WinMenu::WinMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager )
 {
     this->game = game;

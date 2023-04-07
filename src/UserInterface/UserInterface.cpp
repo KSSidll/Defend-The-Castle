@@ -1,15 +1,15 @@
-#include "../Managers/SummonDungeon.hpp"
-#include "../Managers/TextureManager.hpp"
-#include "../Managers/Player.hpp"
-#include "../Engine/Game.hpp"
-#include "UserInterface.hpp"
-#include "MainMenu.hpp"
-#include "GameMenu.hpp"
-#include "PauseMenu.hpp"
-#include "DifficultySelectionMenu.hpp"
-#include "WinMenu.hpp"
-#include "LoseMenu.hpp"
-#include "ShopMenu.hpp"
+#include "../Managers/SummonDungeon.h"
+#include "../Managers/TextureManager.h"
+#include "../Managers/Player.h"
+#include "../Engine/Game.h"
+#include "UserInterface.h"
+#include "MainMenu.h"
+#include "GameMenu.h"
+#include "PauseMenu.h"
+#include "DifficultySelectionMenu.h"
+#include "WinMenu.h"
+#include "LoseMenu.h"
+#include "ShopMenu.h"
 
 UserInterface::UserInterface()
 {
@@ -105,7 +105,7 @@ void UserInterface::HandleEvents( SDL_Event* event )
 
     else if( game->isShopMenu() )
         shopMenu->HandleEvents( event, &bStatUpdate );
-        
+
     else if( game->Paused() )
         pauseMenu->HandleEvents( event );
 
@@ -123,7 +123,7 @@ void UserInterface::HardReset()
     bStatUpdate = true;
 
     shopMenu->Reset();
-    
+
     Update();
 }
 

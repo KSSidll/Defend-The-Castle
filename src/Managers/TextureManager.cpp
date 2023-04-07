@@ -1,4 +1,4 @@
-#include "TextureManager.hpp"
+#include "TextureManager.h"
 
 TextureManager::TextureManager()
 {
@@ -61,7 +61,7 @@ void TextureManager::LoadButtonTexture( const char* key, const char* none, const
         texture_over = SDL_CreateTextureFromSurface( renderer, tempSurface_over );
         SDL_FreeSurface( tempSurface_over );
     }
-    
+
     if( down == over )
         texture_down = texture_over;
     else

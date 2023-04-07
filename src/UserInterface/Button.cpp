@@ -1,9 +1,9 @@
-#include "../Managers/TextureManager.hpp"
-#include "../Managers/Shop.hpp"
-#include "../Managers/SummonDungeon.hpp"
-#include "../Engine/Game.hpp"
-#include "Button.hpp"
-#include "UILabel.hpp"
+#include "../Managers/TextureManager.h"
+#include "../Managers/Shop.h"
+#include "../Managers/SummonDungeon.h"
+#include "../Engine/Game.h"
+#include "Button.h"
+#include "UILabel.h"
 
 Button::Button()
 {
@@ -22,7 +22,7 @@ Button::~Button()
 }
 
 Button::Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer )
-{   
+{
     this->rect.x = rect.x;
     this->rect.y = rect.y;
     this->rect.w = rect.w;
@@ -97,7 +97,7 @@ bool Button::HandleEvents( SDL_Event* event )
         else if( BUTTON_STATE == MOUSE_OUT )
             BUTTON_STATE = MOUSE_OVER;
     }
-    
+
     if( event->type == SDL_MOUSEBUTTONDOWN )
     {
         if( BUTTON_STATE == MOUSE_OVER )

@@ -1,9 +1,9 @@
-#include "../Managers/TextureManager.hpp"
-#include "../Objects/SceneObject.hpp"
-#include "../Engine/Game.hpp"
-#include "LoseMenu.hpp"
-#include "Button.hpp"
-#include "UILabel.hpp"
+#include "../Managers/TextureManager.h"
+#include "../Objects/SceneObject.h"
+#include "../Engine/Game.h"
+#include "LoseMenu.h"
+#include "Button.h"
+#include "UILabel.h"
 
 LoseMenu::LoseMenu()
 {

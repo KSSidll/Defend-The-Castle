@@ -1,5 +1,5 @@
 #pragma once
-#include "MovableObject.hpp"
+#include "MovableObject.h"
 
 class EntityObject : public MovableObject
 {
@@ -15,11 +15,11 @@ class EntityObject : public MovableObject
         int attackSpeed;
 
         void Move();
-        
+
     public:
         EntityObject(){};
         ~EntityObject(){};
-        
+
         EntityObject( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer );
 
         void Kill();

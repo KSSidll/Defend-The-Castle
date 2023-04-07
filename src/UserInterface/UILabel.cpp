@@ -1,4 +1,4 @@
-#include "UILabel.hpp"
+#include "UILabel.h"
 #include <SDL2/SDL_image.h>
 
 UILabel::UILabel()
@@ -73,7 +73,7 @@ void UILabel::ChangeText( const char* text )
     {
         position.x += ( org_refPos.w - position.w ) / 2;
     }
-    
+
     if( hCentered )
     {
         position.y += ( org_refPos.h - position.h ) / 2;

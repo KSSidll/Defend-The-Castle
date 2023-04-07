@@ -1,6 +1,6 @@
 #define RAPIDJSON_HAS_STDSTRING 1
-#include "Shop.hpp"
-#include "Player.hpp"
+#include "Shop.h"
+#include "Player.h"
 
 Shop::Shop()
 {
@@ -67,7 +67,7 @@ void Shop::Reset()
                 item.second.bSpecialEffectSet = false;
                 item.second.drawSpecialEffect = true;
             }
-        
+
             item.second.level = 0;
         }
     }

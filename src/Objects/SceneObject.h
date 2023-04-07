@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "rapidjson/document.h"
-#include "../Engine/Global.hpp"
+#include "../Engine/Global.h"
 
 class SceneObject
 {

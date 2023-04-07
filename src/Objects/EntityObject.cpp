@@ -1,4 +1,4 @@
-#include "EntityObject.hpp"
+#include "EntityObject.h"
 
 void EntityObject::Move()
 {

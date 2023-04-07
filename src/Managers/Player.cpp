@@ -1,5 +1,5 @@
-#include "Player.hpp"
-#include "../Engine/Global.hpp"
+#include "Player.h"
+#include "../Engine/Global.h"
 
 bool Player::Summon( int cost )
 {
@@ -29,7 +29,7 @@ void Player::Update()
         {
             if( fujika + fujikaGain > fujikaLimit ) fujika = fujikaLimit;
             else fujika += fujikaGain;
-        } 
+        }
         else if ( fuko != fukoLimit )
         {
             if( fuko + fukoGain > fukoLimit ) fuko = fukoLimit;
@@ -39,7 +39,7 @@ void Player::Update()
         frameCounter = 0;
     }
     else ++frameCounter;
-        
+
 }
 
 void Player::Reset()

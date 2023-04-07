@@ -1,11 +1,11 @@
-#include "../Managers/TextureManager.hpp"
-#include "../Managers/Shop.hpp"
-#include "../Managers/Player.hpp"
-#include "../Objects/SceneObject.hpp"
-#include "../Engine/Game.hpp"
-#include "Button.hpp"
-#include "ShopMenu.hpp"
-#include "UILabel.hpp"
+#include "../Managers/TextureManager.h"
+#include "../Managers/Shop.h"
+#include "../Managers/Player.h"
+#include "../Objects/SceneObject.h"
+#include "../Engine/Game.h"
+#include "Button.h"
+#include "ShopMenu.h"
+#include "UILabel.h"
 
 ShopMenu::ShopMenu()
 {
@@ -54,7 +54,7 @@ struct ShopMenu::itemColumn
         }
 
         for( auto itr = begin_column; itr < begin_column + 3 - offset; ++itr )
-        {   
+        {
             items[itr].Render();
         }
     }
@@ -166,7 +166,7 @@ ShopMenu::ShopMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureM
             SDL_Rect tmp_pos = { (1024 / 3 * tmp_column_counter) + 10, ((768 - (tmp_itemColumn.label.GetPosition().y + tmp_itemColumn.label.GetPosition().h)) / 3 * (tmp_item_counter % 3)) + tmp_itemColumn.label.GetPosition().y + tmp_itemColumn.label.GetPosition().h + 20 - tmp_offset, (1024 / 3) - 20, 150  };
             std::string tmp_text = "";
             Item tmp_item = shop->GetItem( item.name.GetString() );
-            
+
             tmp_text.append("\n Cost: " + std::to_string( tmp_item.itemCost ));
             tmp_text.append("\n Level: " + std::to_string( tmp_item.level ));
             for( auto& stat : tmp_item.stats )

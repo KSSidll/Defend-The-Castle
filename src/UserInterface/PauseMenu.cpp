@@ -1,9 +1,9 @@
-#include "../Managers/TextureManager.hpp"
-#include "../Engine/Game.hpp"
-#include "../Objects/SceneObject.hpp"
-#include "PauseMenu.hpp"
-#include "Button.hpp"
-#include "UILabel.hpp"
+#include "../Managers/TextureManager.h"
+#include "../Engine/Game.h"
+#include "../Objects/SceneObject.h"
+#include "PauseMenu.h"
+#include "Button.h"
+#include "UILabel.h"
 
 PauseMenu::PauseMenu()
 {

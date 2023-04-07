@@ -1,5 +1,5 @@
-#include "Game.hpp"
-#include "Global.hpp"
+#include "Game.h"
+#include "Global.h"
 
 int main()
 {

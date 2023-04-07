@@ -1,5 +1,5 @@
 #pragma once
-#include "EntityObject.hpp"
+#include "EntityObject.h"
 
 class Enemy;
 
@@ -11,10 +11,10 @@ class PlayerSummon : virtual public EntityObject
     public:
         PlayerSummon(){};
         ~PlayerSummon(){};
-        
+
         PlayerSummon( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer );
         PlayerSummon( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer, int id );
-        
+
         void Update();
         void Render();
         void JsonReset();

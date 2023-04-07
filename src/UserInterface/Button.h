@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <rapidjson/document.h>
 #include <unordered_map>
-#include "UILabel.hpp"
+#include "UILabel.h"
 
 struct ButtonTextures;
 
@@ -28,7 +28,7 @@ private:
 public:
     Button();
     ~Button();
-    
+
     Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer );
     Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void* type, void (*summon)( SummonDungeon* dungeon, rapidjson::Value& json, const char* type ) );
     Button( ButtonTextures* textures, SDL_Rect rect, SDL_Renderer* renderer, void (*game)( Game* game ) );

@@ -1,5 +1,5 @@
 #pragma once
-#include "SceneObject.hpp"
+#include "SceneObject.h"
 #include <vector>
 
 class MovableObject : public SceneObject
@@ -26,11 +26,11 @@ class MovableObject : public SceneObject
         std::vector<int> animationLengths;
 
         void Move();
-        
+
     public:
         MovableObject();
         ~MovableObject();
-        
+
         MovableObject( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer );
 
         void SetObjectValues( rapidjson::Value& object );

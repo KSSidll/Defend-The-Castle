@@ -1,11 +1,11 @@
-#include "Game.hpp"
+#include "Game.h"
 
-#include "../Managers/SummonDungeon.hpp"
-#include "../Managers/TextureManager.hpp"
-#include "../Managers/Player.hpp"
-#include "../Objects/Enemy.hpp"
-#include "../Objects/PlayerSummon.hpp"
-#include "../UserInterface/UserInterface.hpp"
+#include "../Managers/SummonDungeon.h"
+#include "../Managers/TextureManager.h"
+#include "../Managers/Player.h"
+#include "../Objects/Enemy.h"
+#include "../Objects/PlayerSummon.h"
+#include "../UserInterface/UserInterface.h"
 #include <rapidjson/filereadstream.h>
 #include <rapidjson/filewritestream.h>
 #include <rapidjson/writer.h>
@@ -64,7 +64,7 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
         if( renderer )
         {
             SDL_SetRenderDrawColor( renderer, 50,50,50,255 );
-        } 
+        }
 
         isRunning = true;
     }
@@ -87,7 +87,7 @@ void Game::Init( const char* title, int width, int height, bool fullscreen )
     textureManager->LoadButtonTexture( "button-arrow-down", "assets/prototypes/arrow-down.png", "assets/prototypes/arrow-down.png", "assets/prototypes/arrow-down.png" );
     textureManager->LoadButtonTexture( "button-arrow-left", "assets/prototypes/arrow-left.png", "assets/prototypes/arrow-left.png", "assets/prototypes/arrow-left.png" );
     textureManager->LoadButtonTexture( "button-arrow-right", "assets/prototypes/arrow-right.png", "assets/prototypes/arrow-right.png", "assets/prototypes/arrow-right.png" );
-    
+
     background = new SceneObject( textureManager->GetTexture( (*objectsDoc)["background"]["textureSrc"]), renderer );
 
     summonDungeon = new SummonDungeon( textureManager, renderer, player );
