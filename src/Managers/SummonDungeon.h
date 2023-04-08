@@ -1,6 +1,8 @@
-#pragma once
+#ifndef MANAGERS_SUMMON_DUNGEON_H_
+#define MANAGERS_SUMMON_DUNGEON_H_
+
 #include <SDL2/SDL.h>
-#include <rapidjson/document.h>
+#include <rapidjson/fwd.h>
 #include <deque>
 
 class TextureManager;
@@ -35,3 +37,5 @@ class SummonDungeon
 
         void SummonObject( rapidjson::Value& object );
 };
+
+#endif // MANAGERS_SUMMON_DUNGEON_H_

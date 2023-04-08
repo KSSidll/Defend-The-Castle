@@ -1,8 +1,9 @@
-#pragma once
+#ifndef OBJECTS_SCENE_OBJECT_H_
+#define OBJECTS_SCENE_OBJECT_H_
+
+#include "../Engine/Global.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "rapidjson/document.h"
-#include "../Engine/Global.h"
 
 class SceneObject
 {
@@ -21,3 +22,5 @@ class SceneObject
 
         void Render();
 };
+
+#endif // OBJECTS_SCENE_OBJECT_H_

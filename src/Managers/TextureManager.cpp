@@ -1,4 +1,5 @@
 #include "TextureManager.h"
+#include <rapidjson/document.h>
 
 TextureManager::TextureManager()
 {

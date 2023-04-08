@@ -1,5 +1,8 @@
-#pragma once
+#ifndef OBJECTS_MOVABLE_OBJECT_H_
+#define OBJECTS_MOVABLE_OBJECT_H_
+
 #include "SceneObject.h"
+#include <rapidjson/fwd.h>
 #include <vector>
 
 class MovableObject : public SceneObject
@@ -39,3 +42,5 @@ class MovableObject : public SceneObject
         void Reset();
         int GetPosition(){ return destRect.x; };
 };
+
+#endif // OBJECTS_MOVABLE_OBJECT_H_

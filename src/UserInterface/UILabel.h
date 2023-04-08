@@ -1,4 +1,6 @@
-#pragma once
+#ifndef USER_INTERFACE_UI_LABEL_H_
+#define USER_INTERFACE_UI_LABEL_H_
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
@@ -32,3 +34,5 @@ public:
 
     SDL_Rect GetPosition(){ return position; };
 };
+
+#endif // USER_INTERFACE_UI_LABEL_H_

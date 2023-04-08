@@ -1,4 +1,7 @@
-#pragma once
+#ifndef USER_INTERFACE_USER_INTERFACE_H_
+#define USER_INTERFACE_USER_INTERFACE_H_
+
+#include <rapidjson/fwd.h>
 
 class Game;
 class GameMenu;
@@ -26,7 +29,7 @@ private:
 public:
     UserInterface();
     ~UserInterface();
-    
+
     UserInterface( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Game* game, Player* player );
 
     void Update();
@@ -37,3 +40,5 @@ public:
     void Save( rapidjson::Document* saveJson );
     void Load( rapidjson::Value* saveJson );
 };
+
+#endif // USER_INTERFACE_USER_INTERFACE_H_

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef USER_INTERFACE_MAIN_MENU_H_
+#define USER_INTERFACE_MAIN_MENU_H_
+
 #include <SDL2/SDL.h>
 #include <deque>
 
@@ -33,3 +35,5 @@ class MainMenu
         void Render();
         void HandleEvents( SDL_Event* event );
 };
+
+#endif // USER_INTERFACE_MAIN_MENU_H_

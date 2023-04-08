@@ -1,6 +1,9 @@
-#pragma once
-#include "rapidjson/document.h"
-#include "unordered_map"
+#ifndef MANAGERS_SHOP_H_
+#define MANAGERS_SHOP_H_
+
+#include <rapidjson/fwd.h>
+#include <unordered_map>
+#include <string>
 
 class Player;
 
@@ -22,7 +25,7 @@ class Shop
 private:
     rapidjson::Value* json;
     Player* player;
-    
+
     std::unordered_map< std::string, Item > items;
 
 public:
@@ -43,3 +46,5 @@ public:
     void Save( rapidjson::Document* saveJson );
     void Load( rapidjson::Value* saveJson );
 };
+
+#endif // MANAGERS_SHOP_H_

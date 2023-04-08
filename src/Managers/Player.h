@@ -1,5 +1,7 @@
-#pragma once
-#include "rapidjson/document.h"
+#ifndef MANAGERS_PLAYER_H_
+#define MANAGERS_PLAYER_H_
+
+#include <rapidjson/fwd.h>
 
 class Player
 {
@@ -36,3 +38,5 @@ public:
     void Save( rapidjson::Document* saveJson );
     void Load( rapidjson::Value* saveJson );
 };
+
+#endif // MANAGERS_PLAYER_H_

@@ -1,7 +1,8 @@
-#include "../Objects/PlayerSummon.h"
 #include "SummonDungeon.h"
 #include "Player.h"
 #include "TextureManager.h"
+#include "../Objects/PlayerSummon.h"
+#include <rapidjson/document.h>
 
 SummonDungeon::SummonDungeon()
 {

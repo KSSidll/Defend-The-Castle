@@ -1,6 +1,8 @@
-#pragma once
+#ifndef USER_INTERFACE_SHOP_MENU_H_
+#define USER_INTERFACE_SHOP_MENU_H_
+
 #include <SDL2/SDL.h>
-#include <rapidjson/document.h>
+#include <rapidjson/fwd.h>
 #include <deque>
 
 class Game;
@@ -41,7 +43,7 @@ class ShopMenu
         Button* col_decButton;
         Button* line_incButton;
         Button* line_decButton;
-        
+
     public:
         ShopMenu();
         ~ShopMenu();
@@ -56,3 +58,5 @@ class ShopMenu
         void Save( rapidjson::Document* saveJson );
         void Load( rapidjson::Value* saveJson );
 };
+
+#endif // USER_INTERFACE_SHOP_MENU_H_

@@ -1,5 +1,7 @@
-#pragma once
-#include "SDL2/SDL.h"
+#ifndef USER_INTERFACE_WIN_MENU_H_
+#define USER_INTERFACE_WIN_MENU_H_
+
+#include <SDL2/SDL.h>
 #include <deque>
 
 struct LabeledButton;
@@ -23,7 +25,7 @@ class WinMenu
         SDL_Rect saveButtonPos = {156,334,200,100};
         SDL_Rect shopButtonPos = {412,334,200,100};
         SDL_Rect nextLevelButtonPos = {668,334,200,100};
-        
+
     public:
         WinMenu();
         ~WinMenu();
@@ -33,3 +35,5 @@ class WinMenu
         void Render();
         void HandleEvents( SDL_Event* event );
 };
+
+#endif // USER_INTERFACE_WIN_MENU_H_

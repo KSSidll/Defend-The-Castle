@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "PlayerSummon.h"
+#include <rapidjson/document.h>
 
 void Enemy::Move()
 {

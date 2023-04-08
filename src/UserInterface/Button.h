@@ -1,8 +1,10 @@
-#pragma once
-#include <SDL2/SDL.h>
-#include <rapidjson/document.h>
-#include <unordered_map>
+#ifndef USER_INTERFACE_BUTTON_H_
+#define USER_INTERFACE_BUTTON_H_
+
 #include "UILabel.h"
+#include <SDL2/SDL.h>
+#include <rapidjson/fwd.h>
+#include <unordered_map>
 
 struct ButtonTextures;
 
@@ -75,3 +77,5 @@ struct LabeledButton
         return button.GetArg();
     }
 };
+
+#endif // USER_INTERFACE_BUTTON_H_

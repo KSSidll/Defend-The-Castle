@@ -1,6 +1,7 @@
 #define RAPIDJSON_HAS_STDSTRING 1
 #include "Shop.h"
 #include "Player.h"
+#include <rapidjson/document.h>
 
 Shop::Shop()
 {

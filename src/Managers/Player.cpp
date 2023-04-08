@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../Engine/Global.h"
+#include <rapidjson/document.h>
 
 bool Player::Summon( int cost )
 {

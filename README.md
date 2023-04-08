@@ -67,7 +67,7 @@ You can also add custom units by modifying that object
 ### example for g++
 
 ```bash
-g++ -g ./src/Engine/*.cpp ./src/Managers/*.cpp ./src/Objects/*.cpp ./src/UserInterface/*.cpp -o ./build/game.exe -I"./include" -L"./lib" -lSDL2 -lSDL2_image -lSDL2_ttf --std=c++11
+g++ -g ./src/Engine/*.cpp ./src/Managers/*.cpp ./src/Objects/*.cpp ./src/UserInterface/*.cpp -o ./build/game.exe -I"./include" -L"./lib" -lSDL2 -lSDL2_image -lSDL2_ttf --std=c++14
 ```
 
 and copy `bin` folder' contents into `build/` directory that contains `game.exe` file

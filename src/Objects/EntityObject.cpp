@@ -1,4 +1,5 @@
 #include "EntityObject.h"
+#include <rapidjson/document.h>
 
 void EntityObject::Move()
 {

@@ -4,6 +4,7 @@
 #include "DifficultySelectionMenu.h"
 #include "Button.h"
 #include "UILabel.h"
+#include <rapidjson/document.h>
 
 DifficultySelectionMenu::DifficultySelectionMenu()
 {

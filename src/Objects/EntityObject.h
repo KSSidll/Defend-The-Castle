@@ -1,5 +1,8 @@
-#pragma once
+#ifndef OBJECTS_ENTITY_OBJECT_H_
+#define OBJECTS_ENTITY_OBJECT_H_
+
 #include "MovableObject.h"
+#include <rapidjson/fwd.h>
 
 class EntityObject : public MovableObject
 {
@@ -39,3 +42,5 @@ class EntityObject : public MovableObject
         bool KillPending(){ return pendingKill; };
         bool Alive(){ return alive; };
 };
+
+#endif // OBJECTS_ENTITY_OBJECT_H_

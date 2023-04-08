@@ -1,5 +1,8 @@
-#pragma once
+#ifndef OBJECTS_PLAYER_SUMMON_H_
+#define OBJECTS_PLAYER_SUMMON_H_
+
 #include "EntityObject.h"
+#include <rapidjson/fwd.h>
 
 class Enemy;
 
@@ -21,3 +24,5 @@ class PlayerSummon : virtual public EntityObject
         void HandleCollision();
         void HandleCollision( Enemy* entity );
 };
+
+#endif // OBJECTS_PLAYER_SUMMON_H_

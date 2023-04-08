@@ -10,6 +10,7 @@
 #include "WinMenu.h"
 #include "LoseMenu.h"
 #include "ShopMenu.h"
+#include <rapidjson/document.h>
 
 UserInterface::UserInterface()
 {

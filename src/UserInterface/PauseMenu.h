@@ -1,4 +1,6 @@
-#pragma once
+#ifndef USER_INTERFACE_PAUSE_MENU_H_
+#define USER_INTERFACE_PAUSE_MENU_H_
+
 #include <SDL2/SDL.h>
 #include <deque>
 
@@ -21,7 +23,7 @@ class PauseMenu
 
         SDL_Rect resumeButtonPos = {412,200,200,100};
         SDL_Rect exitButtonPos = {412,400,200,100};
-        
+
     public:
         PauseMenu();
         ~PauseMenu();
@@ -31,3 +33,5 @@ class PauseMenu
         void Render();
         void HandleEvents( SDL_Event* event );
 };
+
+#endif // USER_INTERFACE_PAUSE_MENU_H_

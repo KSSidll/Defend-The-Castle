@@ -1,4 +1,6 @@
-#pragma once
+#ifndef USER_INTERFACE_LOSE_MENU_H_
+#define USER_INTERFACE_LOSE_MENU_H_
+
 #include <SDL2/SDL.h>
 #include <deque>
 
@@ -21,7 +23,7 @@ class LoseMenu
 
         SDL_Rect exitButtonPos = { 362,300,300,150 };
         SDL_Rect loadButtonPos = { 362,600,300,100 };
-        
+
     public:
         LoseMenu();
         ~LoseMenu();
@@ -31,3 +33,5 @@ class LoseMenu
         void Render();
         void HandleEvents( SDL_Event* event );
 };
+
+#endif // USER_INTERFACE_LOSE_MENU_H_

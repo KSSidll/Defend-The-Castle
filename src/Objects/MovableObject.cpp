@@ -1,4 +1,5 @@
 #include "MovableObject.h"
+#include <rapidjson/document.h>
 
 MovableObject::MovableObject()
 {

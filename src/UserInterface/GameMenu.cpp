@@ -6,6 +6,7 @@
 #include "../Objects/SceneObject.h"
 #include "GameMenu.h"
 #include "Button.h"
+#include <rapidjson/document.h>
 
 GameMenu::GameMenu()
 {

@@ -4,6 +4,7 @@
 #include "../Engine/Game.h"
 #include "Button.h"
 #include "UILabel.h"
+#include <rapidjson/document.h>
 
 Button::Button()
 {

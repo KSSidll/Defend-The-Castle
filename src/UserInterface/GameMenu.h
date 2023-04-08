@@ -1,6 +1,8 @@
-#pragma once
+#ifndef USER_INTERFACE_GAME_MENU_H_
+#define USER_INTERFACE_GAME_MENU_H_
+
 #include <SDL2/SDL.h>
-#include <rapidjson/document.h>
+#include <rapidjson/fwd.h>
 #include <deque>
 
 struct LabeledButton;
@@ -23,10 +25,10 @@ class GameMenu
         Game* game;
 
         std::deque<LabeledButton> buttons;
-        
+
         SDL_Rect gameInfoBackgroundPos = { 0, 0, 1024, 100 };
         SceneObject* gameInfoBackground;
-        
+
         UILabel* levelInfo;
         UILabel* playerFujika;
         UILabel* playerFuko;
@@ -46,3 +48,5 @@ class GameMenu
         void Reset( float multiplier );
         void Update( bool bStatUpdate = false );
 };
+
+#endif // USER_INTERFACE_GAME_MENU_H_

@@ -1,5 +1,6 @@
 #include "PlayerSummon.h"
 #include "Enemy.h"
+#include <rapidjson/document.h>
 
 PlayerSummon::PlayerSummon( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer ) : EntityObject( objTexture, object, renderer )
 {

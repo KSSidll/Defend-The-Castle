@@ -1,7 +1,9 @@
+#ifndef ENGINE_GAME_H_
+#define ENGINE_GAME_H_
+
 #define SDL_MAIN_HANDLED
-#pragma once
 #include <SDL2/SDL.h>
-#include <rapidjson/document.h>
+#include <rapidjson/fwd.h>
 
 class SummonDungeon;
 class TextureManager;
@@ -43,7 +45,7 @@ public:
     ~Game();
 
     void Init( const char* title, int width, int height, bool fullscreen );
-    
+
     void HandleEvents();
     void Update();
     void Render();
@@ -53,11 +55,11 @@ public:
     void Reset();
     void Save(bool incrementLevel = false);
     void Load();
-    
+
     void Pause() { isPaused = true; };
     void UnPause() { isPaused = false; };
     void Quit() { isRunning = false; };
-    
+
     void IncreaseLevel();
     void ChangeEnemyLevelMultiplier( float multiplier );
 
@@ -78,3 +80,5 @@ public:
     bool isLoseMenu() { return loseMenu; };
     bool isShopMenu() { return shopMenu; };
 };
+
+#endif // ENGINE_GAME_H_

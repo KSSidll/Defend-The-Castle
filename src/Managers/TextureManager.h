@@ -1,9 +1,12 @@
-#pragma once
-#include <unordered_map>
+#ifndef MANAGERS_TEXTURE_MANAGER_H_
+#define MANAGERS_TEXTURE_MANAGER_H_
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include <rapidjson/document.h>
+#include <rapidjson/fwd.h>
+#include <unordered_map>
+#include <string>
 
 struct ButtonTextures
 {
@@ -26,7 +29,7 @@ class TextureManager
         ~TextureManager();
 
         TextureManager( SDL_Renderer* renderer );
-        
+
         void LoadTexture( rapidjson::Value& texturePath );
         void LoadTexture( const char* key, const char* filePath );
         void LoadButtonTexture( const char* key, const char* none, const char* over, const char* down );
@@ -35,3 +38,5 @@ class TextureManager
         SDL_Texture* GetTexture( const char* key );
         ButtonTextures* GetButtonTexture( const char* key );
 };
+
+#endif // MANAGERS_TEXTURE_MANAGER_H_

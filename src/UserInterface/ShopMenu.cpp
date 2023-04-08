@@ -6,6 +6,7 @@
 #include "Button.h"
 #include "ShopMenu.h"
 #include "UILabel.h"
+#include <rapidjson/document.h>
 
 ShopMenu::ShopMenu()
 {
