@@ -67,7 +67,7 @@ requires:
 -   [SDL2 ttf - tested with 2.20.2](https://github.com/libsdl-org/SDL_ttf/releases)
 -   [Rapidjson - tested with 1.1.0](https://github.com/Tencent/rapidjson/releases)
 
-copy `dll` files into directory that you build `.exe` into \
+copy `dll` files into `/build` folder \
 include files must be in their respective folders (`SDL2` and `rapidjson`)
 
 ### example for g++

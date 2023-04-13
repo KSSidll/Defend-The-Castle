@@ -1,0 +1,191 @@
+{
+    "lang":{
+        "cost": "Cost",
+        "health": "Health",
+        "attackDamage": "Attack Damage",
+        "movementSpeed": "Movement Speed",
+        "attackSpeed": "Attack Speed",
+        "range": "Range"
+    },
+    
+    "textures":[
+        "assets/prototypes/background.jpg",
+        "assets/prototypes/warrior.png",
+        "assets/prototypes/tank.png",
+        "assets/prototypes/mage.png",
+        "assets/prototypes/enemy.png"
+    ],
+
+    "background":{
+        "textureSrc": "assets/prototypes/background.jpg"
+    },
+
+    "summons":{
+        "warrior":{
+            "textureSrc": "assets/prototypes/warrior.png",
+            "srcRectX": 0,
+            "srcRectY": 0,
+            "srcRectH": 420,
+            "srcRectW": 520,
+            "destRectX": -100,
+            "destRectY": 400,
+            "renderScale": 0.3,
+            "cost": 7,
+            "health": 40,
+            "attackDamage": 7,
+            "movementSpeed": 25,
+            "attackSpeed": 20,
+            "range": 40,
+            "positions" : [18,12,12,15]
+        },
+        "tank":{
+            "textureSrc": "assets/prototypes/tank.png",
+            "srcRectX": 0,
+            "srcRectY": 0,
+            "srcRectH": 420,
+            "srcRectW": 520,
+            "destRectX": -100,
+            "destRectY": 400,
+            "renderScale": 0.3,
+            "cost": 6,
+            "health": 70,
+            "attackDamage": 4,
+            "movementSpeed": 10,
+            "attackSpeed": 15,
+            "range": 30,
+            "positions" : [18,12,12,15]
+        },
+        "mage":{
+            "textureSrc": "assets/prototypes/mage.png",
+            "srcRectX": 0,
+            "srcRectY": 0,
+            "srcRectH": 420,
+            "srcRectW": 520,
+            "destRectX": -100,
+            "destRectY": 400,
+            "renderScale": 0.3,
+            "cost": 5,
+            "health": 10,
+            "attackDamage": 15,
+            "movementSpeed": 20,
+            "attackSpeed": 7,
+            "range": 150,
+            "positions" : [18,12,12,15]
+        }
+    },
+
+    "items":{
+        "warrior":{
+            "spear":{
+                "itemCost": 3,
+                "stats":{
+                    "attackDamage": 1,
+                    "attackSpeed": -1
+                },
+    
+                "specialEffect":{
+                    "levelReq": 5,
+                    "stats":{
+                        "range": 50
+                    }
+                }
+            },
+            "sword":{
+                "itemCost": 7,
+                "stats":{
+                    "attackDamage": 1
+                }
+            },
+            "shield":{
+                "itemCost": 3,
+                "stats":{
+                    "health": 5
+                },
+    
+                "specialEffect":{
+                    "levelReq": 1,
+                    "stats":{
+                        "attackSpeed": -2
+                    }
+                }
+            },
+            "boots":{
+                "itemCost": 25,
+                "stats":{
+                    "movementSpeed": 1,
+                    "health": -50
+                }
+            }
+        },
+        
+        "tank":{
+            "armor":{
+                "itemCost": 4,
+                "stats":{
+                    "health": 15,
+                    "movementSpeed": -1
+                }
+            },
+            "shield":{
+                "itemCost": 2,
+                "stats":{
+                    "health": 8
+                },
+    
+                "specialEffect":{
+                    "levelReq": 1,
+                    "stats":{
+                        "attackSpeed": -2,
+                        "movementSpeed": -2
+                    }
+                }
+            }
+        },
+        
+        "mage":{
+            "wand":{
+                "itemCost": 5,
+                "stats":{
+                    "attackDamage": 2,
+                    "attackSpeed": -1
+                },
+    
+                "specialEffect":{
+                    "levelReq": 5,
+                    "stats":{
+                        "cost": -1
+                    }
+                }
+            },
+            "magic ring":{
+                "itemCost": 25,
+                "stats":{
+                    "attackDamage": 1
+                }
+            }
+        }
+    },
+
+    "enemy":{
+        "textureSrc": "assets/prototypes/enemy.png",
+        "srcRectX": 2880,
+        "srcRectY": 0,
+        "srcRectH": 480,
+        "srcRectW": 720,
+        "destRectX": 800,
+        "destRectY": 290,
+        "renderScale": 0.5,
+        "health": 200,
+        "attackDamage": 25,
+        "movementSpeed": 10,
+        "attackSpeed": 15,
+        "range": 100,
+        "positions" : [18,12,12,15]
+    },
+
+    "difficulties":{
+        "easy": 1.05,
+        "medium": 1.1,
+        "hard": 1.15
+    }
+}
