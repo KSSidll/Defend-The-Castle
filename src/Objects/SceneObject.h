@@ -7,20 +7,21 @@
 
 class SceneObject
 {
-    protected:
-        SDL_Texture* objTexture;
-        SDL_Renderer* renderer;
-        SDL_Rect position;
-        bool fullScreen = true;
+  protected:
+	SDL_Texture *objTexture;
+	SDL_Renderer *renderer;
+	SDL_Rect position;
+	bool fullScreen = true;
 
-    public:
-        SceneObject();
-        ~SceneObject();
+  public:
+	SceneObject ();
+	~SceneObject ();
 
-        SceneObject( SDL_Texture* objTexture, SDL_Renderer* renderer, SDL_Rect position );
-        SceneObject( SDL_Texture* objTexture, SDL_Renderer* renderer );
+	SceneObject (SDL_Texture *objTexture, SDL_Renderer *renderer,
+	             SDL_Rect position);
+	SceneObject (SDL_Texture *objTexture, SDL_Renderer *renderer);
 
-        void Render();
+	void Render ();
 };
 
 #endif // OBJECTS_SCENE_OBJECT_H_

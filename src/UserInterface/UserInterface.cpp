@@ -1,139 +1,151 @@
+#include "UserInterface.h"
+#include "../Engine/Game.h"
+#include "../Managers/Player.h"
 #include "../Managers/SummonDungeon.h"
 #include "../Managers/TextureManager.h"
-#include "../Managers/Player.h"
-#include "../Engine/Game.h"
-#include "UserInterface.h"
-#include "MainMenu.h"
-#include "GameMenu.h"
-#include "PauseMenu.h"
 #include "DifficultySelectionMenu.h"
-#include "WinMenu.h"
+#include "GameMenu.h"
 #include "LoseMenu.h"
+#include "MainMenu.h"
+#include "PauseMenu.h"
 #include "ShopMenu.h"
+#include "WinMenu.h"
 #include <rapidjson/document.h>
 
-UserInterface::UserInterface()
+UserInterface::UserInterface ()
 {
-    game = nullptr;
-    gameMenu = nullptr;
-    pauseMenu = nullptr;
-    mainMenu = nullptr;
-    difficultySelectionMenu = nullptr;
-    winMenu = nullptr;
-    loseMenu = nullptr;
-    shopMenu = nullptr;
+	game = nullptr;
+	gameMenu = nullptr;
+	pauseMenu = nullptr;
+	mainMenu = nullptr;
+	difficultySelectionMenu = nullptr;
+	winMenu = nullptr;
+	loseMenu = nullptr;
+	shopMenu = nullptr;
 }
 
-UserInterface::~UserInterface()
+UserInterface::~UserInterface ()
 {
-    shopMenu = nullptr;
-    loseMenu = nullptr;
-    winMenu = nullptr;
-    difficultySelectionMenu = nullptr;
-    mainMenu = nullptr;
-    pauseMenu = nullptr;
-    gameMenu = nullptr;
-    game = nullptr;
+	shopMenu = nullptr;
+	loseMenu = nullptr;
+	winMenu = nullptr;
+	difficultySelectionMenu = nullptr;
+	mainMenu = nullptr;
+	pauseMenu = nullptr;
+	gameMenu = nullptr;
+	game = nullptr;
 }
 
-UserInterface::UserInterface( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Game* game, Player* player )
+UserInterface::UserInterface (rapidjson::Value *json, SummonDungeon *dungeon,
+                              SDL_Renderer *renderer,
+                              TextureManager *textureManager, Game *game,
+                              Player *player)
+	: UserInterface::UserInterface ()
 {
-    this->game = game;
+	this->game = game;
 
-    gameMenu = new GameMenu( json, dungeon, renderer, textureManager, player, game );
-    pauseMenu = new PauseMenu( renderer, game, textureManager );
-    mainMenu = new MainMenu( renderer, textureManager, game );
-    difficultySelectionMenu = new DifficultySelectionMenu( renderer, game, textureManager, json );
-    winMenu = new WinMenu( renderer, game, textureManager );
-    loseMenu = new LoseMenu( renderer, game, textureManager );
-    shopMenu = new ShopMenu( renderer, game, textureManager, player, json );
+	gameMenu
+		= new GameMenu (json, dungeon, renderer, textureManager, player, game);
+	pauseMenu = new PauseMenu (renderer, game, textureManager);
+	mainMenu = new MainMenu (renderer, textureManager, game);
+	difficultySelectionMenu
+		= new DifficultySelectionMenu (renderer, game, textureManager, json);
+	winMenu = new WinMenu (renderer, game, textureManager);
+	loseMenu = new LoseMenu (renderer, game, textureManager);
+	shopMenu = new ShopMenu (renderer, game, textureManager, player, json);
 }
 
-void UserInterface::Update()
+void
+UserInterface::Update ()
 {
-    if( game->isShopMenu() )
-        shopMenu->Update();
+	if (game->isShopMenu ())
+		shopMenu->Update ();
 
-    else if( !game->Paused() )
-        gameMenu->Update();
+	else if (!game->Paused ())
+		gameMenu->Update ();
 
-    if( bStatUpdate )
-    {
-        shopMenu->Update( true );
-        gameMenu->Update( true );
-        bStatUpdate = false;
-    }
-
+	if (bStatUpdate)
+	{
+		shopMenu->Update (true);
+		gameMenu->Update (true);
+		bStatUpdate = false;
+	}
 }
 
-void UserInterface::Render()
+void
+UserInterface::Render ()
 {
-    if( game->isMainMenu() )
-        mainMenu->Render();
+	if (game->isMainMenu ())
+		mainMenu->Render ();
 
-    else if( game->isDifficultyMenu() )
-        difficultySelectionMenu->Render();
+	else if (game->isDifficultyMenu ())
+		difficultySelectionMenu->Render ();
 
-    else if( game->isWinMenu() )
-        winMenu->Render();
+	else if (game->isWinMenu ())
+		winMenu->Render ();
 
-    else if( game->isLoseMenu() )
-        loseMenu->Render();
+	else if (game->isLoseMenu ())
+		loseMenu->Render ();
 
-    else if( game->isShopMenu() )
-        shopMenu->Render();
+	else if (game->isShopMenu ())
+		shopMenu->Render ();
 
-    else if( game->Paused() )
-        pauseMenu->Render();
+	else if (game->Paused ())
+		pauseMenu->Render ();
 
-    else
-        gameMenu->Render();
+	else
+		gameMenu->Render ();
 }
 
-void UserInterface::HandleEvents( SDL_Event* event )
+void
+UserInterface::HandleEvents (SDL_Event *event)
 {
-    if( game->isMainMenu() )
-        mainMenu->HandleEvents( event );
+	if (game->isMainMenu ())
+		mainMenu->HandleEvents (event);
 
-    else if( game->isDifficultyMenu() )
-        difficultySelectionMenu->HandleEvents( event );
+	else if (game->isDifficultyMenu ())
+		difficultySelectionMenu->HandleEvents (event);
 
-    else if( game->isWinMenu() )
-        winMenu->HandleEvents( event );
+	else if (game->isWinMenu ())
+		winMenu->HandleEvents (event);
 
-    else if( game->isLoseMenu() )
-        loseMenu->HandleEvents( event );
+	else if (game->isLoseMenu ())
+		loseMenu->HandleEvents (event);
 
-    else if( game->isShopMenu() )
-        shopMenu->HandleEvents( event, &bStatUpdate );
+	else if (game->isShopMenu ())
+		shopMenu->HandleEvents (event, &bStatUpdate);
 
-    else if( game->Paused() )
-        pauseMenu->HandleEvents( event );
+	else if (game->Paused ())
+		pauseMenu->HandleEvents (event);
 
-    else
-        gameMenu->HandleEvents( event );
+	else
+		gameMenu->HandleEvents (event);
 }
 
-void UserInterface::Reset( float multiplier )
+void
+UserInterface::Reset (float multiplier)
 {
-    gameMenu->Reset( multiplier );
+	gameMenu->Reset (multiplier);
 }
 
-void UserInterface::HardReset()
+void
+UserInterface::HardReset ()
 {
-    bStatUpdate = true;
+	bStatUpdate = true;
 
-    shopMenu->Reset();
+	shopMenu->Reset ();
 
-    Update();
+	Update ();
 }
 
-void UserInterface::Save( rapidjson::Document* saveJson )
+void
+UserInterface::Save (rapidjson::Document *saveJson)
 {
-    shopMenu->Save( saveJson );
+	shopMenu->Save (saveJson);
 }
 
-void UserInterface::Load( rapidjson::Value* saveJson )
+void
+UserInterface::Load (rapidjson::Value *saveJson)
 {
-    shopMenu->Load( saveJson );
+	shopMenu->Load (saveJson);
 }

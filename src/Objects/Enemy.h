@@ -8,22 +8,23 @@ class PlayerSummon;
 
 class Enemy : virtual public EntityObject
 {
-    private:
-        float speedReference;
+  private:
+	float speedReference;
 
-        void Move();
+	void Move ();
 
-    public:
-        Enemy(){};
-        ~Enemy(){};
+  public:
+	Enemy (){};
+	~Enemy (){};
 
-        Enemy( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer );
+	Enemy (SDL_Texture *objTexture, rapidjson::Value &object,
+	       SDL_Renderer *renderer);
 
-        void Update();
-        void Render();
-        void DoDamage( int attack );
-        void HandleCollision();
-        void HandleCollision( PlayerSummon* entity );
+	void Update ();
+	void Render ();
+	void DoDamage (int attack);
+	void HandleCollision ();
+	void HandleCollision (PlayerSummon *entity);
 };
 
 #endif // OBJECTS_ENEMY_H_

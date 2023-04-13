@@ -6,3 +6,7 @@ scripts/
 
 # clangd configuration
 compile_flags.txt
+.clang-format
+
+# vsc configuration
+.vscode/

@@ -1,6 +1,7 @@
 #ifndef USER_INTERFACE_LOSE_MENU_H_
 #define USER_INTERFACE_LOSE_MENU_H_
 
+#include "Button.h"
 #include <SDL2/SDL.h>
 #include <deque>
 
@@ -10,28 +11,30 @@ class Button;
 class Game;
 class SceneObject;
 class UILabel;
+class TextureManager;
 
 class LoseMenu
 {
-    private:
-        Game* game;
-        SDL_Renderer* renderer;
+  private:
+	Game *game;
+	SDL_Renderer *renderer;
 
-        std::deque<LabeledButton> buttons;
-        SceneObject* background;
-        UILabel* label;
+	std::deque<LabeledButton> buttons;
+	SceneObject *background;
+	UILabel *label;
 
-        SDL_Rect exitButtonPos = { 362,300,300,150 };
-        SDL_Rect loadButtonPos = { 362,600,300,100 };
+	SDL_Rect exitButtonPos = { 362, 300, 300, 150 };
+	SDL_Rect loadButtonPos = { 362, 600, 300, 100 };
 
-    public:
-        LoseMenu();
-        ~LoseMenu();
+  public:
+	LoseMenu ();
+	~LoseMenu ();
 
-        LoseMenu( SDL_Renderer* renderer, Game* game, TextureManager* textureManager );
+	LoseMenu (SDL_Renderer *renderer, Game *game,
+	          TextureManager *textureManager);
 
-        void Render();
-        void HandleEvents( SDL_Event* event );
+	void Render ();
+	void HandleEvents (SDL_Event *event);
 };
 
 #endif // USER_INTERFACE_LOSE_MENU_H_

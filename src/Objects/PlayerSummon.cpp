@@ -2,39 +2,47 @@
 #include "Enemy.h"
 #include <rapidjson/document.h>
 
-PlayerSummon::PlayerSummon( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer ) : EntityObject( objTexture, object, renderer )
+PlayerSummon::PlayerSummon (SDL_Texture *objTexture, rapidjson::Value &object,
+                            SDL_Renderer *renderer)
+	: EntityObject (objTexture, object, renderer)
 {
-    cost = object["cost"].GetInt();
+	cost = object["cost"].GetInt ();
 }
 
-PlayerSummon::PlayerSummon( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer, int id ) : EntityObject( objTexture, object, renderer )
+PlayerSummon::PlayerSummon (SDL_Texture *objTexture, rapidjson::Value &object,
+                            SDL_Renderer *renderer, int id)
+	: PlayerSummon::PlayerSummon (objTexture, object, renderer)
 {
-    cost = object["cost"].GetInt();
-    this->id = id;
+	this->id = id;
 }
 
-void PlayerSummon::Update()
+void
+PlayerSummon::Update ()
 {
-    EntityObject::Update();
+	EntityObject::Update ();
 
-    if( isMoving ) Move();
-    if( isAnimationDone && animationYpos == animationLengths.size() - 1 ) pendingKill = true;
+	if (isMoving)
+		Move ();
+	if (isAnimationDone && animationYpos == animationLengths.size () - 1)
+		pendingKill = true;
 }
 
-void PlayerSummon::Render()
+void
+PlayerSummon::Render ()
 {
-    EntityObject::Render();
+	EntityObject::Render ();
 }
 
-void PlayerSummon::HandleCollision()
+void
+PlayerSummon::HandleCollision ()
 {
-    EntityObject::HandleCollision();
+	EntityObject::HandleCollision ();
 }
 
-void PlayerSummon::HandleCollision( Enemy* entity )
+void
+PlayerSummon::HandleCollision (Enemy *entity)
 {
-    Attack();
-    if( isAnimationDone && attacking )
-        entity->DoDamage( attackDamage );
-
+	Attack ();
+	if (isAnimationDone && attacking)
+		entity->DoDamage (attackDamage);
 }

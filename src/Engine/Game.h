@@ -14,71 +14,70 @@ class SceneObject;
 
 class Game
 {
-private:
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-    rapidjson::Document* objectsDoc;
-    rapidjson::Document* saveDoc;
-    SummonDungeon* summonDungeon;
-    TextureManager* textureManager;
-    UserInterface* userInterface;
-    Player* player;
-    Enemy* enemy;
-    SceneObject* background;
+  private:
+	SDL_Window *window;
+	SDL_Renderer *renderer;
+	rapidjson::Document *objectsDoc;
+	rapidjson::Document *saveDoc;
+	SummonDungeon *summonDungeon;
+	TextureManager *textureManager;
+	UserInterface *userInterface;
+	Player *player;
+	Enemy *enemy;
+	SceneObject *background;
 
-    float enemyStatsLevelMultiplier = 1.1;
-    int level = 0;
+	float enemyStatsLevelMultiplier = 1.1;
+	int level = 0;
 
-    bool menuFlag = true;
-    bool isPaused = true;
-    bool mainMenu = true;
-    bool difficultyMenu = false;
-    bool winMenu = false;
-    bool loseMenu = false;
-    bool shopMenu = false;
-    bool isRunning;
+	bool menuFlag = true;
+	bool isPaused = true;
+	bool mainMenu = true;
+	bool difficultyMenu = false;
+	bool winMenu = false;
+	bool loseMenu = false;
+	bool shopMenu = false;
+	bool isRunning;
 
-    void ResetMenus();
+	void ResetMenus ();
 
-public:
-    Game();
-    ~Game();
+  public:
+	Game ();
+	~Game ();
 
-    void Init( const char* title, int width, int height, bool fullscreen );
+	void Init (const char *title, int width, int height, bool fullscreen);
 
-    void HandleEvents();
-    void Update();
-    void Render();
-    void Clean();
-    void HandleCollisions();
-    void HardReset();
-    void Reset();
-    void Save(bool incrementLevel = false);
-    void Load();
+	void HandleEvents ();
+	void Update ();
+	void Render ();
+	void Clean ();
+	void HandleCollisions ();
+	void HardReset ();
+	void Reset ();
+	void Save (bool incrementLevel = false);
+	void Load ();
 
-    void Pause() { isPaused = true; };
-    void UnPause() { isPaused = false; };
-    void Quit() { isRunning = false; };
+	void Pause ();
+	void UnPause ();
+	void Quit ();
+	void IncreaseLevel ();
+	void ChangeEnemyLevelMultiplier (float multiplier);
 
-    void IncreaseLevel();
-    void ChangeEnemyLevelMultiplier( float multiplier );
+	bool Running ();
+	bool Paused ();
+	int Level ();
 
-    bool Running() { return isRunning; };
-    bool Paused() { return isPaused; };
-    int Level() { return level; };
+	void LoseGame ();
+	void NewGame ();
+	void Start ();
+	void MainMenu ();
+	void WinMenu ();
+	void ShopMenu ();
 
-    void LoseGame();
-    void NewGame();
-    void Start();
-    void MainMenu();
-    void WinMenu();
-    void ShopMenu();
-
-    bool isMainMenu() { return mainMenu; };
-    bool isDifficultyMenu() { return difficultyMenu; };
-    bool isWinMenu() { return winMenu; };
-    bool isLoseMenu() { return loseMenu; };
-    bool isShopMenu() { return shopMenu; };
+	bool isMainMenu ();
+	bool isDifficultyMenu ();
+	bool isWinMenu ();
+	bool isLoseMenu ();
+	bool isShopMenu ();
 };
 
 #endif // ENGINE_GAME_H_

@@ -2,8 +2,8 @@
 #define MANAGERS_SUMMON_DUNGEON_H_
 
 #include <SDL2/SDL.h>
-#include <rapidjson/fwd.h>
 #include <deque>
+#include <rapidjson/fwd.h>
 
 class TextureManager;
 class Player;
@@ -11,31 +11,32 @@ class PlayerSummon;
 
 class SummonDungeon
 {
-    private:
-        TextureManager* textureManager;
-        SDL_Renderer* renderer;
-        Player* player;
+  private:
+	TextureManager *textureManager;
+	SDL_Renderer *renderer;
+	Player *player;
 
-        std::deque<PlayerSummon> objectArray;
-        std::deque<PlayerSummon*> pendingKills;
+	std::deque<PlayerSummon> *objectArray;
+	std::deque<PlayerSummon *> pendingKills;
 
-        int id = 0;
+	int id = 0;
 
-        void KillPending();
-        void KillSummonObject( PlayerSummon* summon );
+	void KillPending ();
+	void KillSummonObject (PlayerSummon *summon);
 
-    public:
-        SummonDungeon();
-        ~SummonDungeon();
+  public:
+	SummonDungeon ();
+	~SummonDungeon ();
 
-        SummonDungeon( TextureManager* textureManager, SDL_Renderer* renderer, Player* player );
+	SummonDungeon (TextureManager *textureManager, SDL_Renderer *renderer,
+	               Player *player);
 
-        void Update();
-        void Render();
-        void Reset();
-        std::deque<PlayerSummon>& getObjectArray(){ return objectArray; };
+	void Update ();
+	void Render ();
+	void Reset ();
+	void SummonObject (rapidjson::Value &object);
 
-        void SummonObject( rapidjson::Value& object );
+	std::deque<PlayerSummon> *getObjectArray ();
 };
 
 #endif // MANAGERS_SUMMON_DUNGEON_H_

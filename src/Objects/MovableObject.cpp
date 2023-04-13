@@ -1,86 +1,90 @@
 #include "MovableObject.h"
 #include <rapidjson/document.h>
 
-MovableObject::MovableObject()
+MovableObject::MovableObject () { originalJsonValues = nullptr; }
+
+MovableObject::~MovableObject () { originalJsonValues = nullptr; }
+
+void
+MovableObject::Move ()
 {
-    originalJsonValues = nullptr;
+	destRect.x += (int)xShift * movementVector;
+	xShift -= (int)xShift;
 }
 
-MovableObject::~MovableObject()
+MovableObject::MovableObject (SDL_Texture *objTexture,
+                              rapidjson::Value &object, SDL_Renderer *renderer)
+	: SceneObject (objTexture, renderer)
 {
-    originalJsonValues = nullptr;
+	originalJsonValues = &object;
+
+	renderScale = object["renderScale"].GetFloat ();
+
+	OsrcRect.x = srcRect.x = object["srcRectX"].GetInt ();
+	OsrcRect.y = srcRect.y = object["srcRectY"].GetInt ();
+	srcRect.h = object["srcRectH"].GetInt ();
+	srcRect.w = object["srcRectW"].GetInt ();
+	destRect.h = srcRect.h * renderScale;
+	destRect.w = srcRect.w * renderScale;
+
+	for (auto &position : object["positions"].GetArray ())
+		animationLengths.push_back (position.GetInt ());
+
+	SetObjectValues (object);
 }
 
-void MovableObject::Move()
+void
+MovableObject::SetObjectValues (rapidjson::Value &object)
 {
-    destRect.x += (int)xShift * movementVector;
-    xShift -= (int)xShift;
+	destRect.x = object["destRectX"].GetInt ();
+	destRect.y = object["destRectY"].GetInt ();
 }
 
-MovableObject::MovableObject( SDL_Texture* objTexture, rapidjson::Value& object, SDL_Renderer* renderer ) : SceneObject( objTexture, renderer )
+void
+MovableObject::Update ()
 {
-    originalJsonValues = &object;
+	isAnimationDone = false;
 
-    renderScale = object["renderScale"].GetFloat();
+	if (animationSpeed)
+	{
+		if (animationFramesSkipped
+		    == ANIMATION_SPEED_DIVISOR / (FPS * animationSpeed))
+		{
+			++animationXpos;
 
-    OsrcRect.x = srcRect.x = object["srcRectX"].GetInt();
-    OsrcRect.y = srcRect.y = object["srcRectY"].GetInt();
-    srcRect.h = object["srcRectH"].GetInt();
-    srcRect.w = object["srcRectW"].GetInt();
-    destRect.h = srcRect.h * renderScale;
-    destRect.w = srcRect.w * renderScale;
+			srcRect.x = srcRect.w * animationXpos;
+			srcRect.y = srcRect.h * animationYpos;
 
-    for ( auto& position : object["positions"].GetArray() )
-        animationLengths.push_back( position.GetInt() );
+			if (animationXpos == animationLengths[animationYpos] - 1)
+			{
+				animationXpos = 0;
+				isAnimationDone = true;
+			}
 
-    SetObjectValues( object );
+			animationFramesSkipped = 0;
+		}
+		else
+			++animationFramesSkipped;
+	}
 }
 
-void MovableObject::SetObjectValues( rapidjson::Value& object )
+void
+MovableObject::Render ()
 {
-    destRect.x = object["destRectX"].GetInt();
-    destRect.y = object["destRectY"].GetInt();
+	SDL_RenderCopy (renderer, objTexture, &srcRect, &destRect);
 }
 
-void MovableObject::Update()
+void
+MovableObject::Reset ()
 {
-    isAnimationDone = false;
-
-    if( animationSpeed )
-    {
-        if( animationFramesSkipped == ANIMATION_SPEED_DIVISOR / (FPS*animationSpeed) )
-        {
-            ++animationXpos;
-
-            srcRect.x = srcRect.w * animationXpos;
-            srcRect.y = srcRect.h * animationYpos;
-
-            if( animationXpos == animationLengths[ animationYpos ] -1 )
-            {
-                animationXpos = 0;
-                isAnimationDone = true;
-            }
-
-            animationFramesSkipped = 0;
-        } else ++animationFramesSkipped;
-    }
-}
-
-void MovableObject::Render()
-{
-    SDL_RenderCopy( renderer, objTexture, &srcRect, &destRect );
-}
-
-void MovableObject::Reset()
-{
-    animationFramesSkipped = 0;
-    animationYpos = 0;
-    animationXpos = 0;
-    animationSpeed = 5;
-    xShift = 0;
-    srcRect.x = srcRect.w * animationXpos;
-    srcRect.y = srcRect.h * animationYpos;
-    isMoving = true;
-    isAnimationDone = false;
-    SetObjectValues( *originalJsonValues );
+	animationFramesSkipped = 0;
+	animationYpos = 0;
+	animationXpos = 0;
+	animationSpeed = 5;
+	xShift = 0;
+	srcRect.x = srcRect.w * animationXpos;
+	srcRect.y = srcRect.h * animationYpos;
+	isMoving = true;
+	isAnimationDone = false;
+	SetObjectValues (*originalJsonValues);
 }

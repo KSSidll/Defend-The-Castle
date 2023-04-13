@@ -1,9 +1,10 @@
 #ifndef USER_INTERFACE_GAME_MENU_H_
 #define USER_INTERFACE_GAME_MENU_H_
 
+#include "Button.h"
 #include <SDL2/SDL.h>
-#include <rapidjson/fwd.h>
 #include <deque>
+#include <rapidjson/fwd.h>
 
 struct LabeledButton;
 
@@ -17,36 +18,38 @@ class SceneObject;
 
 class GameMenu
 {
-    private:
-        rapidjson::Value* json;
-        SDL_Renderer* renderer;
-        SummonDungeon* dungeon;
-        Player* player;
-        Game* game;
+  private:
+	rapidjson::Value *json;
+	SDL_Renderer *renderer;
+	SummonDungeon *dungeon;
+	Player *player;
+	Game *game;
 
-        std::deque<LabeledButton> buttons;
+	std::deque<LabeledButton> buttons;
 
-        SDL_Rect gameInfoBackgroundPos = { 0, 0, 1024, 100 };
-        SceneObject* gameInfoBackground;
+	SDL_Rect gameInfoBackgroundPos = { 0, 0, 1024, 100 };
+	SceneObject *gameInfoBackground;
 
-        UILabel* levelInfo;
-        UILabel* playerFujika;
-        UILabel* playerFuko;
+	UILabel *levelInfo;
+	UILabel *playerFujika;
+	UILabel *playerFuko;
 
-        SceneObject* enemyStatsBackground;
-        UILabel* enemyNameLabel;
-        UILabel* enemyStatsLabel;
+	SceneObject *enemyStatsBackground;
+	UILabel *enemyNameLabel;
+	UILabel *enemyStatsLabel;
 
-    public:
-        GameMenu();
-        ~GameMenu();
+  public:
+	GameMenu ();
+	~GameMenu ();
 
-        GameMenu( rapidjson::Value* json, SummonDungeon* dungeon, SDL_Renderer* renderer, TextureManager* textureManager, Player* player, Game* game );
+	GameMenu (rapidjson::Value *json, SummonDungeon *dungeon,
+	          SDL_Renderer *renderer, TextureManager *textureManager,
+	          Player *player, Game *game);
 
-        void Render();
-        void HandleEvents( SDL_Event* event );
-        void Reset( float multiplier );
-        void Update( bool bStatUpdate = false );
+	void Render ();
+	void HandleEvents (SDL_Event *event);
+	void Reset (float multiplier);
+	void Update (bool bStatUpdate = false);
 };
 
 #endif // USER_INTERFACE_GAME_MENU_H_
