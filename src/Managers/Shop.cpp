@@ -129,7 +129,7 @@ Shop::Buy (const char *itemName)
 		}
 
 		if (isValid)
-			++items.at (itemName).level;
+			IncreaseLevel (itemName);
 		else
 			player->ReturnFuko (items.at (itemName).itemCost);
 	}
