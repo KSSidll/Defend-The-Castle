@@ -145,3 +145,9 @@ Button::HandleEvents (SDL_Event *event)
 	}
 	return false;
 }
+
+const void *
+Button::GetArg ()
+{
+	return Arg;
+};

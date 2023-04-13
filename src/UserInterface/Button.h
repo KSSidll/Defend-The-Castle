@@ -52,11 +52,7 @@ class Button
 	void Render ();
 	bool HandleEvents (SDL_Event *event);
 
-	const void *
-	GetArg ()
-	{
-		return Arg;
-	};
+	const void *GetArg ();
 
 	void (*summon) (SummonDungeon *dungeon, rapidjson::Value &json,
 	                const char *type);
