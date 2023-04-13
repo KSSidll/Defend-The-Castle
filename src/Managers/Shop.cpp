@@ -45,7 +45,9 @@ Shop::Shop (Player *player, rapidjson::Value *json)
 						stat.name.GetString (), stat.value.GetInt ());
 				}
 			}
-			items.emplace (itemData.name.GetString (), tmp_item);
+			std::string tmp_item_name = unit.name.GetString ();
+			tmp_item_name.append (itemData.name.GetString ());
+			items.emplace (tmp_item_name, tmp_item);
 		}
 	}
 }
@@ -173,6 +175,8 @@ Shop::Load (rapidjson::Value *saveJson)
 						(*json)["summons"][item.second.unit]
 							   [stat.first.c_str ()]
 								   .SetInt (previousValue + stat.second);
+
+					int test = (*json)["summons"][item.second.unit][stat.first.c_str()].GetInt();
 
 					if (isValid && item.second.drawSpecialEffect
 					    && item.second.specialEffectLevelReq - 1

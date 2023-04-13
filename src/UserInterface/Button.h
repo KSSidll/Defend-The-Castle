@@ -32,6 +32,7 @@ class Button
 	ButtonTextures *textures;
 
 	const void *Arg;
+	const void *Arg2;
 
   public:
 	Button ();
@@ -47,18 +48,19 @@ class Button
 	Button (ButtonTextures *textures, SDL_Rect rect, SDL_Renderer *renderer,
 	        void *number, void (*game) (Game *game, float *number));
 	Button (ButtonTextures *textures, SDL_Rect rect, SDL_Renderer *renderer,
-	        void *itemName, void (*item) (Shop *shop, const char *itemName));
+	        void *itemName, void *unitClass, void (*item) (Shop *shop, const char *itemName, const char *unitClass));
 
 	void Render ();
 	bool HandleEvents (SDL_Event *event);
 
 	const void *GetArg ();
+	const void *GetArg2 ();
 
 	void (*summon) (SummonDungeon *dungeon, rapidjson::Value &json,
 	                const char *type);
 	void (*game) (Game *game);
 	void (*game_numbered) (Game *game, float *number);
-	void (*item) (Shop *shop, const char *itemName);
+	void (*item) (Shop *shop, const char *itemName, const char *unitClass);
 };
 
 struct LabeledButton

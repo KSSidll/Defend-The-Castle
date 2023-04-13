@@ -88,7 +88,7 @@ struct ShopMenu::itemColumn
 			if (items[itr].HandleEvents (event))
 			{
 				items[itr].button.item (
-					shop, (const char *)items[itr].button.GetArg ());
+					shop, (const char *)items[itr].button.GetArg (), (const char *)items[itr].button.GetArg2 ());
 				*bUpdate = true;
 			}
 		}
@@ -218,7 +218,9 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 				                     + 20 - tmp_offset,
 				                 (1024 / 3) - 20, 150 };
 			std::string tmp_text = "";
-			Item tmp_item = shop->GetItem (item.name.GetString ());
+			std::string tmp_item_name = unit.name.GetString ();
+			tmp_item_name.append (item.name.GetString ());
+			Item tmp_item = shop->GetItem (tmp_item_name.c_str ());
 
 			tmp_text.append ("\n Cost: " + std::to_string (tmp_item.itemCost));
 			tmp_text.append ("\n Level: " + std::to_string (tmp_item.level));
@@ -249,9 +251,9 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 				}
 			Button tmp_button
 				= Button (textureManager->GetButtonTexture ("button1"),
-			              tmp_pos, renderer, (void *)item.name.GetString (),
-			              [] (Shop *shop, const char *itemName)
-			              { shop->Buy (itemName); });
+			              tmp_pos, renderer, (void *)item.name.GetString (), (void *)unit.name.GetString (),
+			              [] (Shop *shop, const char *itemName, const char *unitClass)
+			              { shop->Buy (std::string(unitClass).append(itemName).c_str()); });
 			std::string tmp_name = item.name.GetString ();
 			tmp_name[0] = toupper (tmp_name[0]);
 			UILabel tmp_nameLabel
@@ -298,8 +300,7 @@ ShopMenu::Update (bool bStatUpdate)
 			for (auto &button : column.items)
 			{
 				std::string tmp_text = "";
-				auto tmp_item = shop->GetItems ().at (
-					(const char *)button.button.GetArg ());
+				auto tmp_item = shop->GetItems ().at (std::string((const char *)button.button.GetArg2 ()).append((const char *)button.button.GetArg ()));
 
 				tmp_text.append ("\n Cost: "
 				                 + std::to_string (tmp_item.itemCost));

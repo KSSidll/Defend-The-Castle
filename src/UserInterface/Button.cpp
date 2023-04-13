@@ -69,11 +69,12 @@ Button::Button (ButtonTextures *textures, SDL_Rect rect,
 }
 
 Button::Button (ButtonTextures *textures, SDL_Rect rect,
-                SDL_Renderer *renderer, void *itemName,
-                void (*item) (Shop *shop, const char *itemName))
+                SDL_Renderer *renderer, void *itemName, void *unitClass,
+                void (*item) (Shop *shop, const char *itemName, const char *unitClass))
 	: Button (textures, rect, renderer)
 {
 	Arg = itemName;
+	Arg2 = unitClass;
 	this->item = item;
 }
 
@@ -150,4 +151,10 @@ const void *
 Button::GetArg ()
 {
 	return Arg;
+};
+
+const void *
+Button::GetArg2 ()
+{
+	return Arg2;
 };
