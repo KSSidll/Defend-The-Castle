@@ -298,51 +298,50 @@ ShopMenu::Update (bool bStatUpdate)
 	playerInfoLabel->ChangeText (
 		("Fuko: " + std::to_string (player->GetFuko ())).c_str ());
 	if (bStatUpdate)
-	{
-		for (auto &column : fullPage->fullPage.columns)
-		{
-			for (auto &button : column.items)
-			{
-				std::string tmp_text = "";
-				auto tmp_item = shop->GetItems ().at (
-					std::string ((const char *)button.button.GetArg2 ())
-						.append ((const char *)button.button.GetArg ()));
+		UpdateItemsStats ();
+}
 
-				tmp_text.append ("\n Cost: "
-				                 + std::to_string (tmp_item.itemCost));
-				tmp_text.append ("\n Level: "
-				                 + std::to_string (tmp_item.level));
-				for (auto &stat : tmp_item.stats)
+void
+ShopMenu::UpdateItemsStats ()
+{
+	for (auto &column : fullPage->fullPage.columns)
+	{
+		for (auto &button : column.items)
+		{
+			std::string tmp_text = "";
+			auto tmp_item = shop->GetItems ().at (
+				std::string ((const char *)button.button.GetArg2 ())
+					.append ((const char *)button.button.GetArg ()));
+
+			tmp_text.append ("\n Cost: " + std::to_string (tmp_item.itemCost));
+			tmp_text.append ("\n Level: " + std::to_string (tmp_item.level));
+			for (auto &stat : tmp_item.stats)
+			{
+				auto itr = (*json)["lang"].FindMember (stat.first.c_str ());
+				if (itr != (*json)["lang"].MemberEnd ())
+				{
+					tmp_text.append (
+						"\n " + std::string (itr->value.GetString ()) + ": "
+						+ std::to_string (stat.second) + " per Level");
+				}
+			}
+
+			if (tmp_item.drawSpecialEffect)
+				for (auto &stat : tmp_item.specialEffectStats)
 				{
 					auto itr
 						= (*json)["lang"].FindMember (stat.first.c_str ());
 					if (itr != (*json)["lang"].MemberEnd ())
 					{
 						tmp_text.append (
-							"\n " + std::string (itr->value.GetString ())
-							+ ": " + std::to_string (stat.second)
-							+ " per Level");
+							"\n " + std::to_string (stat.second) + " to "
+							+ std::string (itr->value.GetString ())
+							+ " at level "
+							+ std::to_string (tmp_item.specialEffectLevelReq));
 					}
 				}
 
-				if (tmp_item.drawSpecialEffect)
-					for (auto &stat : tmp_item.specialEffectStats)
-					{
-						auto itr
-							= (*json)["lang"].FindMember (stat.first.c_str ());
-						if (itr != (*json)["lang"].MemberEnd ())
-						{
-							tmp_text.append (
-								"\n " + std::to_string (stat.second) + " to "
-								+ std::string (itr->value.GetString ())
-								+ " at level "
-								+ std::to_string (
-									tmp_item.specialEffectLevelReq));
-						}
-					}
-
-				button.labels.at ("stats").ChangeText (tmp_text.c_str ());
-			}
+			button.labels.at ("stats").ChangeText (tmp_text.c_str ());
 		}
 	}
 }

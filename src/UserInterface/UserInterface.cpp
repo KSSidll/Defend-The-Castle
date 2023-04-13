@@ -148,4 +148,5 @@ void
 UserInterface::Load (rapidjson::Value *saveJson)
 {
 	shopMenu->Load (saveJson);
+	bStatUpdate = true;
 }

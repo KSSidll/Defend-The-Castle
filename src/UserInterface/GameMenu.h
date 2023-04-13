@@ -38,6 +38,9 @@ class GameMenu
 	UILabel *enemyNameLabel;
 	UILabel *enemyStatsLabel;
 
+	void UpdateEnemyStatsLabel (float multiplier = 1);
+	void UpdateEntitiesStatsLabel ();
+
   public:
 	GameMenu ();
 	~GameMenu ();

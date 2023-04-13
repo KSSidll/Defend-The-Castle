@@ -173,8 +173,36 @@ GameMenu::HandleEvents (SDL_Event *event)
 	}
 }
 
+void UpdateEnemyStatsLabel ();
+void UpdateEntitiesStatsLabel ();
+
 void
 GameMenu::Reset (float multiplier)
+{
+	UpdateEnemyStatsLabel (multiplier);
+	UpdateEntitiesStatsLabel ();
+}
+
+void
+GameMenu::Update (bool bStatUpdate)
+{
+	playerFujika->ChangeText (("Fujika "
+	                           + std::to_string (player->GetFujika ()) + " / "
+	                           + std::to_string (player->GetFujikaLimit ()))
+	                              .c_str ());
+	levelInfo->ChangeText (
+		("Level " + std::to_string (game->Level () + 1)).c_str ());
+	playerFuko->ChangeText (("Fuko " + std::to_string (player->GetFuko ())
+	                         + " / "
+	                         + std::to_string (player->GetFukoLimit ()))
+	                            .c_str ());
+
+	if (bStatUpdate)
+		UpdateEntitiesStatsLabel ();
+}
+
+void
+GameMenu::UpdateEnemyStatsLabel (float multiplier)
 {
 	std::string tmp_statText = "";
 	for (auto &stat : (*json)["enemy"].GetObject ())
@@ -199,37 +227,24 @@ GameMenu::Reset (float multiplier)
 }
 
 void
-GameMenu::Update (bool bStatUpdate)
+GameMenu::UpdateEntitiesStatsLabel ()
 {
-	playerFujika->ChangeText (("Fujika "
-	                           + std::to_string (player->GetFujika ()) + " / "
-	                           + std::to_string (player->GetFujikaLimit ()))
-	                              .c_str ());
-	levelInfo->ChangeText (
-		("Level " + std::to_string (game->Level () + 1)).c_str ());
-	playerFuko->ChangeText (("Fuko " + std::to_string (player->GetFuko ())
-	                         + " / "
-	                         + std::to_string (player->GetFukoLimit ()))
-	                            .c_str ());
-
-	if (bStatUpdate)
-		for (auto &button : buttons)
+	for (auto &button : buttons)
+	{
+		std::string tmp_statText = "";
+		for (auto &stat :
+		     (*json)["summons"][(const char *)(button.GetArg ())].GetObject ())
 		{
-			std::string tmp_statText = "";
-			for (auto &stat :
-			     (*json)["summons"][(const char *)(button.GetArg ())]
-			         .GetObject ())
+			auto itr = (*json)["lang"].FindMember (stat.name.GetString ());
+			if (itr != (*json)["lang"].MemberEnd ())
 			{
-				auto itr = (*json)["lang"].FindMember (stat.name.GetString ());
-				if (itr != (*json)["lang"].MemberEnd ())
-				{
-					tmp_statText.append (
-						std::string (itr->value.GetString ()) + ": "
-						+ std::to_string (stat.value.GetInt ()));
-					tmp_statText.append ("\n");
-				}
+				tmp_statText.append (std::string (itr->value.GetString ())
+				                     + ": "
+				                     + std::to_string (stat.value.GetInt ()));
+				tmp_statText.append ("\n");
 			}
-
-			button.ChangeText ("stats", tmp_statText.c_str ());
 		}
+
+		button.ChangeText ("stats", tmp_statText.c_str ());
+	}
 }

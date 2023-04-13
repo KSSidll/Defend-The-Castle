@@ -44,6 +44,8 @@ class ShopMenu
 	Button *line_incButton;
 	Button *line_decButton;
 
+	void UpdateItemsStats ();
+
   public:
 	ShopMenu ();
 	~ShopMenu ();
