@@ -88,7 +88,8 @@ struct ShopMenu::itemColumn
 			if (items[itr].HandleEvents (event))
 			{
 				items[itr].button.item (
-					shop, (const char *)items[itr].button.GetArg (), (const char *)items[itr].button.GetArg2 ());
+					shop, (const char *)items[itr].button.GetArg (),
+					(const char *)items[itr].button.GetArg2 ());
 				*bUpdate = true;
 			}
 		}
@@ -249,11 +250,14 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 							+ std::to_string (tmp_item.specialEffectLevelReq));
 					}
 				}
-			Button tmp_button
-				= Button (textureManager->GetButtonTexture ("button1"),
-			              tmp_pos, renderer, (void *)item.name.GetString (), (void *)unit.name.GetString (),
-			              [] (Shop *shop, const char *itemName, const char *unitClass)
-			              { shop->Buy (std::string(unitClass).append(itemName).c_str()); });
+			Button tmp_button = Button (
+				textureManager->GetButtonTexture ("button1"), tmp_pos,
+				renderer, (void *)item.name.GetString (),
+				(void *)unit.name.GetString (),
+				[] (Shop *shop, const char *itemName, const char *unitClass) {
+					shop->Buy (
+						std::string (unitClass).append (itemName).c_str ());
+				});
 			std::string tmp_name = item.name.GetString ();
 			tmp_name[0] = toupper (tmp_name[0]);
 			UILabel tmp_nameLabel
@@ -300,7 +304,9 @@ ShopMenu::Update (bool bStatUpdate)
 			for (auto &button : column.items)
 			{
 				std::string tmp_text = "";
-				auto tmp_item = shop->GetItems ().at (std::string((const char *)button.button.GetArg2 ()).append((const char *)button.button.GetArg ()));
+				auto tmp_item = shop->GetItems ().at (
+					std::string ((const char *)button.button.GetArg2 ())
+						.append ((const char *)button.button.GetArg ()));
 
 				tmp_text.append ("\n Cost: "
 				                 + std::to_string (tmp_item.itemCost));

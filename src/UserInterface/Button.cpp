@@ -70,7 +70,8 @@ Button::Button (ButtonTextures *textures, SDL_Rect rect,
 
 Button::Button (ButtonTextures *textures, SDL_Rect rect,
                 SDL_Renderer *renderer, void *itemName, void *unitClass,
-                void (*item) (Shop *shop, const char *itemName, const char *unitClass))
+                void (*item) (Shop *shop, const char *itemName,
+                              const char *unitClass))
 	: Button (textures, rect, renderer)
 {
 	Arg = itemName;

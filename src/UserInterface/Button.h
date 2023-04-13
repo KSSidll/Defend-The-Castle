@@ -48,7 +48,9 @@ class Button
 	Button (ButtonTextures *textures, SDL_Rect rect, SDL_Renderer *renderer,
 	        void *number, void (*game) (Game *game, float *number));
 	Button (ButtonTextures *textures, SDL_Rect rect, SDL_Renderer *renderer,
-	        void *itemName, void *unitClass, void (*item) (Shop *shop, const char *itemName, const char *unitClass));
+	        void *itemName, void *unitClass,
+	        void (*item) (Shop *shop, const char *itemName,
+	                      const char *unitClass));
 
 	void Render ();
 	bool HandleEvents (SDL_Event *event);
