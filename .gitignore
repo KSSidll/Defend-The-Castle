@@ -10,3 +10,7 @@ compile_flags.txt
 
 # vsc configuration
 .vscode/
+
+# external files
+include/
+lib/
