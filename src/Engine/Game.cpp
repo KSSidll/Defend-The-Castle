@@ -10,6 +10,7 @@
 #include <rapidjson/filereadstream.h>
 #include <rapidjson/filewritestream.h>
 #include <rapidjson/writer.h>
+#include <stdio.h>
 
 Game::Game ()
 {
@@ -48,7 +49,9 @@ Game::Init (const char *title, int width, int height, bool fullscreen)
 
 	objectsDoc = new rapidjson::Document ();
 
-	FILE *objectsJsonFile = fopen ("assets/objects.json", "r");
+	FILE *objectsJsonFile = nullptr;
+	fopen_s (&objectsJsonFile, "assets/objects.json", "r");
+
 	char *readBuffer = new char[65536];
 	rapidjson::FileReadStream objectsJson (objectsJsonFile, readBuffer,
 	                                       sizeof (readBuffer));
@@ -241,7 +244,8 @@ Game::Reset ()
 void
 Game::Save (bool incrementLevel)
 {
-	FILE *saveFile = fopen ("assets/save.json", "w");
+	FILE *saveFile = nullptr;
+	fopen_s (&saveFile, "assets/save.json", "w");
 
 	char writeBuffer[65536];
 	rapidjson::FileWriteStream saveStream (saveFile, writeBuffer,
@@ -269,7 +273,10 @@ Game::Load ()
 {
 	HardReset ();
 
-	if (FILE *saveJsonFile = fopen ("assets/save.json", "r"))
+	FILE *saveJsonFile = nullptr;
+	fopen_s (&saveJsonFile, "assets/save.json", "r");
+
+	if (saveJsonFile)
 	{
 		char *readBuffer = new char[65536];
 		rapidjson::FileReadStream saveJson (saveJsonFile, readBuffer,
