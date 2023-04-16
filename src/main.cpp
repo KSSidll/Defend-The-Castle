@@ -5,15 +5,15 @@ int
 main ()
 {
 	bool updateOnly = false;
-	Uint32 frameStart;
-	int frameTime;
+	Uint64 frameStart;
+	Uint64 frameTime;
 
 	Game *game = new Game ();
 	game->Init ("Defend The Castle", 1024, 768, false);
 
 	while (game->Running ())
 	{
-		frameStart = SDL_GetTicks ();
+		frameStart = SDL_GetTicks64 ();
 
 		game->HandleEvents ();
 		game->Update ();
@@ -23,7 +23,7 @@ main ()
 		else
 			updateOnly = false;
 
-		frameTime = SDL_GetTicks () - frameStart;
+		frameTime = SDL_GetTicks64 () - frameStart;
 
 		if (FRAME_DELAY > frameTime)
 			SDL_Delay (FRAME_DELAY - frameTime);
