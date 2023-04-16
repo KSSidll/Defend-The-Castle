@@ -1,8 +1,8 @@
 #include "Button.h"
-#include "../Engine/Game.h"
-#include "../Managers/Shop.h"
-#include "../Managers/SummonDungeon.h"
-#include "../Managers/TextureManager.h"
+#include "../../Engine/Game.h"
+#include "../../Managers/Shop.h"
+#include "../../Managers/SummonDungeon.h"
+#include "../../Managers/TextureManager.h"
 #include "UILabel.h"
 #include <rapidjson/document.h>
 

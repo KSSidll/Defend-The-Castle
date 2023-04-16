@@ -1,11 +1,11 @@
 #include "ShopMenu.h"
-#include "../Engine/Game.h"
-#include "../Managers/Player.h"
-#include "../Managers/Shop.h"
-#include "../Managers/TextureManager.h"
-#include "../Objects/SceneObject.h"
-#include "Button.h"
-#include "UILabel.h"
+#include "../../Engine/Game.h"
+#include "../../Managers/Player.h"
+#include "../../Managers/Shop.h"
+#include "../../Managers/TextureManager.h"
+#include "../../Objects/SceneObject.h"
+#include "../Components/Button.h"
+#include "../Components/UILabel.h"
 #include <rapidjson/document.h>
 
 ShopMenu::ShopMenu ()

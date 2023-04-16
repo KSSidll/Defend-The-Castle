@@ -3,13 +3,13 @@
 #include "../Managers/Player.h"
 #include "../Managers/SummonDungeon.h"
 #include "../Managers/TextureManager.h"
-#include "DifficultySelectionMenu.h"
-#include "GameMenu.h"
-#include "LoseMenu.h"
-#include "MainMenu.h"
-#include "PauseMenu.h"
-#include "ShopMenu.h"
-#include "WinMenu.h"
+#include "Menus/DifficultySelectionMenu.h"
+#include "Menus/GameMenu.h"
+#include "Menus/LoseMenu.h"
+#include "Menus/MainMenu.h"
+#include "Menus/PauseMenu.h"
+#include "Menus/ShopMenu.h"
+#include "Menus/WinMenu.h"
 #include <rapidjson/document.h>
 
 UserInterface::UserInterface ()

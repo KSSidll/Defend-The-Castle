@@ -1,7 +1,7 @@
 #ifndef USER_INTERFACE_MAIN_MENU_H_
 #define USER_INTERFACE_MAIN_MENU_H_
 
-#include "Button.h"
+#include "../Components/Button.h"
 #include <SDL2/SDL.h>
 #include <deque>
 

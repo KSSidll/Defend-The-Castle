@@ -1,11 +1,11 @@
 #include "GameMenu.h"
-#include "../Engine/Game.h"
-#include "../Global.h"
-#include "../Managers/Player.h"
-#include "../Managers/SummonDungeon.h"
-#include "../Managers/TextureManager.h"
-#include "../Objects/SceneObject.h"
-#include "Button.h"
+#include "../../Engine/Game.h"
+#include "../../Global.h"
+#include "../../Managers/Player.h"
+#include "../../Managers/SummonDungeon.h"
+#include "../../Managers/TextureManager.h"
+#include "../../Objects/SceneObject.h"
+#include "../Components/Button.h"
 #include <rapidjson/document.h>
 
 GameMenu::GameMenu ()
