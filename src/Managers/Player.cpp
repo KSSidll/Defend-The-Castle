@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "../Engine/Global.h"
+#include "../Global.h"
 #include <rapidjson/document.h>
 
 bool

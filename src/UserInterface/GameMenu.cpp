@@ -1,6 +1,6 @@
 #include "GameMenu.h"
 #include "../Engine/Game.h"
-#include "../Engine/Global.h"
+#include "../Global.h"
 #include "../Managers/Player.h"
 #include "../Managers/SummonDungeon.h"
 #include "../Managers/TextureManager.h"

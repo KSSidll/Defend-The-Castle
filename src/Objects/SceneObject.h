@@ -1,7 +1,7 @@
 #ifndef OBJECTS_SCENE_OBJECT_H_
 #define OBJECTS_SCENE_OBJECT_H_
 
-#include "../Engine/Global.h"
+#include "../Global.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 

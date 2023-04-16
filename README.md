@@ -73,5 +73,5 @@ include files must be in their respective folders (`SDL2` and `rapidjson`)
 ### example for g++
 
 ```bash
-g++ -g ./src/Engine/*.cpp ./src/Managers/*.cpp ./src/Objects/*.cpp ./src/UserInterface/*.cpp -o ./build/game.exe -I"./include" -L"./lib" -lSDL2 -lSDL2_image -lSDL2_ttf --std=c++14
+g++ -g ./src/*.cpp ./src/Engine/*.cpp ./src/Managers/*.cpp ./src/Objects/*.cpp ./src/UserInterface/*.cpp -o ./build/game.exe -I"./include" -L"./lib" -lSDL2 -lSDL2_image -lSDL2_ttf --std=c++14
 ```
