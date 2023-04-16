@@ -1,5 +1,5 @@
 #include "ShopMenu.h"
-#include "../../Engine/Game.h"
+#include "../../Game.h"
 #include "../../Managers/Player.h"
 #include "../../Managers/Shop.h"
 #include "../../Managers/TextureManager.h"

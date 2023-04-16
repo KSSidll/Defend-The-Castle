@@ -1,10 +1,10 @@
 #include "Game.h"
-#include "../Managers/Player.h"
-#include "../Managers/SummonDungeon.h"
-#include "../Managers/TextureManager.h"
-#include "../Objects/Enemy.h"
-#include "../Objects/PlayerSummon.h"
-#include "../UserInterface/UserInterface.h"
+#include "Managers/Player.h"
+#include "Managers/SummonDungeon.h"
+#include "Managers/TextureManager.h"
+#include "Objects/Enemy.h"
+#include "Objects/PlayerSummon.h"
+#include "UserInterface/UserInterface.h"
 #include <cmath>
 #include <rapidjson/document.h>
 #include <rapidjson/filereadstream.h>

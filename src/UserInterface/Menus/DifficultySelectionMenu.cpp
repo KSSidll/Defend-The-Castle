@@ -1,5 +1,5 @@
 #include "DifficultySelectionMenu.h"
-#include "../../Engine/Game.h"
+#include "../../Game.h"
 #include "../../Managers/TextureManager.h"
 #include "../../Objects/SceneObject.h"
 #include "../Components/Button.h"
