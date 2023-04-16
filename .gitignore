@@ -16,3 +16,4 @@ compile_flags.txt
 # external files
 include/
 lib/
+tags
