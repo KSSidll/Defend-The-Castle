@@ -1,5 +1,5 @@
 #include "TextureManager.h"
-#include <rapidjson/document.h>
+#include <SDL2/SDL_image.h>
 
 TextureManager::TextureManager () { renderer = nullptr; }
 
@@ -20,7 +20,7 @@ TextureManager::TextureManager (SDL_Renderer *renderer)
 }
 
 void
-TextureManager::LoadTexture (rapidjson::Value &texturePath)
+TextureManager::LoadTexture (const rapidjson::Value &texturePath)
 {
 	SDL_Surface *tempSurface = IMG_Load (texturePath.GetString ());
 
@@ -75,25 +75,26 @@ TextureManager::LoadButtonTexture (const char *key, const char *none,
 		SDL_FreeSurface (tempSurface_down);
 	}
 
-	ButtonTextures textures = { texture_none, texture_over, texture_down };
+	ButtonTextures *textures
+		= new ButtonTextures ({ texture_none, texture_over, texture_down });
 
 	buttonTextureArray.insert ({ key, textures });
 }
 
 SDL_Texture *
-TextureManager::GetTexture (rapidjson::Value &texturePath)
+TextureManager::GetTexture (const rapidjson::Value &texturePath) const
 {
 	return textureArray.at (texturePath.GetString ());
 }
 
 SDL_Texture *
-TextureManager::GetTexture (const char *key)
+TextureManager::GetTexture (const char *key) const
 {
 	return textureArray.at (key);
 }
 
 ButtonTextures *
-TextureManager::GetButtonTexture (const char *key)
+TextureManager::GetButtonTexture (const char *key) const
 {
-	return &buttonTextureArray.at (key);
+	return buttonTextureArray.at (key);
 }

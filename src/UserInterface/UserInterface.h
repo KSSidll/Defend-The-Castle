@@ -1,25 +1,20 @@
 #ifndef USER_INTERFACE_USER_INTERFACE_H_
 #define USER_INTERFACE_USER_INTERFACE_H_
 
+#include "Menus/DifficultySelectionMenu.h"
+#include "Menus/GameMenu.h"
+#include "Menus/LoseMenu.h"
+#include "Menus/MainMenu.h"
+#include "Menus/PauseMenu.h"
+#include "Menus/ShopMenu.h"
+#include "Menus/WinMenu.h"
 #include <SDL2/SDL.h>
 #include <rapidjson/fwd.h>
-
-class Game;
-class GameMenu;
-class PauseMenu;
-class MainMenu;
-class DifficultySelectionMenu;
-class WinMenu;
-class LoseMenu;
-class ShopMenu;
-class SummonDungeon;
-class TextureManager;
-class Player;
 
 class UserInterface
 {
   private:
-	Game *game;
+	const Game *game;
 	GameMenu *gameMenu;
 	PauseMenu *pauseMenu;
 	MainMenu *mainMenu;
@@ -39,12 +34,12 @@ class UserInterface
 	               Game *game, Player *player);
 
 	void Update ();
-	void Render ();
+	void Render () const;
 	void HandleEvents (SDL_Event *event);
 	void Reset (float multiplier);
 	void HardReset ();
-	void Save (rapidjson::Document *saveJson);
-	void Load (rapidjson::Value *saveJson);
+	void Save (rapidjson::Document *saveJson) const;
+	void Load (const rapidjson::Value *saveJson);
 };
 
 #endif // USER_INTERFACE_USER_INTERFACE_H_

@@ -1,5 +1,5 @@
 #include "UILabel.h"
-#include <SDL2/SDL_image.h>
+#include <algorithm>
 
 UILabel::UILabel ()
 {
@@ -11,7 +11,7 @@ UILabel::UILabel ()
 UILabel::~UILabel ()
 {
 	texture = nullptr;
-	font = nullptr;
+	// TTF_CloseFont (font);
 	renderer = nullptr;
 }
 
@@ -94,13 +94,13 @@ UILabel::ChangeText (const char *text)
 }
 
 void
-UILabel::Render ()
+UILabel::Render () const
 {
 	SDL_RenderCopy (renderer, texture, NULL, &position);
 }
 
 SDL_Rect
-UILabel::GetPosition ()
+UILabel::GetPosition () const
 {
 	return position;
 };

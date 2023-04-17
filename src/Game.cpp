@@ -23,21 +23,28 @@ Game::Game ()
 	userInterface = nullptr;
 	player = nullptr;
 	enemy = nullptr;
-	background = nullptr;
 }
 
 Game::~Game ()
 {
-	background = nullptr;
-	enemy = nullptr;
-	player = nullptr;
-	userInterface = nullptr;
-	textureManager = nullptr;
-	summonDungeon = nullptr;
-	saveDoc = nullptr;
-	objectsDoc = nullptr;
-	renderer = nullptr;
-	window = nullptr;
+	if (enemy)
+		delete enemy;
+	if (player)
+		delete player;
+	if (userInterface)
+		delete userInterface;
+	if (textureManager)
+		delete textureManager;
+	if (summonDungeon)
+		delete summonDungeon;
+	if (saveDoc)
+		delete saveDoc;
+	if (objectsDoc)
+		delete objectsDoc;
+	if (renderer)
+		SDL_DestroyRenderer (renderer);
+	if (window)
+		SDL_DestroyWindow (window);
 }
 
 void
@@ -111,7 +118,7 @@ Game::Init (const char *title, int width, int height, bool fullscreen)
 	                                   "assets/prototypes/arrow-right.png",
 	                                   "assets/prototypes/arrow-right.png");
 
-	background = new SceneObject (
+	background = SceneObject (
 		textureManager->GetTexture ((*objectsDoc)["background"]["textureSrc"]),
 		renderer);
 
@@ -177,7 +184,7 @@ void
 Game::Render ()
 {
 	SDL_RenderClear (renderer);
-	background->Render ();
+	background.Render ();
 
 	summonDungeon->Render ();
 	enemy->Render ();
@@ -335,19 +342,19 @@ Game::ChangeEnemyLevelMultiplier (float multiplier)
 }
 
 bool
-Game::Running ()
+Game::Running () const
 {
 	return isRunning;
 };
 
 bool
-Game::Paused ()
+Game::Paused () const
 {
 	return isPaused;
 };
 
 int
-Game::Level ()
+Game::Level () const
 {
 	return level;
 };
@@ -422,31 +429,31 @@ Game::ResetMenus ()
 }
 
 bool
-Game::isMainMenu ()
+Game::isMainMenu () const
 {
 	return mainMenu;
 };
 
 bool
-Game::isDifficultyMenu ()
+Game::isDifficultyMenu () const
 {
 	return difficultyMenu;
 };
 
 bool
-Game::isWinMenu ()
+Game::isWinMenu () const
 {
 	return winMenu;
 };
 
 bool
-Game::isLoseMenu ()
+Game::isLoseMenu () const
 {
 	return loseMenu;
 };
 
 bool
-Game::isShopMenu ()
+Game::isShopMenu () const
 {
 	return shopMenu;
 };

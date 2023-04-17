@@ -2,8 +2,8 @@
 #define OBJECTS_ENEMY_H_
 
 #include "EntityObject.h"
-#include <rapidjson/fwd.h>
 
+// Recurrent dependency
 class PlayerSummon;
 
 class Enemy : virtual public EntityObject
@@ -17,11 +17,11 @@ class Enemy : virtual public EntityObject
 	Enemy (){};
 	~Enemy (){};
 
-	Enemy (SDL_Texture *objTexture, rapidjson::Value &object,
+	Enemy (SDL_Texture *objTexture, const rapidjson::Value &object,
 	       SDL_Renderer *renderer);
 
 	void Update ();
-	void Render ();
+	void Render () const;
 	void DoDamage (int attack);
 	void HandleCollision ();
 	void HandleCollision (PlayerSummon *entity);

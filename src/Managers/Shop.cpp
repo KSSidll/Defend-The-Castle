@@ -1,18 +1,16 @@
 #define RAPIDJSON_HAS_STDSTRING 1
 #include "Shop.h"
-#include "Player.h"
-#include <rapidjson/document.h>
 
 Shop::Shop ()
 {
-	this->json = nullptr;
-	this->player = nullptr;
+	json = nullptr;
+	player = nullptr;
 }
 
 Shop::~Shop ()
 {
-	this->player = nullptr;
-	this->json = nullptr;
+	player = nullptr;
+	json = nullptr;
 }
 
 Shop::Shop (Player *player, rapidjson::Value *json)
@@ -138,7 +136,7 @@ Shop::Buy (const char *itemName)
 }
 
 void
-Shop::Save (rapidjson::Document *saveJson)
+Shop::Save (rapidjson::Document *saveJson) const
 {
 	rapidjson::Value object (rapidjson::kObjectType);
 
@@ -154,7 +152,7 @@ Shop::Save (rapidjson::Document *saveJson)
 }
 
 void
-Shop::Load (rapidjson::Value *saveJson)
+Shop::Load (const rapidjson::Value *saveJson)
 {
 	for (auto &item : items)
 	{
@@ -204,13 +202,13 @@ Shop::Load (rapidjson::Value *saveJson)
 }
 
 Item
-Shop::GetItem (const char *key)
+Shop::GetItem (const char *key) const
 {
 	return items.at (key);
 };
 
 std::unordered_map<std::string, Item>
-Shop::GetItems ()
+Shop::GetItems () const
 {
 	return items;
 };

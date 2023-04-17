@@ -1,28 +1,17 @@
 #ifndef USER_INTERFACE_WIN_MENU_H_
-
 #define USER_INTERFACE_WIN_MENU_H_
 
-#include "../Components/Button.h"
-#include <SDL2/SDL.h>
+#include "../../Game.h"
+#include "../../Objects/SceneObject.h"
+#include "../Components/LabeledButton.h"
 #include <deque>
-
-struct LabeledButton;
-
-class Button;
-class Game;
-class UILabel;
-class SceneObject;
-class TextureManager;
 
 class WinMenu
 {
   private:
-	Game *game;
-	SDL_Renderer *renderer;
-
 	std::deque<LabeledButton> buttons;
-	SceneObject *background;
-	UILabel *label;
+	SceneObject background;
+	UILabel label;
 
 	SDL_Rect saveButtonPos = { 156, 334, 200, 100 };
 	SDL_Rect shopButtonPos = { 412, 334, 200, 100 };
@@ -35,7 +24,7 @@ class WinMenu
 	WinMenu (SDL_Renderer *renderer, Game *game,
 	         TextureManager *textureManager);
 
-	void Render ();
+	void Render () const;
 	void HandleEvents (SDL_Event *event);
 };
 

@@ -2,7 +2,6 @@
 #define OBJECTS_ENTITY_OBJECT_H_
 
 #include "MovableObject.h"
-#include <rapidjson/fwd.h>
 
 class EntityObject : public MovableObject
 {
@@ -23,25 +22,25 @@ class EntityObject : public MovableObject
 	EntityObject (){};
 	~EntityObject (){};
 
-	EntityObject (SDL_Texture *objTexture, rapidjson::Value &object,
+	EntityObject (SDL_Texture *objTexture, const rapidjson::Value &object,
 	              SDL_Renderer *renderer);
 
 	void Kill ();
 	void Attack ();
-	void SetObjectValues (rapidjson::Value &object, float multiplier);
-	void SetObjectValues (rapidjson::Value &object);
+	void SetObjectValues (const rapidjson::Value &object, float multiplier);
+	void SetObjectValues (const rapidjson::Value &object);
 	void Update ();
-	void Render ();
+	void Render () const;
 	void Reset ();
 	void Reset (float multipier);
 	void HandleCollision ();
 	void DoDamage (int damage);
 
-	float GetRange ();
-	int GetId ();
-	int GetHealth ();
-	bool KillPending ();
-	bool Alive ();
+	float GetRange () const;
+	int GetId () const;
+	int GetHealth () const;
+	bool KillPending () const;
+	bool Alive () const;
 };
 
 #endif // OBJECTS_ENTITY_OBJECT_H_

@@ -1,7 +1,7 @@
 #ifndef MANAGERS_PLAYER_H_
 #define MANAGERS_PLAYER_H_
 
-#include <rapidjson/fwd.h>
+#include <rapidjson/document.h>
 
 class Player
 {
@@ -25,18 +25,18 @@ class Player
 	bool Summon (int cost);
 	bool Buy (int cost);
 
-	int GetFujika ();
-	int GetFujikaLimit ();
-	int GetFuko ();
-	int GetFukoLimit ();
+	int GetFujika () const;
+	int GetFujikaLimit () const;
+	int GetFuko () const;
+	int GetFukoLimit () const;
 
 	void ReturnFuko (int value);
 
 	void Update ();
 	void Reset ();
 	void HardReset ();
-	void Save (rapidjson::Document *saveJson);
-	void Load (rapidjson::Value *saveJson);
+	void Save (rapidjson::Document *saveJson) const;
+	void Load (const rapidjson::Value *saveJson);
 };
 
 #endif // MANAGERS_PLAYER_H_

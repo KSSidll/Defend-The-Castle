@@ -1,6 +1,5 @@
 #include "Enemy.h"
 #include "PlayerSummon.h"
-#include <rapidjson/document.h>
 
 void
 Enemy::Move ()
@@ -8,7 +7,7 @@ Enemy::Move ()
 	EntityObject::Move ();
 }
 
-Enemy::Enemy (SDL_Texture *objTexture, rapidjson::Value &object,
+Enemy::Enemy (SDL_Texture *objTexture, const rapidjson::Value &object,
               SDL_Renderer *renderer)
 	: EntityObject (objTexture, object, renderer)
 {
@@ -27,7 +26,7 @@ Enemy::Update ()
 }
 
 void
-Enemy::Render ()
+Enemy::Render () const
 {
 	EntityObject::Render ();
 }

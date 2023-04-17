@@ -1,5 +1,4 @@
 #include "MovableObject.h"
-#include <rapidjson/document.h>
 
 MovableObject::MovableObject () { originalJsonValues = nullptr; }
 
@@ -13,7 +12,8 @@ MovableObject::Move ()
 }
 
 MovableObject::MovableObject (SDL_Texture *objTexture,
-                              rapidjson::Value &object, SDL_Renderer *renderer)
+                              const rapidjson::Value &object,
+                              SDL_Renderer *renderer)
 	: SceneObject (objTexture, renderer)
 {
 	originalJsonValues = &object;
@@ -34,7 +34,7 @@ MovableObject::MovableObject (SDL_Texture *objTexture,
 }
 
 void
-MovableObject::SetObjectValues (rapidjson::Value &object)
+MovableObject::SetObjectValues (const rapidjson::Value &object)
 {
 	destRect.x = object["destRectX"].GetInt ();
 	destRect.y = object["destRectY"].GetInt ();
@@ -69,7 +69,7 @@ MovableObject::Update ()
 }
 
 void
-MovableObject::Render ()
+MovableObject::Render () const
 {
 	SDL_RenderCopy (renderer, objTexture, &srcRect, &destRect);
 }
@@ -88,3 +88,9 @@ MovableObject::Reset ()
 	isAnimationDone = false;
 	SetObjectValues (*originalJsonValues);
 }
+
+int
+MovableObject::GetPosition () const
+{
+	return destRect.x;
+};

@@ -1,16 +1,4 @@
 #include "UserInterface.h"
-#include "../Game.h"
-#include "../Managers/Player.h"
-#include "../Managers/SummonDungeon.h"
-#include "../Managers/TextureManager.h"
-#include "Menus/DifficultySelectionMenu.h"
-#include "Menus/GameMenu.h"
-#include "Menus/LoseMenu.h"
-#include "Menus/MainMenu.h"
-#include "Menus/PauseMenu.h"
-#include "Menus/ShopMenu.h"
-#include "Menus/WinMenu.h"
-#include <rapidjson/document.h>
 
 UserInterface::UserInterface ()
 {
@@ -23,16 +11,23 @@ UserInterface::UserInterface ()
 	loseMenu = nullptr;
 	shopMenu = nullptr;
 }
-
 UserInterface::~UserInterface ()
 {
-	shopMenu = nullptr;
-	loseMenu = nullptr;
-	winMenu = nullptr;
-	difficultySelectionMenu = nullptr;
-	mainMenu = nullptr;
-	pauseMenu = nullptr;
-	gameMenu = nullptr;
+	if (shopMenu)
+		delete shopMenu;
+	if (loseMenu)
+		delete loseMenu;
+	if (winMenu)
+		delete winMenu;
+	if (difficultySelectionMenu)
+		delete difficultySelectionMenu;
+	if (mainMenu)
+		delete mainMenu;
+	if (pauseMenu)
+		delete pauseMenu;
+	if (gameMenu)
+		delete gameMenu;
+
 	game = nullptr;
 }
 
@@ -43,7 +38,6 @@ UserInterface::UserInterface (rapidjson::Value *json, SummonDungeon *dungeon,
 	: UserInterface::UserInterface ()
 {
 	this->game = game;
-
 	gameMenu
 		= new GameMenu (json, dungeon, renderer, textureManager, player, game);
 	pauseMenu = new PauseMenu (renderer, game, textureManager);
@@ -73,7 +67,7 @@ UserInterface::Update ()
 }
 
 void
-UserInterface::Render ()
+UserInterface::Render () const
 {
 	if (game->isMainMenu ())
 		mainMenu->Render ();
@@ -139,13 +133,13 @@ UserInterface::HardReset ()
 }
 
 void
-UserInterface::Save (rapidjson::Document *saveJson)
+UserInterface::Save (rapidjson::Document *saveJson) const
 {
 	shopMenu->Save (saveJson);
 }
 
 void
-UserInterface::Load (rapidjson::Value *saveJson)
+UserInterface::Load (const rapidjson::Value *saveJson)
 {
 	shopMenu->Load (saveJson);
 	bStatUpdate = true;

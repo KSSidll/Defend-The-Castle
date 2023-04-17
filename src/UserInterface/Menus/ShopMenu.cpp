@@ -1,194 +1,61 @@
 #include "ShopMenu.h"
-#include "../../Game.h"
 #include "../../Managers/Player.h"
-#include "../../Managers/Shop.h"
 #include "../../Managers/TextureManager.h"
-#include "../../Objects/SceneObject.h"
-#include "../Components/Button.h"
-#include "../Components/UILabel.h"
-#include <rapidjson/document.h>
 
 ShopMenu::ShopMenu ()
 {
-	game = nullptr;
 	player = nullptr;
-	shop = nullptr;
-	renderer = nullptr;
 	json = nullptr;
-	fullPage = nullptr;
-	mainLabel = nullptr;
-	playerInfoLabel = nullptr;
-	returnButtonLabel = nullptr;
-	returnButton = nullptr;
-	background = nullptr;
-	col_incButton = nullptr;
-	col_decButton = nullptr;
-	line_incButton = nullptr;
-	line_decButton = nullptr;
+	shop = nullptr;
 }
 
 ShopMenu::~ShopMenu ()
 {
-	line_decButton = nullptr;
-	line_incButton = nullptr;
-	col_decButton = nullptr;
-	col_incButton = nullptr;
-	background = nullptr;
-	returnButton = nullptr;
-	returnButtonLabel = nullptr;
-	playerInfoLabel = nullptr;
-	mainLabel = nullptr;
-	fullPage = nullptr;
+	if (shop)
+		delete shop;
+
 	json = nullptr;
-	renderer = nullptr;
-	shop = nullptr;
 	player = nullptr;
-	game = nullptr;
 }
-
-struct ShopMenu::itemColumn
-{
-	UILabel label;
-	std::deque<LabeledButton> items;
-
-	int
-	Pages ()
-	{
-		return items.size () / 3;
-	}
-	void
-	Render (int begin_column)
-	{
-		label.Render ();
-
-		int offset = 0;
-		if (begin_column + 3 > items.size ())
-		{
-			offset = begin_column + 3 - items.size ();
-		}
-
-		for (auto itr = begin_column; itr < begin_column + 3 - offset; ++itr)
-		{
-			items[itr].Render ();
-		}
-	}
-
-	void
-	HandleEvents (int begin_column, SDL_Event *event, Shop *shop,
-	              bool *bUpdate)
-	{
-		int offset = 0;
-		if (begin_column + 3 > items.size ())
-		{
-			offset = begin_column + 3 - items.size ();
-		}
-
-		for (auto itr = begin_column; itr < begin_column + 3 - offset; ++itr)
-		{
-			if (items[itr].HandleEvents (event))
-			{
-				items[itr].button.item (
-					shop, (const char *)items[itr].button.GetArg (),
-					(const char *)items[itr].button.GetArg2 ());
-				*bUpdate = true;
-			}
-		}
-	}
-};
-
-struct ShopMenu::columnLine
-{
-	std::deque<itemColumn> columns;
-
-	void
-	Render (int begin_column, int begin_line)
-	{
-		int offset = 0;
-		if (begin_line + 3 > columns.size ())
-		{
-			offset = begin_line + 3 - columns.size ();
-		}
-
-		for (auto itr = begin_line; itr < begin_line + 3 - offset; ++itr)
-		{
-			columns[itr].Render (begin_column);
-		}
-	}
-
-	void
-	HandleEvents (int begin_column, int begin_line, SDL_Event *event,
-	              Shop *shop, bool *bUpdate)
-	{
-		int offset = 0;
-		if (begin_line + 3 > columns.size ())
-		{
-			offset = begin_line + 3 - columns.size ();
-		}
-
-		for (auto itr = begin_line; itr < begin_line + 3 - offset; ++itr)
-		{
-			columns[itr].HandleEvents (begin_column, event, shop, bUpdate);
-		}
-	}
-};
-
-struct ShopMenu::Page
-{
-	columnLine fullPage;
-
-	void
-	Render (int begin_column, int begin_line)
-	{
-		fullPage.Render (begin_column, begin_line);
-	}
-
-	void
-	HandleEvents (int begin_column, int begin_line, SDL_Event *event,
-	              Shop *shop, bool *bUpdate)
-	{
-		fullPage.HandleEvents (begin_column, begin_line, event, shop, bUpdate);
-	}
-};
 
 ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
                     TextureManager *textureManager, Player *player,
                     rapidjson::Value *json)
 	: ShopMenu::ShopMenu ()
 {
-	this->game = game;
-	this->renderer = renderer;
 	this->player = player;
 	this->json = json;
+
 	shop = new Shop (player, json);
 
-	background = new SceneObject (
-		textureManager->GetTexture ("darkBackground"), renderer);
+	background = SceneObject (textureManager->GetTexture ("darkBackground"),
+	                          renderer);
 	playerInfoLabel
-		= new UILabel (renderer, 0, 100, FONT_SANS, 32,
-	                   ("Fuko: " + std::to_string (player->GetFuko ())),
-	                   { 255, 255, 255 }, 1024);
-	returnButtonLabel = new UILabel (renderer, 10, 10, FONT_SANS, 32, "Return",
-	                                 { 255, 255, 255 }, 150, 100);
-	returnButton = new Button (textureManager->GetButtonTexture ("button1"),
-	                           { 10, 10, 150, 100 }, renderer,
-	                           [] (Game *game) { game->WinMenu (); });
-	mainLabel = new UILabel (renderer, 0, 50, FONT_SANS, 48, "Item Shop",
-	                         { 255, 255, 255 }, 1024);
+		= UILabel (renderer, 0, 100, FONT_SANS, 32,
+	               ("Fuko: " + std::to_string (player->GetFuko ())),
+	               { 255, 255, 255 }, 1024);
+	returnButtonLabel = UILabel (renderer, 10, 10, FONT_SANS, 32, "Return",
+	                             { 255, 255, 255 }, 150, 100);
+	returnButton = Button (textureManager->GetButtonTexture ("button1"),
+	                       { 10, 10, 150, 100 }, renderer,
+	                       [game] { game->WinMenu (); });
+	mainLabel = UILabel (renderer, 0, 50, FONT_SANS, 48, "Item Shop",
+	                     { 255, 255, 255 }, 1024);
 
 	col_incButton
-		= new Button (textureManager->GetButtonTexture ("button-arrow-down"),
-	                  { 502, 732, 20, 20 }, renderer);
+		= Button (textureManager->GetButtonTexture ("button-arrow-down"),
+	              { 502, 732, 20, 20 }, renderer);
 	col_decButton
-		= new Button (textureManager->GetButtonTexture ("button-arrow-up"),
-	                  { 502, 693, 20, 20 }, renderer);
+		= Button (textureManager->GetButtonTexture ("button-arrow-up"),
+	              { 502, 693, 20, 20 }, renderer);
 	line_incButton
-		= new Button (textureManager->GetButtonTexture ("button-arrow-right"),
-	                  { 522, 713, 20, 20 }, renderer);
+		= Button (textureManager->GetButtonTexture ("button-arrow-right"),
+	              { 522, 713, 20, 20 }, renderer);
 	line_decButton
-		= new Button (textureManager->GetButtonTexture ("button-arrow-left"),
-	                  { 482, 713, 20, 20 }, renderer);
+		= Button (textureManager->GetButtonTexture ("button-arrow-left"),
+	              { 482, 713, 20, 20 }, renderer);
 
-	fullPage = new Page ();
+	fullPage = ShopPage ();
 
 	int tmp_column_counter = 0;
 	for (auto &unit : (*json)["items"].GetObject ())
@@ -252,9 +119,9 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 				}
 			Button tmp_button = Button (
 				textureManager->GetButtonTexture ("button1"), tmp_pos,
-				renderer, (void *)item.name.GetString (),
-				(void *)unit.name.GetString (),
-				[] (Shop *shop, const char *itemName, const char *unitClass) {
+				renderer,
+				[shop = shop, itemName = item.name.GetString (),
+			     unitClass = unit.name.GetString ()] {
 					shop->Buy (
 						std::string (unitClass).append (itemName).c_str ());
 				});
@@ -268,9 +135,10 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 			               16, tmp_text, { 255, 255, 255 });
 
 			tmp_itemColumn.items.push_back (
-				{ tmp_button,
-			      { { "name", tmp_nameLabel },
-			        { "stats", tmp_statsLabel } } });
+				{ { tmp_button,
+			        { { "name", tmp_nameLabel },
+			          { "stats", tmp_statsLabel } } },
+			      tmp_item_name });
 
 			++tmp_item_counter;
 			if (tmp_item_counter > column_count)
@@ -282,7 +150,7 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 		if (tmp_column_counter == 3)
 			tmp_column_counter = 0;
 
-		fullPage->fullPage.columns.push_back (tmp_itemColumn);
+		fullPage.fullPage.columns.push_back (tmp_itemColumn);
 	}
 }
 
@@ -295,7 +163,7 @@ ShopMenu::Reset ()
 void
 ShopMenu::Update (bool bStatUpdate)
 {
-	playerInfoLabel->ChangeText (
+	playerInfoLabel.ChangeText (
 		("Fuko: " + std::to_string (player->GetFuko ())).c_str ());
 	if (bStatUpdate)
 		UpdateItemsStats ();
@@ -304,14 +172,12 @@ ShopMenu::Update (bool bStatUpdate)
 void
 ShopMenu::UpdateItemsStats ()
 {
-	for (auto &column : fullPage->fullPage.columns)
+	for (auto &column : fullPage.fullPage.columns)
 	{
 		for (auto &button : column.items)
 		{
 			std::string tmp_text = "";
-			auto tmp_item = shop->GetItems ().at (
-				std::string ((const char *)button.button.GetArg2 ())
-					.append ((const char *)button.button.GetArg ()));
+			auto tmp_item = shop->GetItems ().at (button.item_name);
 
 			tmp_text.append ("\n Cost: " + std::to_string (tmp_item.itemCost));
 			tmp_text.append ("\n Level: " + std::to_string (tmp_item.level));
@@ -341,56 +207,54 @@ ShopMenu::UpdateItemsStats ()
 					}
 				}
 
-			button.labels.at ("stats").ChangeText (tmp_text.c_str ());
+			button.button.labels.at ("stats").ChangeText (tmp_text.c_str ());
 		}
 	}
 }
 
 void
-ShopMenu::Render ()
+ShopMenu::Render () const
 {
-	background->Render ();
-	mainLabel->Render ();
+	background.Render ();
+	mainLabel.Render ();
 	if (begin_column + 3 < column_count)
-		col_incButton->Render ();
+		col_incButton.Render ();
 	if (begin_column - 3 >= 0)
-		col_decButton->Render ();
+		col_decButton.Render ();
 	if (begin_line + 3 < line_count)
-		line_incButton->Render ();
+		line_incButton.Render ();
 	if (begin_line - 3 >= 0)
-		line_decButton->Render ();
+		line_decButton.Render ();
 
-	fullPage->Render (begin_column, begin_line);
-	playerInfoLabel->Render ();
-	returnButton->Render ();
-	returnButtonLabel->Render ();
+	fullPage.Render (begin_column, begin_line);
+	playerInfoLabel.Render ();
+	returnButton.Render ();
+	returnButtonLabel.Render ();
 }
-
 void
 ShopMenu::HandleEvents (SDL_Event *event, bool *bUpdate)
 {
-	fullPage->HandleEvents (begin_column, begin_line, event, shop, bUpdate);
-	if (returnButton->HandleEvents (event))
-		returnButton->game (game);
+	fullPage.HandleEvents (begin_column, begin_line, event, bUpdate);
+	returnButton.HandleEvents (event, true);
 
-	if (col_incButton->HandleEvents (event) && begin_column + 3 < column_count)
+	if (col_incButton.HandleEvents (event) && begin_column + 3 < column_count)
 		begin_column += 3;
-	if (col_decButton->HandleEvents (event) && begin_column - 3 >= 0)
+	if (col_decButton.HandleEvents (event) && begin_column - 3 >= 0)
 		begin_column -= 3;
-	if (line_incButton->HandleEvents (event) && begin_line + 3 < line_count)
+	if (line_incButton.HandleEvents (event) && begin_line + 3 < line_count)
 		begin_line += 3;
-	if (line_decButton->HandleEvents (event) && begin_line - 3 >= 0)
+	if (line_decButton.HandleEvents (event) && begin_line - 3 >= 0)
 		begin_line -= 3;
 }
 
 void
-ShopMenu::Save (rapidjson::Document *saveJson)
+ShopMenu::Save (rapidjson::Document *saveJson) const
 {
 	shop->Save (saveJson);
 }
 
 void
-ShopMenu::Load (rapidjson::Value *saveJson)
+ShopMenu::Load (const rapidjson::Value *saveJson)
 {
 	shop->Load (saveJson);
 }

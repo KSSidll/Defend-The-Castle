@@ -1,79 +1,51 @@
 #include "GameMenu.h"
-#include "../../Game.h"
-#include "../../Global.h"
-#include "../../Managers/Player.h"
 #include "../../Managers/SummonDungeon.h"
-#include "../../Managers/TextureManager.h"
-#include "../../Objects/SceneObject.h"
-#include "../Components/Button.h"
-#include <rapidjson/document.h>
 
 GameMenu::GameMenu ()
 {
 	json = nullptr;
-	renderer = nullptr;
-	dungeon = nullptr;
 	player = nullptr;
 	game = nullptr;
-	gameInfoBackground = nullptr;
-	levelInfo = nullptr;
-	playerFujika = nullptr;
-	playerFuko = nullptr;
-	enemyStatsBackground = nullptr;
-	enemyNameLabel = nullptr;
-	enemyStatsLabel = nullptr;
 }
 
 GameMenu::~GameMenu ()
 {
-	enemyStatsLabel = nullptr;
-	enemyNameLabel = nullptr;
-	enemyStatsBackground = nullptr;
-	playerFuko = nullptr;
-	playerFujika = nullptr;
-	levelInfo = nullptr;
-	gameInfoBackground = nullptr;
 	game = nullptr;
 	player = nullptr;
-	dungeon = nullptr;
-	renderer = nullptr;
 	json = nullptr;
 }
 
-GameMenu::GameMenu (rapidjson::Value *json, SummonDungeon *dungeon,
+GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
                     SDL_Renderer *renderer, TextureManager *textureManager,
-                    Player *player, Game *game)
+                    const Player *player, const Game *game)
 	: GameMenu::GameMenu ()
 {
 	this->json = json;
-	this->renderer = renderer;
-	this->dungeon = dungeon;
 	this->player = player;
 	this->game = game;
 
 	gameInfoBackground
-		= new SceneObject (textureManager->GetTexture ("darkBackground"),
-	                       renderer, gameInfoBackgroundPos);
+		= SceneObject (textureManager->GetTexture ("darkBackground"), renderer,
+	                   gameInfoBackgroundPos);
 
-	playerFujika = new UILabel (
-		renderer, (gameInfoBackgroundPos.w / 3 * 0), gameInfoBackgroundPos.y,
-		FONT_SANS, 24,
-		"Fujika " + std::to_string (player->GetFujika ()) + " / "
-			+ std::to_string (player->GetFujikaLimit ()),
-		{ 255, 255, 255 }, gameInfoBackgroundPos.w / 3,
-		gameInfoBackgroundPos.h);
-	levelInfo = new UILabel (renderer, (gameInfoBackgroundPos.w / 3 * 1),
-	                         gameInfoBackgroundPos.y, FONT_SANS, 24,
-	                         "Level " + std::to_string (game->Level () + 1),
-	                         { 255, 255, 255 }, gameInfoBackgroundPos.w / 3,
-	                         gameInfoBackgroundPos.h);
-	playerFuko
-		= new UILabel (renderer, (gameInfoBackgroundPos.w / 3 * 2),
-	                   gameInfoBackgroundPos.y, FONT_SANS, 24,
-	                   "Fuko " + std::to_string (player->GetFuko ()) + " / "
-	                       + std::to_string (player->GetFukoLimit ()),
-	                   { 255, 255, 255 }, gameInfoBackgroundPos.w / 3,
-	                   gameInfoBackgroundPos.h);
+	playerFujika
+		= UILabel (renderer, (gameInfoBackgroundPos.w / 3 * 0),
+	               gameInfoBackgroundPos.y, FONT_SANS, 24,
+	               "Fujika " + std::to_string (player->GetFujika ()) + " / "
+	                   + std::to_string (player->GetFujikaLimit ()),
+	               { 255, 255, 255 }, gameInfoBackgroundPos.w / 3,
+	               gameInfoBackgroundPos.h);
+	levelInfo = UILabel (renderer, (gameInfoBackgroundPos.w / 3 * 1),
+	                     gameInfoBackgroundPos.y, FONT_SANS, 24,
+	                     "Level " + std::to_string (game->Level () + 1),
+	                     { 255, 255, 255 }, gameInfoBackgroundPos.w / 3,
+	                     gameInfoBackgroundPos.h);
+	playerFuko = UILabel (renderer, (gameInfoBackgroundPos.w / 3 * 2),
+	                      gameInfoBackgroundPos.y, FONT_SANS, 24,
+	                      "Fuko " + std::to_string (player->GetFuko ()) + " / "
+	                          + std::to_string (player->GetFukoLimit ()),
+	                      { 255, 255, 255 }, gameInfoBackgroundPos.w / 3,
+	                      gameInfoBackgroundPos.h);
 
 	int entityCounter = 0;
 	int rectW
@@ -103,15 +75,14 @@ GameMenu::GameMenu (rapidjson::Value *json, SummonDungeon *dungeon,
 			= UILabel (renderer, tmp_rect.x + 5,
 		               tmp_rect.y + NameLabel.GetPosition ().h + 5, FONT_SANS,
 		               16, tmp_statText, { 255, 255, 255 });
-		Button button
-			= Button (textureManager->GetButtonTexture ("button2"), tmp_rect,
-		              renderer, (void *)(entity.name.GetString ()),
-		              [] (SummonDungeon *dungeon, rapidjson::Value &json,
-		                  const char *type)
-		              { dungeon->SummonObject (json["summons"][type]); });
+		Button button = Button (
+			textureManager->GetButtonTexture ("button2"), tmp_rect, renderer,
+			[dungeon, json, type = entity.name.GetString ()]
+			{ dungeon->SummonObject ((*json)["summons"][type]); });
 
 		buttons.push_back (
-			{ button, { { "name", NameLabel }, { "stats", StatsLabel } } });
+			{ { button, { { "name", NameLabel }, { "stats", StatsLabel } } },
+		      entity.name.GetString () });
 
 		++entityCounter;
 		tmp_rect.x = entityCounter * rectW;
@@ -119,11 +90,11 @@ GameMenu::GameMenu (rapidjson::Value *json, SummonDungeon *dungeon,
 
 	tmp_rect.w = gameInfoBackgroundPos.w - (rectW * entityCounter);
 
-	enemyStatsBackground = new SceneObject (
+	enemyStatsBackground = SceneObject (
 		textureManager->GetTexture ("darkBackground"), renderer, tmp_rect);
 	enemyNameLabel
-		= new UILabel (renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24,
-	                   "Enemy", { 255, 255, 255 }, tmp_rect.w);
+		= UILabel (renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24,
+	               "Enemy", { 255, 255, 255 }, tmp_rect.w);
 	{
 		std::string tmp_statText = "";
 		for (auto &stat : (*json)["enemy"].GetObject ())
@@ -138,28 +109,28 @@ GameMenu::GameMenu (rapidjson::Value *json, SummonDungeon *dungeon,
 			}
 		}
 		enemyStatsLabel
-			= new UILabel (renderer, tmp_rect.x + 5,
-		                   tmp_rect.y + enemyNameLabel->GetPosition ().h,
-		                   FONT_SANS, 16, tmp_statText, { 255, 255, 255 });
+			= UILabel (renderer, tmp_rect.x + 5,
+		               tmp_rect.y + enemyNameLabel.GetPosition ().h, FONT_SANS,
+		               16, tmp_statText, { 255, 255, 255 });
 	}
 }
 
 void
-GameMenu::Render ()
+GameMenu::Render () const
 {
 	for (auto &button : buttons)
 	{
-		button.Render ();
+		button.button.Render ();
 	}
 
-	gameInfoBackground->Render ();
-	enemyStatsBackground->Render ();
-	enemyNameLabel->Render ();
-	enemyStatsLabel->Render ();
+	gameInfoBackground.Render ();
+	enemyStatsBackground.Render ();
+	enemyNameLabel.Render ();
+	enemyStatsLabel.Render ();
 
-	levelInfo->Render ();
-	playerFujika->Render ();
-	playerFuko->Render ();
+	levelInfo.Render ();
+	playerFujika.Render ();
+	playerFuko.Render ();
 }
 
 void
@@ -167,9 +138,7 @@ GameMenu::HandleEvents (SDL_Event *event)
 {
 	for (auto &button : buttons)
 	{
-		if (button.HandleEvents (event))
-			button.button.summon (dungeon, (*json),
-			                      (const char *)(button.GetArg ()));
+		button.button.HandleEvents (event, true);
 	}
 }
 
@@ -186,16 +155,15 @@ GameMenu::Reset (float multiplier)
 void
 GameMenu::Update (bool bStatUpdate)
 {
-	playerFujika->ChangeText (("Fujika "
-	                           + std::to_string (player->GetFujika ()) + " / "
-	                           + std::to_string (player->GetFujikaLimit ()))
-	                              .c_str ());
-	levelInfo->ChangeText (
+	playerFujika.ChangeText (("Fujika " + std::to_string (player->GetFujika ())
+	                          + " / "
+	                          + std::to_string (player->GetFujikaLimit ()))
+	                             .c_str ());
+	levelInfo.ChangeText (
 		("Level " + std::to_string (game->Level () + 1)).c_str ());
-	playerFuko->ChangeText (("Fuko " + std::to_string (player->GetFuko ())
-	                         + " / "
-	                         + std::to_string (player->GetFukoLimit ()))
-	                            .c_str ());
+	playerFuko.ChangeText (("Fuko " + std::to_string (player->GetFuko ())
+	                        + " / " + std::to_string (player->GetFukoLimit ()))
+	                           .c_str ());
 
 	if (bStatUpdate)
 		UpdateEntitiesStatsLabel ();
@@ -223,7 +191,7 @@ GameMenu::UpdateEnemyStatsLabel (float multiplier)
 			tmp_statText.append ("\n");
 		}
 	}
-	enemyStatsLabel->ChangeText (tmp_statText.c_str ());
+	enemyStatsLabel.ChangeText (tmp_statText.c_str ());
 }
 
 void
@@ -233,7 +201,8 @@ GameMenu::UpdateEntitiesStatsLabel ()
 	{
 		std::string tmp_statText = "";
 		for (auto &stat :
-		     (*json)["summons"][(const char *)(button.GetArg ())].GetObject ())
+		     (*json)["summons"][(const char *)(button.entity_type)]
+		         .GetObject ())
 		{
 			auto itr = (*json)["lang"].FindMember (stat.name.GetString ());
 			if (itr != (*json)["lang"].MemberEnd ())
@@ -245,6 +214,6 @@ GameMenu::UpdateEntitiesStatsLabel ()
 			}
 		}
 
-		button.ChangeText ("stats", tmp_statText.c_str ());
+		button.button.ChangeText ("stats", tmp_statText.c_str ());
 	}
 }

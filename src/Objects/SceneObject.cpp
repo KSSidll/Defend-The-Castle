@@ -28,7 +28,7 @@ SceneObject::SceneObject (SDL_Texture *objTexture, SDL_Renderer *renderer,
 }
 
 void
-SceneObject::Render ()
+SceneObject::Render () const
 {
 	if (fullScreen)
 		SDL_RenderCopy (renderer, objTexture, NULL, NULL);

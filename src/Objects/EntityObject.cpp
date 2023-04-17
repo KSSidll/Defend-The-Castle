@@ -1,5 +1,4 @@
 #include "EntityObject.h"
-#include <rapidjson/document.h>
 
 void
 EntityObject::Move ()
@@ -8,7 +7,8 @@ EntityObject::Move ()
 	MovableObject::Move ();
 }
 
-EntityObject::EntityObject (SDL_Texture *objTexture, rapidjson::Value &object,
+EntityObject::EntityObject (SDL_Texture *objTexture,
+                            const rapidjson::Value &object,
                             SDL_Renderer *renderer)
 	: MovableObject (objTexture, object, renderer)
 {
@@ -45,7 +45,8 @@ EntityObject::Attack ()
 }
 
 void
-EntityObject::SetObjectValues (rapidjson::Value &object, float multiplier)
+EntityObject::SetObjectValues (const rapidjson::Value &object,
+                               float multiplier)
 {
 	health = object["health"].GetInt () * multiplier;
 	attackDamage = object["attackDamage"].GetInt () * multiplier;
@@ -56,7 +57,7 @@ EntityObject::SetObjectValues (rapidjson::Value &object, float multiplier)
 }
 
 void
-EntityObject::SetObjectValues (rapidjson::Value &object)
+EntityObject::SetObjectValues (const rapidjson::Value &object)
 {
 	EntityObject::SetObjectValues (object, 1);
 }
@@ -81,7 +82,7 @@ EntityObject::Update ()
 }
 
 void
-EntityObject::Render ()
+EntityObject::Render () const
 {
 	if (!pendingKill)
 	{
@@ -131,31 +132,31 @@ EntityObject::DoDamage (int damage)
 };
 
 float
-EntityObject::GetRange ()
+EntityObject::GetRange () const
 {
 	return range;
 };
 
 int
-EntityObject::GetId ()
+EntityObject::GetId () const
 {
 	return id;
 };
 
 int
-EntityObject::GetHealth ()
+EntityObject::GetHealth () const
 {
 	return health;
 };
 
 bool
-EntityObject::KillPending ()
+EntityObject::KillPending () const
 {
 	return pendingKill;
 };
 
 bool
-EntityObject::Alive ()
+EntityObject::Alive () const
 {
 	return alive;
 };

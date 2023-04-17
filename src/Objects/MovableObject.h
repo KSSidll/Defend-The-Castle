@@ -2,13 +2,13 @@
 #define OBJECTS_MOVABLE_OBJECT_H_
 
 #include "SceneObject.h"
-#include <rapidjson/fwd.h>
+#include <rapidjson/document.h>
 #include <vector>
 
 class MovableObject : public SceneObject
 {
   protected:
-	rapidjson::Value *originalJsonValues;
+	const rapidjson::Value *originalJsonValues;
 
 	int movementVector = 1;
 	int xpos;
@@ -34,18 +34,14 @@ class MovableObject : public SceneObject
 	MovableObject ();
 	~MovableObject ();
 
-	MovableObject (SDL_Texture *objTexture, rapidjson::Value &object,
+	MovableObject (SDL_Texture *objTexture, const rapidjson::Value &object,
 	               SDL_Renderer *renderer);
 
-	void SetObjectValues (rapidjson::Value &object);
+	void SetObjectValues (const rapidjson::Value &object);
 	void Update ();
-	void Render ();
+	void Render () const;
 	void Reset ();
-	int
-	GetPosition ()
-	{
-		return destRect.x;
-	};
+	int GetPosition () const;
 };
 
 #endif // OBJECTS_MOVABLE_OBJECT_H_

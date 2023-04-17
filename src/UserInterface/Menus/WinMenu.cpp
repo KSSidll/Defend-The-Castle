@@ -1,42 +1,21 @@
 #include "WinMenu.h"
-#include "../../Game.h"
-#include "../../Managers/TextureManager.h"
-#include "../../Objects/SceneObject.h"
-#include "../Components/Button.h"
-#include "../Components/UILabel.h"
 
-WinMenu::WinMenu ()
-{
-	game = nullptr;
-	renderer = nullptr;
-	background = nullptr;
-	label = nullptr;
-}
-
-WinMenu::~WinMenu ()
-{
-	label = nullptr;
-	background = nullptr;
-	renderer = nullptr;
-	game = nullptr;
-}
+WinMenu::WinMenu () {}
+WinMenu::~WinMenu () {}
 
 WinMenu::WinMenu (SDL_Renderer *renderer, Game *game,
                   TextureManager *textureManager)
 	: WinMenu::WinMenu ()
 {
-	this->game = game;
-	this->renderer = renderer;
+	background = SceneObject (textureManager->GetTexture ("darkBackground"),
+	                          renderer);
 
-	background = new SceneObject (
-		textureManager->GetTexture ("darkBackground"), renderer);
-
-	label = new UILabel (renderer, 0, 20, "assets/fonts/Sans.ttf", 72,
-	                     "Level Cleared", { 255, 255, 255 }, 1024);
+	label = UILabel (renderer, 0, 20, "assets/fonts/Sans.ttf", 72,
+	                 "Level Cleared", { 255, 255, 255 }, 1024);
 
 	buttons.push_back (
 		{ Button (textureManager->GetButtonTexture ("button1"), saveButtonPos,
-	              renderer, [] (Game *game) { game->Save (true); }),
+	              renderer, [game] { game->Save (true); }),
 	      { { "",
 	          UILabel (renderer, saveButtonPos.x, saveButtonPos.y,
 	                   "assets/fonts/Sans.ttf", 32, "Save", { 255, 255, 255 },
@@ -44,7 +23,7 @@ WinMenu::WinMenu (SDL_Renderer *renderer, Game *game,
 
 	buttons.push_back (
 		{ Button (textureManager->GetButtonTexture ("button1"), shopButtonPos,
-	              renderer, [] (Game *game) { game->ShopMenu (); }),
+	              renderer, [game] { game->ShopMenu (); }),
 	      { { "",
 	          UILabel (renderer, shopButtonPos.x, shopButtonPos.y,
 	                   "assets/fonts/Sans.ttf", 32, "Shop", { 255, 255, 255 },
@@ -53,7 +32,7 @@ WinMenu::WinMenu (SDL_Renderer *renderer, Game *game,
 	buttons.push_back (
 		{ Button (textureManager->GetButtonTexture ("button1"),
 	              nextLevelButtonPos, renderer,
-	              [] (Game *game) { game->IncreaseLevel (); }),
+	              [game] { game->IncreaseLevel (); }),
 	      { { "", UILabel (renderer, nextLevelButtonPos.x,
 	                       nextLevelButtonPos.y, "assets/fonts/Sans.ttf", 32,
 	                       "Next Level", { 255, 255, 255 },
@@ -61,10 +40,10 @@ WinMenu::WinMenu (SDL_Renderer *renderer, Game *game,
 }
 
 void
-WinMenu::Render ()
+WinMenu::Render () const
 {
-	background->Render ();
-	label->Render ();
+	background.Render ();
+	label.Render ();
 	for (auto &button : buttons)
 	{
 		button.Render ();
@@ -76,7 +55,6 @@ WinMenu::HandleEvents (SDL_Event *event)
 {
 	for (auto &button : buttons)
 	{
-		if (button.HandleEvents (event))
-			button.button.game (game);
+		button.HandleEvents (event, true);
 	}
 }

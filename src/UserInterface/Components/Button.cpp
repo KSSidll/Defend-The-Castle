@@ -1,29 +1,13 @@
 #include "Button.h"
-#include "../../Game.h"
-#include "../../Managers/Shop.h"
-#include "../../Managers/SummonDungeon.h"
-#include "../../Managers/TextureManager.h"
-#include "UILabel.h"
-#include <rapidjson/document.h>
 
 Button::Button ()
 {
 	renderer = nullptr;
 	textures = nullptr;
-	Arg = nullptr;
-	summon = nullptr;
-	game = nullptr;
-	game_numbered = nullptr;
-	item = nullptr;
 }
 
 Button::~Button ()
 {
-	item = nullptr;
-	game_numbered = nullptr;
-	game = nullptr;
-	summon = nullptr;
-	Arg = nullptr;
 	textures = nullptr;
 	renderer = nullptr;
 }
@@ -38,49 +22,18 @@ Button::Button (ButtonTextures *textures, SDL_Rect rect,
 	this->rect.h = rect.h;
 
 	this->renderer = renderer;
-
 	this->textures = textures;
 }
 
 Button::Button (ButtonTextures *textures, SDL_Rect rect,
-                SDL_Renderer *renderer, void *type,
-                void (*summon) (SummonDungeon *dungeon, rapidjson::Value &json,
-                                const char *type))
+                SDL_Renderer *renderer, std::function<void ()> callback)
 	: Button (textures, rect, renderer)
 {
-	Arg = type;
-	this->summon = summon;
-}
-
-Button::Button (ButtonTextures *textures, SDL_Rect rect,
-                SDL_Renderer *renderer, void (*game) (Game *game))
-	: Button (textures, rect, renderer)
-{
-	this->game = game;
-}
-
-Button::Button (ButtonTextures *textures, SDL_Rect rect,
-                SDL_Renderer *renderer, void *number,
-                void (*game) (Game *game, float *number))
-	: Button (textures, rect, renderer)
-{
-	Arg = number;
-	this->game_numbered = game;
-}
-
-Button::Button (ButtonTextures *textures, SDL_Rect rect,
-                SDL_Renderer *renderer, void *itemName, void *unitClass,
-                void (*item) (Shop *shop, const char *itemName,
-                              const char *unitClass))
-	: Button (textures, rect, renderer)
-{
-	Arg = itemName;
-	Arg2 = unitClass;
-	this->item = item;
+	this->callback = callback;
 }
 
 void
-Button::Render ()
+Button::Render () const
 {
 
 	switch (BUTTON_STATE)
@@ -104,7 +57,7 @@ Button::Render ()
 }
 
 bool
-Button::HandleEvents (SDL_Event *event)
+Button::HandleEvents (SDL_Event *event, bool callback_on_click)
 {
 	if (event->type == SDL_MOUSEMOTION || event->type == SDL_MOUSEBUTTONDOWN
 	    || event->type == SDL_MOUSEBUTTONUP)
@@ -143,19 +96,19 @@ Button::HandleEvents (SDL_Event *event)
 	if (BUTTON_STATE == MOUSE_UP)
 	{
 		BUTTON_STATE = MOUSE_OVER;
+
+		if (callback_on_click)
+		{
+			Callback ();
+		}
+
 		return true;
 	}
 	return false;
 }
 
-const void *
-Button::GetArg ()
+void
+Button::Callback () const
 {
-	return Arg;
-};
-
-const void *
-Button::GetArg2 ()
-{
-	return Arg2;
-};
+	callback ();
+}

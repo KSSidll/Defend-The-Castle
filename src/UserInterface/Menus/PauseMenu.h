@@ -1,26 +1,17 @@
 #ifndef USER_INTERFACE_PAUSE_MENU_H_
 #define USER_INTERFACE_PAUSE_MENU_H_
 
-#include "../Components/Button.h"
-#include <SDL2/SDL.h>
+#include "../../Game.h"
+#include "../../Objects/SceneObject.h"
+#include "../Components/LabeledButton.h"
 #include <deque>
-
-struct LabeledButton;
-
-class Game;
-class SceneObject;
-class TextureManager;
-class UILabel;
 
 class PauseMenu
 {
   private:
-	Game *game;
-	SDL_Renderer *renderer;
-
 	std::deque<LabeledButton> buttons;
-	SceneObject *background;
-	UILabel *label;
+	SceneObject background;
+	UILabel label;
 
 	SDL_Rect resumeButtonPos = { 412, 200, 200, 100 };
 	SDL_Rect exitButtonPos = { 412, 400, 200, 100 };
@@ -32,7 +23,7 @@ class PauseMenu
 	PauseMenu (SDL_Renderer *renderer, Game *game,
 	           TextureManager *textureManager);
 
-	void Render ();
+	void Render () const;
 	void HandleEvents (SDL_Event *event);
 };
 

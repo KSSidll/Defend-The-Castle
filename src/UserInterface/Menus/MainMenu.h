@@ -1,27 +1,18 @@
 #ifndef USER_INTERFACE_MAIN_MENU_H_
 #define USER_INTERFACE_MAIN_MENU_H_
 
-#include "../Components/Button.h"
-#include <SDL2/SDL.h>
+#include "../../Game.h"
+#include "../../Objects/SceneObject.h"
+#include "../Components/LabeledButton.h"
 #include <deque>
-
-struct LabeledButton;
-
-class Game;
-class SceneObject;
-class UILabel;
-class TextureManager;
 
 class MainMenu
 {
   private:
-	Game *game;
-	SDL_Renderer *renderer;
-
 	std::deque<LabeledButton> buttons;
-	SceneObject *background;
+	SceneObject background;
 
-	UILabel *mainMenuLabel;
+	UILabel mainMenuLabel;
 
 	SDL_Rect newGameButtonPos = { 362, 200, 300, 150 };
 	SDL_Rect continueButtonPos = { 362, 400, 300, 150 };
@@ -34,7 +25,7 @@ class MainMenu
 	MainMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 	          Game *game);
 
-	void Render ();
+	void Render () const;
 	void HandleEvents (SDL_Event *event);
 };
 

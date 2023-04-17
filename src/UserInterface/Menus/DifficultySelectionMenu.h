@@ -1,32 +1,21 @@
 #ifndef USER_INTERFACE_DIFFICULTY_SELECTION_MENU_H_
 #define USER_INTERFACE_DIFFICULTY_SELECTION_MENU_H_
 
-#include "../Components/Button.h"
-#include <SDL2/SDL.h>
+#include "../../Game.h"
+#include "../../Objects/SceneObject.h"
+#include "../Components/LabeledButton.h"
 #include <deque>
-#include <rapidjson/fwd.h>
-
-struct LabeledButton;
-
-class Button;
-class Game;
-class SceneObject;
-class UILabel;
-class TextureManager;
 
 class DifficultySelectionMenu
 {
   private:
-	Game *game;
-	SDL_Renderer *renderer;
-
 	std::deque<LabeledButton> buttons;
-	SceneObject *background;
-	UILabel *label;
+	SceneObject background;
+	UILabel label;
 
-	float *easy;
-	float *medium;
-	float *hard;
+	float easy;
+	float medium;
+	float hard;
 
 	SDL_Rect easyButtonPos = { 412, 200, 200, 100 };
 	SDL_Rect mediumButtonPos = { 412, 400, 200, 100 };
@@ -38,9 +27,9 @@ class DifficultySelectionMenu
 
 	DifficultySelectionMenu (SDL_Renderer *renderer, Game *game,
 	                         TextureManager *textureManager,
-	                         rapidjson::Value *json);
+	                         const rapidjson::Value *json);
 
-	void Render ();
+	void Render () const;
 	void HandleEvents (SDL_Event *event);
 };
 

@@ -1,11 +1,9 @@
 #ifndef MANAGERS_SHOP_H_
 #define MANAGERS_SHOP_H_
 
-#include <rapidjson/fwd.h>
+#include "Player.h"
 #include <string>
 #include <unordered_map>
-
-class Player;
 
 struct Item
 {
@@ -39,11 +37,11 @@ class Shop
 	void IncreaseLevel (const char *itemName);
 	void Buy (const char *itemName);
 
-	void Save (rapidjson::Document *saveJson);
-	void Load (rapidjson::Value *saveJson);
+	void Save (rapidjson::Document *saveJson) const;
+	void Load (const rapidjson::Value *saveJson);
 
-	Item GetItem (const char *key);
-	std::unordered_map<std::string, Item> GetItems ();
+	Item GetItem (const char *key) const;
+	std::unordered_map<std::string, Item> GetItems () const;
 };
 
 #endif // MANAGERS_SHOP_H_

@@ -3,7 +3,6 @@
 
 #include "../Global.h"
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 
 class SceneObject
 {
@@ -21,7 +20,7 @@ class SceneObject
 	             SDL_Rect position);
 	SceneObject (SDL_Texture *objTexture, SDL_Renderer *renderer);
 
-	void Render ();
+	void Render () const;
 };
 
 #endif // OBJECTS_SCENE_OBJECT_H_

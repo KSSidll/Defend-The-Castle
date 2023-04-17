@@ -1,25 +1,20 @@
 #ifndef USER_INTERFACE_SHOP_MENU_H_
 #define USER_INTERFACE_SHOP_MENU_H_
 
+#include "../../Game.h"
+#include "../../Managers/Shop.h"
+#include "../../Objects/SceneObject.h"
+#include "../Components/Button.h"
+#include "../Components/ShopPage.h"
+#include "../Components/UILabel.h"
 #include <SDL2/SDL.h>
 #include <deque>
-#include <rapidjson/fwd.h>
-
-class Game;
-class Player;
-class Shop;
-class SceneObject;
-class TextureManager;
-class UILabel;
-class Button;
 
 class ShopMenu
 {
   private:
-	Game *game;
 	Player *player;
 	Shop *shop;
-	SDL_Renderer *renderer;
 	rapidjson::Value *json;
 
 	int begin_column = 0;
@@ -28,21 +23,18 @@ class ShopMenu
 	int column_count = 0;
 	int line_count = 0;
 
-	struct itemColumn;
-	struct columnLine;
-	struct Page;
-	Page *fullPage;
+	ShopPage fullPage;
 
-	UILabel *mainLabel;
-	UILabel *playerInfoLabel;
-	UILabel *returnButtonLabel;
-	Button *returnButton;
-	SceneObject *background;
+	UILabel mainLabel;
+	UILabel playerInfoLabel;
+	UILabel returnButtonLabel;
+	Button returnButton;
+	SceneObject background;
 
-	Button *col_incButton;
-	Button *col_decButton;
-	Button *line_incButton;
-	Button *line_decButton;
+	Button col_incButton;
+	Button col_decButton;
+	Button line_incButton;
+	Button line_decButton;
 
 	void UpdateItemsStats ();
 
@@ -57,10 +49,10 @@ class ShopMenu
 	void Reset ();
 
 	void Update (bool bStatUpdate = false);
-	void Render ();
+	void Render () const;
 	void HandleEvents (SDL_Event *event, bool *bUpdate);
-	void Save (rapidjson::Document *saveJson);
-	void Load (rapidjson::Value *saveJson);
+	void Save (rapidjson::Document *saveJson) const;
+	void Load (const rapidjson::Value *saveJson);
 };
 
 #endif // USER_INTERFACE_SHOP_MENU_H_

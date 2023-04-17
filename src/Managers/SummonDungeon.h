@@ -1,18 +1,15 @@
 #ifndef MANAGERS_SUMMON_DUNGEON_H_
 #define MANAGERS_SUMMON_DUNGEON_H_
 
-#include <SDL2/SDL.h>
+#include "../Objects/PlayerSummon.h"
+#include "Player.h"
+#include "TextureManager.h"
 #include <deque>
-#include <rapidjson/fwd.h>
-
-class TextureManager;
-class Player;
-class PlayerSummon;
 
 class SummonDungeon
 {
   private:
-	TextureManager *textureManager;
+	const TextureManager *textureManager;
 	SDL_Renderer *renderer;
 	Player *player;
 
@@ -28,15 +25,15 @@ class SummonDungeon
 	SummonDungeon ();
 	~SummonDungeon ();
 
-	SummonDungeon (TextureManager *textureManager, SDL_Renderer *renderer,
-	               Player *player);
+	SummonDungeon (const TextureManager *textureManager,
+	               SDL_Renderer *renderer, Player *player);
 
 	void Update ();
-	void Render ();
+	void Render () const;
 	void Reset ();
-	void SummonObject (rapidjson::Value &object);
+	void SummonObject (const rapidjson::Value &object);
 
-	std::deque<PlayerSummon> *getObjectArray ();
+	std::deque<PlayerSummon> *getObjectArray () const;
 };
 
 #endif // MANAGERS_SUMMON_DUNGEON_H_

@@ -1,7 +1,6 @@
-#ifndef USER_INTERFACE_UI_LABEL_H_
-#define USER_INTERFACE_UI_LABEL_H_
+#ifndef USER_INTERFACE_COMPONENTS_UI_LABEL_H_
+#define USER_INTERFACE_COMPONENTS_UI_LABEL_H_
 
-#include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
 
@@ -33,9 +32,9 @@ class UILabel
 	         int labelHeight);
 
 	void ChangeText (const char *text);
-	void Render ();
+	void Render () const;
 
-	SDL_Rect GetPosition ();
+	SDL_Rect GetPosition () const;
 };
 
-#endif // USER_INTERFACE_UI_LABEL_H_
+#endif // USER_INTERFACE_COMPONENTS_UI_LABEL_H_

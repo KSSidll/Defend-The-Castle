@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "../Global.h"
-#include <rapidjson/document.h>
 
 bool
 Player::Summon (int cost)
@@ -27,25 +26,25 @@ Player::Buy (int cost)
 }
 
 int
-Player::GetFujika ()
+Player::GetFujika () const
 {
 	return fujika;
 };
 
 int
-Player::GetFujikaLimit ()
+Player::GetFujikaLimit () const
 {
 	return fujikaLimit;
 };
 
 int
-Player::GetFuko ()
+Player::GetFuko () const
 {
 	return fuko;
 };
 
 int
-Player::GetFukoLimit ()
+Player::GetFukoLimit () const
 {
 	return fukoLimit;
 };
@@ -98,7 +97,7 @@ Player::HardReset ()
 }
 
 void
-Player::Save (rapidjson::Document *saveJson)
+Player::Save (rapidjson::Document *saveJson) const
 {
 	rapidjson::Value object (rapidjson::kObjectType);
 	object.AddMember ("fuko", fuko, saveJson->GetAllocator ());
@@ -107,7 +106,7 @@ Player::Save (rapidjson::Document *saveJson)
 }
 
 void
-Player::Load (rapidjson::Value *saveJson)
+Player::Load (const rapidjson::Value *saveJson)
 {
 	fuko = (*saveJson)["player"]["fuko"].GetInt ();
 }

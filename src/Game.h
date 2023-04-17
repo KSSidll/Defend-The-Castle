@@ -2,15 +2,15 @@
 #define ENGINE_GAME_H_
 
 #define SDL_MAIN_HANDLED
+#include "Objects/SceneObject.h"
 #include <SDL2/SDL.h>
-#include <rapidjson/fwd.h>
+#include <rapidjson/document.h>
 
 class SummonDungeon;
 class TextureManager;
 class UserInterface;
 class Player;
 class Enemy;
-class SceneObject;
 
 class Game
 {
@@ -24,7 +24,7 @@ class Game
 	UserInterface *userInterface;
 	Player *player;
 	Enemy *enemy;
-	SceneObject *background;
+	SceneObject background;
 
 	float enemyStatsLevelMultiplier = 1.1;
 	int level = 0;
@@ -62,9 +62,9 @@ class Game
 	void IncreaseLevel ();
 	void ChangeEnemyLevelMultiplier (float multiplier);
 
-	bool Running ();
-	bool Paused ();
-	int Level ();
+	bool Running () const;
+	bool Paused () const;
+	int Level () const;
 
 	void LoseGame ();
 	void NewGame ();
@@ -73,11 +73,11 @@ class Game
 	void WinMenu ();
 	void ShopMenu ();
 
-	bool isMainMenu ();
-	bool isDifficultyMenu ();
-	bool isWinMenu ();
-	bool isLoseMenu ();
-	bool isShopMenu ();
+	bool isMainMenu () const;
+	bool isDifficultyMenu () const;
+	bool isWinMenu () const;
+	bool isLoseMenu () const;
+	bool isShopMenu () const;
 };
 
 #endif // ENGINE_GAME_H_
