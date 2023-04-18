@@ -70,8 +70,8 @@ requires:
 copy `dll` files into `/build` folder \
 include files must be in their respective folders (`SDL2` and `rapidjson`)
 
-### example for g++
+### example for g++ for debug
 
 ```bash
-g++ -g ./src/*.cpp ./src/Managers/*.cpp ./src/Objects/*.cpp ./src/UserInterface/*.cpp ./src/UserInterface/Components/*.cpp ./src/UserInterface/Menus/*.cpp -o ./build/game.exe -I"./include" -L"./lib" -lSDL2 -lSDL2_image -lSDL2_ttf --std=c++14
+g++ -ggdb -g3 ./src/*.cpp ./src/Managers/*.cpp ./src/Objects/*.cpp ./src/UserInterface/*.cpp ./src/UserInterface/Components/*.cpp ./src/UserInterface/Menus/*.cpp -o ./build/game.exe -I"./include" -L"./lib" -lSDL2 -lSDL2_image -lSDL2_ttf --std=c++14
 ```
