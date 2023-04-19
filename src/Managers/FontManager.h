@@ -3,18 +3,17 @@
 
 #include <SDL2/SDL_ttf.h>
 #include <unordered_map>
-#include <utility>
 
 class FontManager
 {
   private:
-	std::unordered_map<const char *, TTF_Font *> fonts;
+	std::unordered_map<size_t, TTF_Font *> fonts;
 
   public:
 	FontManager ();
 	~FontManager ();
 
-	TTF_Font *GetFont (const char *filePath, int fontSize);
+	TTF_Font *GetFont (const char *filePath, size_t fontSize);
 };
 
 #endif // MANAGERS_FONT_MANAGER_H_

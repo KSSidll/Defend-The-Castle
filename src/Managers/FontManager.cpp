@@ -1,5 +1,4 @@
 #include "FontManager.h"
-#include <utility>
 
 FontManager::FontManager () {}
 
@@ -12,9 +11,11 @@ FontManager::~FontManager ()
 }
 
 TTF_Font *
-FontManager::GetFont (const char *filePath, int fontSize)
+FontManager::GetFont (const char *filePath, size_t fontSize)
 {
-	auto res = fonts.emplace (filePath + fontSize,
+	size_t h1 = std::hash<const char *> () (filePath);
+
+	auto res = fonts.emplace (h1 ^ (fontSize << 1),
 	                          TTF_OpenFont (filePath, fontSize));
 
 	return res.first->second;
