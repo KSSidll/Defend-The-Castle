@@ -5,7 +5,7 @@ DifficultySelectionMenu::~DifficultySelectionMenu () {}
 
 DifficultySelectionMenu::DifficultySelectionMenu (
 	SDL_Renderer *renderer, Game *game, TextureManager *textureManager,
-	const rapidjson::Value *json)
+	const rapidjson::Value *json, FontManager *fontManager)
 	: DifficultySelectionMenu::DifficultySelectionMenu ()
 {
 	easy = (*json)["difficulties"]["easy"].GetFloat ();
@@ -14,7 +14,7 @@ DifficultySelectionMenu::DifficultySelectionMenu (
 
 	background = SceneObject (textureManager->GetTexture ("darkBackground"),
 	                          renderer);
-	label = UILabel (renderer, 0, 50, "assets/fonts/Sans.ttf", 48,
+	label = UILabel (renderer, 0, 50, fontManager->GetFont (FONT_SANS, 48),
 	                 "Select Difficulty", { 255, 255, 255 }, 1024);
 
 	buttons.push_back (
@@ -22,10 +22,10 @@ DifficultySelectionMenu::DifficultySelectionMenu (
 	              renderer,
 	              [game, easy = &easy]
 	              { game->ChangeEnemyLevelMultiplier (*easy); }),
-	      { { "",
-	          UILabel (renderer, easyButtonPos.x, easyButtonPos.y,
-	                   "assets/fonts/Sans.ttf", 32, "Easy", { 255, 255, 255 },
-	                   easyButtonPos.w, easyButtonPos.h) } } });
+	      { { "", UILabel (renderer, easyButtonPos.x, easyButtonPos.y,
+	                       fontManager->GetFont (FONT_SANS, 32), "Easy",
+	                       { 255, 255, 255 }, easyButtonPos.w,
+	                       easyButtonPos.h) } } });
 
 	buttons.push_back (
 		{ Button (textureManager->GetButtonTexture ("button1"),
@@ -33,7 +33,7 @@ DifficultySelectionMenu::DifficultySelectionMenu (
 	              [game, medium = &medium]
 	              { game->ChangeEnemyLevelMultiplier (*medium); }),
 	      { { "", UILabel (renderer, mediumButtonPos.x, mediumButtonPos.y,
-	                       "assets/fonts/Sans.ttf", 32, "Medium",
+	                       fontManager->GetFont (FONT_SANS, 32), "Medium",
 	                       { 255, 255, 255 }, mediumButtonPos.w,
 	                       mediumButtonPos.h) } } });
 
@@ -42,10 +42,10 @@ DifficultySelectionMenu::DifficultySelectionMenu (
 	              renderer,
 	              [game, hard = &hard]
 	              { game->ChangeEnemyLevelMultiplier (*hard); }),
-	      { { "",
-	          UILabel (renderer, hardButtonPos.x, hardButtonPos.y,
-	                   "assets/fonts/Sans.ttf", 32, "Hard", { 255, 255, 255 },
-	                   hardButtonPos.w, hardButtonPos.h) } } });
+	      { { "", UILabel (renderer, hardButtonPos.x, hardButtonPos.y,
+	                       fontManager->GetFont (FONT_SANS, 32), "Hard",
+	                       { 255, 255, 255 }, hardButtonPos.w,
+	                       hardButtonPos.h) } } });
 }
 
 void

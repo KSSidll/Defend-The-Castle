@@ -3,6 +3,7 @@
 UserInterface::UserInterface ()
 {
 	game = nullptr;
+	fontManager = nullptr;
 	gameMenu = nullptr;
 	pauseMenu = nullptr;
 	mainMenu = nullptr;
@@ -27,6 +28,8 @@ UserInterface::~UserInterface ()
 		delete pauseMenu;
 	if (gameMenu)
 		delete gameMenu;
+	if (fontManager)
+		delete fontManager;
 
 	game = nullptr;
 }
@@ -38,15 +41,17 @@ UserInterface::UserInterface (rapidjson::Value *json, SummonDungeon *dungeon,
 	: UserInterface::UserInterface ()
 {
 	this->game = game;
-	gameMenu
-		= new GameMenu (json, dungeon, renderer, textureManager, player, game);
-	pauseMenu = new PauseMenu (renderer, game, textureManager);
-	mainMenu = new MainMenu (renderer, textureManager, game);
-	difficultySelectionMenu
-		= new DifficultySelectionMenu (renderer, game, textureManager, json);
-	winMenu = new WinMenu (renderer, game, textureManager);
-	loseMenu = new LoseMenu (renderer, game, textureManager);
-	shopMenu = new ShopMenu (renderer, game, textureManager, player, json);
+	fontManager = new FontManager ();
+	gameMenu = new GameMenu (json, dungeon, renderer, textureManager, player,
+	                         game, fontManager);
+	pauseMenu = new PauseMenu (renderer, game, textureManager, fontManager);
+	mainMenu = new MainMenu (renderer, textureManager, game, fontManager);
+	difficultySelectionMenu = new DifficultySelectionMenu (
+		renderer, game, textureManager, json, fontManager);
+	winMenu = new WinMenu (renderer, game, textureManager, fontManager);
+	loseMenu = new LoseMenu (renderer, game, textureManager, fontManager);
+	shopMenu = new ShopMenu (renderer, game, textureManager, player, json,
+	                         fontManager);
 }
 
 void

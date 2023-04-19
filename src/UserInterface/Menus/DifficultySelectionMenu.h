@@ -2,6 +2,7 @@
 #define USER_INTERFACE_DIFFICULTY_SELECTION_MENU_H_
 
 #include "../../Game.h"
+#include "../../Managers/FontManager.h"
 #include "../../Objects/SceneObject.h"
 #include "../Components/LabeledButton.h"
 #include <deque>
@@ -27,7 +28,8 @@ class DifficultySelectionMenu
 
 	DifficultySelectionMenu (SDL_Renderer *renderer, Game *game,
 	                         TextureManager *textureManager,
-	                         const rapidjson::Value *json);
+	                         const rapidjson::Value *json,
+	                         FontManager *fontManager);
 
 	void Render () const;
 	void HandleEvents (SDL_Event *event);

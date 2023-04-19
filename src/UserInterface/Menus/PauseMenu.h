@@ -2,6 +2,7 @@
 #define USER_INTERFACE_PAUSE_MENU_H_
 
 #include "../../Game.h"
+#include "../../Managers/FontManager.h"
 #include "../../Objects/SceneObject.h"
 #include "../Components/LabeledButton.h"
 #include <deque>
@@ -21,7 +22,7 @@ class PauseMenu
 	~PauseMenu ();
 
 	PauseMenu (SDL_Renderer *renderer, Game *game,
-	           TextureManager *textureManager);
+	           TextureManager *textureManager, FontManager *fontManager);
 
 	void Render () const;
 	void HandleEvents (SDL_Event *event);

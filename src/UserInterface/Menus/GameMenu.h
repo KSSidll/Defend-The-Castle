@@ -2,6 +2,7 @@
 #define USER_INTERFACE_GAME_MENU_H_
 
 #include "../../Game.h"
+#include "../../Managers/FontManager.h"
 #include "../../Objects/SceneObject.h"
 #include "../Components/LabeledButton.h"
 #include <deque>
@@ -41,7 +42,8 @@ class GameMenu
 
 	GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
 	          SDL_Renderer *renderer, TextureManager *textureManager,
-	          const Player *player, const Game *game);
+	          const Player *player, const Game *game,
+	          FontManager *fontManager);
 
 	void Render () const;
 	void HandleEvents (SDL_Event *event);

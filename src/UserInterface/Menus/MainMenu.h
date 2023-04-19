@@ -2,6 +2,7 @@
 #define USER_INTERFACE_MAIN_MENU_H_
 
 #include "../../Game.h"
+#include "../../Managers/FontManager.h"
 #include "../../Objects/SceneObject.h"
 #include "../Components/LabeledButton.h"
 #include <deque>
@@ -23,7 +24,7 @@ class MainMenu
 	~MainMenu ();
 
 	MainMenu (SDL_Renderer *renderer, TextureManager *textureManager,
-	          Game *game);
+	          Game *game, FontManager *fontManager);
 
 	void Render () const;
 	void HandleEvents (SDL_Event *event);

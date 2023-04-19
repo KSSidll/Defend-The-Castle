@@ -20,7 +20,7 @@ ShopMenu::~ShopMenu ()
 
 ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
                     TextureManager *textureManager, Player *player,
-                    rapidjson::Value *json)
+                    rapidjson::Value *json, FontManager *fontManager)
 	: ShopMenu::ShopMenu ()
 {
 	this->player = player;
@@ -31,16 +31,17 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 	background = SceneObject (textureManager->GetTexture ("darkBackground"),
 	                          renderer);
 	playerInfoLabel
-		= UILabel (renderer, 0, 100, FONT_SANS, 32,
+		= UILabel (renderer, 0, 100, fontManager->GetFont (FONT_SANS, 32),
 	               ("Fuko: " + std::to_string (player->GetFuko ())),
 	               { 255, 255, 255 }, 1024);
-	returnButtonLabel = UILabel (renderer, 10, 10, FONT_SANS, 32, "Return",
-	                             { 255, 255, 255 }, 150, 100);
+	returnButtonLabel
+		= UILabel (renderer, 10, 10, fontManager->GetFont (FONT_SANS, 32),
+	               "Return", { 255, 255, 255 }, 150, 100);
 	returnButton = Button (textureManager->GetButtonTexture ("button1"),
 	                       { 10, 10, 150, 100 }, renderer,
 	                       [game] { game->WinMenu (); });
-	mainLabel = UILabel (renderer, 0, 50, FONT_SANS, 48, "Item Shop",
-	                     { 255, 255, 255 }, 1024);
+	mainLabel = UILabel (renderer, 0, 50, fontManager->GetFont (FONT_SANS, 48),
+	                     "Item Shop", { 255, 255, 255 }, 1024);
 
 	col_incButton
 		= Button (textureManager->GetButtonTexture ("button-arrow-down"),
@@ -65,9 +66,10 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 		{
 			std::string tmp_name = unit.name.GetString ();
 			tmp_name[0] = toupper (tmp_name[0]);
-			tmp_itemColumn.label = UILabel (
-				renderer, 1024 / 3 * tmp_column_counter, 160, FONT_SANS, 24,
-				tmp_name, { 255, 255, 255 }, 1024 / 3);
+			tmp_itemColumn.label
+				= UILabel (renderer, 1024 / 3 * tmp_column_counter, 160,
+			               fontManager->GetFont (FONT_SANS, 24), tmp_name,
+			               { 255, 255, 255 }, 1024 / 3);
 		}
 
 		int tmp_item_counter = 0;
@@ -128,11 +130,13 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 			std::string tmp_name = item.name.GetString ();
 			tmp_name[0] = toupper (tmp_name[0]);
 			UILabel tmp_nameLabel
-				= UILabel (renderer, tmp_pos.x, tmp_pos.y + 5, FONT_SANS, 18,
-			               tmp_name, { 255, 255, 255 }, tmp_pos.w);
+				= UILabel (renderer, tmp_pos.x, tmp_pos.y + 5,
+			               fontManager->GetFont (FONT_SANS, 18), tmp_name,
+			               { 255, 255, 255 }, tmp_pos.w);
 			UILabel tmp_statsLabel
-				= UILabel (renderer, tmp_pos.x + 10, tmp_pos.y + 5, FONT_SANS,
-			               16, tmp_text, { 255, 255, 255 });
+				= UILabel (renderer, tmp_pos.x + 10, tmp_pos.y + 5,
+			               fontManager->GetFont (FONT_SANS, 16), tmp_text,
+			               { 255, 255, 255 });
 
 			tmp_itemColumn.items.push_back (
 				{ { tmp_button,

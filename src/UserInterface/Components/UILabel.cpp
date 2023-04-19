@@ -11,20 +11,18 @@ UILabel::UILabel ()
 UILabel::~UILabel ()
 {
 	texture = nullptr;
-	// TTF_CloseFont (font);
+	font = nullptr;
 	renderer = nullptr;
 }
 
-UILabel::UILabel (SDL_Renderer *renderer, int xPos, int yPos,
-                  const char *fontPath, int fontSize, std::string text,
-                  SDL_Color color)
+UILabel::UILabel (SDL_Renderer *renderer, int xPos, int yPos, TTF_Font *font,
+                  std::string text, SDL_Color color)
 	: UILabel::UILabel ()
 {
 	this->renderer = renderer;
-	font = TTF_OpenFont (fontPath, fontSize);
+	this->font = font;
 
 	this->color = color;
-	this->fontSize = fontSize;
 	this->text = text;
 
 	org_refPos.x = position.x = xPos;
@@ -40,10 +38,9 @@ UILabel::UILabel (SDL_Renderer *renderer, int xPos, int yPos,
 	SDL_QueryTexture (texture, NULL, NULL, &position.w, &position.h);
 }
 
-UILabel::UILabel (SDL_Renderer *renderer, int xPos, int yPos,
-                  const char *fontPath, int fontSize, std::string text,
-                  SDL_Color color, int labelWidth)
-	: UILabel (renderer, xPos, yPos, fontPath, fontSize, text, color)
+UILabel::UILabel (SDL_Renderer *renderer, int xPos, int yPos, TTF_Font *font,
+                  std::string text, SDL_Color color, int labelWidth)
+	: UILabel (renderer, xPos, yPos, font, text, color)
 {
 	if (labelWidth > 0)
 	{
@@ -53,11 +50,10 @@ UILabel::UILabel (SDL_Renderer *renderer, int xPos, int yPos,
 	}
 }
 
-UILabel::UILabel (SDL_Renderer *renderer, int xPos, int yPos,
-                  const char *fontPath, int fontSize, std::string text,
-                  SDL_Color color, int labelWidth, int labelHeight)
-	: UILabel (renderer, xPos, yPos, fontPath, fontSize, text, color,
-               labelWidth)
+UILabel::UILabel (SDL_Renderer *renderer, int xPos, int yPos, TTF_Font *font,
+                  std::string text, SDL_Color color, int labelWidth,
+                  int labelHeight)
+	: UILabel (renderer, xPos, yPos, font, text, color, labelWidth)
 {
 	if (labelHeight > 0)
 	{

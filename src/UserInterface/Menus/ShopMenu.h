@@ -2,12 +2,12 @@
 #define USER_INTERFACE_SHOP_MENU_H_
 
 #include "../../Game.h"
+#include "../../Managers/FontManager.h"
 #include "../../Managers/Shop.h"
 #include "../../Objects/SceneObject.h"
 #include "../Components/Button.h"
 #include "../Components/ShopPage.h"
 #include "../Components/UILabel.h"
-#include <SDL2/SDL.h>
 #include <deque>
 
 class ShopMenu
@@ -44,7 +44,7 @@ class ShopMenu
 
 	ShopMenu (SDL_Renderer *renderer, Game *game,
 	          TextureManager *textureManager, Player *player,
-	          rapidjson::Value *json);
+	          rapidjson::Value *json, FontManager *fontManager);
 
 	void Reset ();
 

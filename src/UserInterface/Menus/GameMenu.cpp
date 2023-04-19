@@ -17,7 +17,8 @@ GameMenu::~GameMenu ()
 
 GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
                     SDL_Renderer *renderer, TextureManager *textureManager,
-                    const Player *player, const Game *game)
+                    const Player *player, const Game *game,
+                    FontManager *fontManager)
 	: GameMenu::GameMenu ()
 {
 	this->json = json;
@@ -28,20 +29,21 @@ GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
 		= SceneObject (textureManager->GetTexture ("darkBackground"), renderer,
 	                   gameInfoBackgroundPos);
 
-	playerFujika
-		= UILabel (renderer, (gameInfoBackgroundPos.w / 3 * 0),
-	               gameInfoBackgroundPos.y, FONT_SANS, 24,
-	               "Fujika " + std::to_string (player->GetFujika ()) + " / "
-	                   + std::to_string (player->GetFujikaLimit ()),
-	               { 255, 255, 255 }, gameInfoBackgroundPos.w / 3,
-	               gameInfoBackgroundPos.h);
-	levelInfo = UILabel (renderer, (gameInfoBackgroundPos.w / 3 * 1),
-	                     gameInfoBackgroundPos.y, FONT_SANS, 24,
-	                     "Level " + std::to_string (game->Level () + 1),
-	                     { 255, 255, 255 }, gameInfoBackgroundPos.w / 3,
-	                     gameInfoBackgroundPos.h);
+	playerFujika = UILabel (
+		renderer, (gameInfoBackgroundPos.w / 3 * 0), gameInfoBackgroundPos.y,
+		fontManager->GetFont (FONT_SANS, 24),
+		"Fujika " + std::to_string (player->GetFujika ()) + " / "
+			+ std::to_string (player->GetFujikaLimit ()),
+		{ 255, 255, 255 }, gameInfoBackgroundPos.w / 3,
+		gameInfoBackgroundPos.h);
+	levelInfo = UILabel (
+		renderer, (gameInfoBackgroundPos.w / 3 * 1), gameInfoBackgroundPos.y,
+		fontManager->GetFont (FONT_SANS, 24),
+		"Level " + std::to_string (game->Level () + 1), { 255, 255, 255 },
+		gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h);
 	playerFuko = UILabel (renderer, (gameInfoBackgroundPos.w / 3 * 2),
-	                      gameInfoBackgroundPos.y, FONT_SANS, 24,
+	                      gameInfoBackgroundPos.y,
+	                      fontManager->GetFont (FONT_SANS, 24),
 	                      "Fuko " + std::to_string (player->GetFuko ()) + " / "
 	                          + std::to_string (player->GetFukoLimit ()),
 	                      { 255, 255, 255 }, gameInfoBackgroundPos.w / 3,
@@ -68,13 +70,14 @@ GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
 		}
 		std::string tmp_name = entity.name.GetString ();
 		tmp_name[0] = toupper (tmp_name[0]);
-		UILabel NameLabel
-			= UILabel (renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24,
-		               tmp_name, { 255, 255, 255 }, tmp_rect.w);
+		UILabel NameLabel = UILabel (renderer, tmp_rect.x + 5, tmp_rect.y + 5,
+		                             fontManager->GetFont (FONT_SANS, 24),
+		                             tmp_name, { 255, 255, 255 }, tmp_rect.w);
 		UILabel StatsLabel
 			= UILabel (renderer, tmp_rect.x + 5,
-		               tmp_rect.y + NameLabel.GetPosition ().h + 5, FONT_SANS,
-		               16, tmp_statText, { 255, 255, 255 });
+		               tmp_rect.y + NameLabel.GetPosition ().h + 5,
+		               fontManager->GetFont (FONT_SANS, 16), tmp_statText,
+		               { 255, 255, 255 });
 		Button button = Button (
 			textureManager->GetButtonTexture ("button2"), tmp_rect, renderer,
 			[dungeon, json, type = entity.name.GetString ()]
@@ -92,9 +95,9 @@ GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
 
 	enemyStatsBackground = SceneObject (
 		textureManager->GetTexture ("darkBackground"), renderer, tmp_rect);
-	enemyNameLabel
-		= UILabel (renderer, tmp_rect.x + 5, tmp_rect.y + 5, FONT_SANS, 24,
-	               "Enemy", { 255, 255, 255 }, tmp_rect.w);
+	enemyNameLabel = UILabel (renderer, tmp_rect.x + 5, tmp_rect.y + 5,
+	                          fontManager->GetFont (FONT_SANS, 24), "Enemy",
+	                          { 255, 255, 255 }, tmp_rect.w);
 	{
 		std::string tmp_statText = "";
 		for (auto &stat : (*json)["enemy"].GetObject ())
@@ -110,8 +113,9 @@ GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
 		}
 		enemyStatsLabel
 			= UILabel (renderer, tmp_rect.x + 5,
-		               tmp_rect.y + enemyNameLabel.GetPosition ().h, FONT_SANS,
-		               16, tmp_statText, { 255, 255, 255 });
+		               tmp_rect.y + enemyNameLabel.GetPosition ().h,
+		               fontManager->GetFont (FONT_SANS, 16), tmp_statText,
+		               { 255, 255, 255 });
 	}
 }
 

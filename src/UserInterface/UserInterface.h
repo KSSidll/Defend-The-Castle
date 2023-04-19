@@ -1,6 +1,7 @@
 #ifndef USER_INTERFACE_USER_INTERFACE_H_
 #define USER_INTERFACE_USER_INTERFACE_H_
 
+#include "../Managers/FontManager.h"
 #include "Menus/DifficultySelectionMenu.h"
 #include "Menus/GameMenu.h"
 #include "Menus/LoseMenu.h"
@@ -9,12 +10,12 @@
 #include "Menus/ShopMenu.h"
 #include "Menus/WinMenu.h"
 #include <SDL2/SDL.h>
-#include <rapidjson/fwd.h>
 
 class UserInterface
 {
   private:
 	const Game *game;
+	FontManager *fontManager;
 	GameMenu *gameMenu;
 	PauseMenu *pauseMenu;
 	MainMenu *mainMenu;
