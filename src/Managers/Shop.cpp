@@ -18,14 +18,14 @@ Shop::Shop (Player *player, rapidjson::Value *json)
 	this->json = json;
 	this->player = player;
 
-	for (auto &unit : (*json)["items"].GetObject ())
+	for (const auto &unit : (*json)["items"].GetObject ())
 	{
-		for (auto &itemData : unit.value.GetObject ())
+		for (const auto &itemData : unit.value.GetObject ())
 		{
 			Item tmp_item;
 			tmp_item.itemCost = itemData.value["itemCost"].GetInt ();
 			tmp_item.unit = unit.name.GetString ();
-			for (auto &stat : itemData.value["stats"].GetObject ())
+			for (const auto &stat : itemData.value["stats"].GetObject ())
 			{
 				tmp_item.stats.emplace (stat.name.GetString (),
 				                        stat.value.GetInt ());
@@ -37,7 +37,7 @@ Shop::Shop (Player *player, rapidjson::Value *json)
 				tmp_item.drawSpecialEffect = true;
 				tmp_item.specialEffectLevelReq
 					= itr->value["levelReq"].GetInt ();
-				for (auto &stat : itr->value["stats"].GetObject ())
+				for (const auto &stat : itr->value["stats"].GetObject ())
 				{
 					tmp_item.specialEffectStats.emplace (
 						stat.name.GetString (), stat.value.GetInt ());
@@ -57,7 +57,7 @@ Shop::Reset ()
 	{
 		if (item.second.level > 0)
 		{
-			for (auto &stat : item.second.stats)
+			for (const auto &stat : item.second.stats)
 			{
 				int preVal = (*json)["summons"][item.second.unit][stat.first]
 				                 .GetInt ();
@@ -66,7 +66,7 @@ Shop::Reset ()
 			}
 			if (item.second.bSpecialEffectSet)
 			{
-				for (auto &stat : item.second.specialEffectStats)
+				for (const auto &stat : item.second.specialEffectStats)
 				{
 					int preVal
 						= (*json)["summons"][item.second.unit][stat.first]
@@ -96,7 +96,7 @@ Shop::Buy (const char *itemName)
 	{
 		bool isValid = true;
 
-		for (auto stat : items.at (itemName).stats)
+		for (const auto stat : items.at (itemName).stats)
 		{
 			int previousValue = (*json)["summons"][items.at (itemName).unit]
 			                           [stat.first.c_str ()]
@@ -113,7 +113,7 @@ Shop::Buy (const char *itemName)
 			    && items.at (itemName).specialEffectLevelReq - 1
 			           == items.at (itemName).level)
 			{
-				for (auto &stat : items.at (itemName).specialEffectStats)
+				for (const auto &stat : items.at (itemName).specialEffectStats)
 				{
 					previousValue
 						= (*json)["summons"][items.at (itemName).unit]
@@ -140,7 +140,7 @@ Shop::Save (rapidjson::Document *saveJson) const
 {
 	rapidjson::Value object (rapidjson::kObjectType);
 
-	for (auto &item : items)
+	for (const auto &item : items)
 	{
 		object.AddMember (
 			rapidjson::Value (item.first + "Level", saveJson->GetAllocator ())
@@ -162,7 +162,7 @@ Shop::Load (const rapidjson::Value *saveJson)
 			     ++it)
 			{
 				bool isValid = true;
-				for (auto &stat : item.second.stats)
+				for (const auto &stat : item.second.stats)
 				{
 					int previousValue = (*json)["summons"][item.second.unit]
 					                           [stat.first.c_str ()]
@@ -178,7 +178,7 @@ Shop::Load (const rapidjson::Value *saveJson)
 					    && item.second.specialEffectLevelReq - 1
 					           == item.second.level)
 					{
-						for (auto &stat :
+						for (const auto &stat :
 						     items.at (item.first).specialEffectStats)
 						{
 							previousValue = (*json)["summons"]

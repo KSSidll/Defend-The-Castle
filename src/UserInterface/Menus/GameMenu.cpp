@@ -54,10 +54,10 @@ GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
 		= gameInfoBackgroundPos.w / ((*json)["summons"].MemberCount () + 1);
 	SDL_Rect tmp_rect = { 0, 543, rectW, 225 };
 
-	for (auto &entity : (*json)["summons"].GetObject ())
+	for (const auto &entity : (*json)["summons"].GetObject ())
 	{
 		std::string tmp_statText = "";
-		for (auto &stat : entity.value.GetObject ())
+		for (const auto &stat : entity.value.GetObject ())
 		{
 			auto itr = (*json)["lang"].FindMember (stat.name.GetString ());
 			if (itr != (*json)["lang"].MemberEnd ())
@@ -100,7 +100,7 @@ GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
 	                          { 255, 255, 255 }, tmp_rect.w);
 	{
 		std::string tmp_statText = "";
-		for (auto &stat : (*json)["enemy"].GetObject ())
+		for (const auto &stat : (*json)["enemy"].GetObject ())
 		{
 			auto itr = (*json)["lang"].FindMember (stat.name.GetString ());
 			if (itr != (*json)["lang"].MemberEnd ())
@@ -122,7 +122,7 @@ GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
 void
 GameMenu::Render () const
 {
-	for (auto &button : buttons)
+	for (const auto &button : buttons)
 	{
 		button.button.Render ();
 	}
@@ -177,7 +177,7 @@ void
 GameMenu::UpdateEnemyStatsLabel (float multiplier)
 {
 	std::string tmp_statText = "";
-	for (auto &stat : (*json)["enemy"].GetObject ())
+	for (const auto &stat : (*json)["enemy"].GetObject ())
 	{
 		auto itr = (*json)["lang"].FindMember (stat.name.GetString ());
 		if (itr != (*json)["lang"].MemberEnd ())
@@ -204,7 +204,7 @@ GameMenu::UpdateEntitiesStatsLabel ()
 	for (auto &button : buttons)
 	{
 		std::string tmp_statText = "";
-		for (auto &stat :
+		for (const auto &stat :
 		     (*json)["summons"][(const char *)(button.entity_type)]
 		         .GetObject ())
 		{

@@ -88,7 +88,7 @@ Game::Init (const char *title, int width, int height, bool fullscreen)
 	player = new Player ();
 	textureManager = new TextureManager (renderer);
 
-	for (auto &texture : (*objectsDoc)["textures"].GetArray ())
+	for (const auto &texture : (*objectsDoc)["textures"].GetArray ())
 		textureManager->LoadTexture (texture);
 
 	textureManager->LoadTexture ("enemyLabelBackground",

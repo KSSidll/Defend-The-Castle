@@ -31,7 +31,7 @@ SummonDungeon::SummonDungeon (const TextureManager *textureManager,
 void
 SummonDungeon::KillPending ()
 {
-	for (auto &summon : pendingKills)
+	for (const auto &summon : pendingKills)
 	{
 		for (size_t i = 0; i != objectArray->size (); ++i)
 		{
@@ -70,7 +70,7 @@ SummonDungeon::Update ()
 void
 SummonDungeon::Render () const
 {
-	for (auto &summon : *objectArray)
+	for (const auto &summon : *objectArray)
 	{
 		summon.Render ();
 	}

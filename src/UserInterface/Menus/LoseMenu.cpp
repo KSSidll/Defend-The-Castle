@@ -35,7 +35,7 @@ LoseMenu::Render () const
 {
 	background.Render ();
 	label.Render ();
-	for (auto &button : buttons)
+	for (const auto &button : buttons)
 	{
 		button.Render ();
 	}

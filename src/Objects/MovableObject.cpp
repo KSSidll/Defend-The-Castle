@@ -27,7 +27,7 @@ MovableObject::MovableObject (SDL_Texture *objTexture,
 	destRect.h = srcRect.h * renderScale;
 	destRect.w = srcRect.w * renderScale;
 
-	for (auto &position : object["positions"].GetArray ())
+	for (const auto &position : object["positions"].GetArray ())
 		animationLengths.push_back (position.GetInt ());
 
 	SetObjectValues (object);

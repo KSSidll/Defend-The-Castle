@@ -42,7 +42,7 @@ MainMenu::Render () const
 {
 	background.Render ();
 	mainMenuLabel.Render ();
-	for (auto &button : buttons)
+	for (const auto &button : buttons)
 	{
 		button.Render ();
 	}

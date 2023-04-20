@@ -11,7 +11,7 @@ void
 LabeledButton::Render () const
 {
 	button.Render ();
-	for (auto &label : labels)
+	for (const auto &label : labels)
 	{
 		label.second.Render ();
 	}

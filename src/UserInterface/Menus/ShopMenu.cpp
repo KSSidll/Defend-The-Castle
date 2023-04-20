@@ -59,7 +59,7 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 	fullPage = ShopPage ();
 
 	int tmp_column_counter = 0;
-	for (auto &unit : (*json)["items"].GetObject ())
+	for (const auto &unit : (*json)["items"].GetObject ())
 	{
 
 		itemColumn tmp_itemColumn;
@@ -73,7 +73,7 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 		}
 
 		int tmp_item_counter = 0;
-		for (auto &item : unit.value.GetObject ())
+		for (const auto &item : unit.value.GetObject ())
 		{
 			int tmp_offset = 0;
 			if (tmp_item_counter % 3 > 0)
@@ -94,7 +94,7 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 
 			tmp_text.append ("\n Cost: " + std::to_string (tmp_item.itemCost));
 			tmp_text.append ("\n Level: " + std::to_string (tmp_item.level));
-			for (auto &stat : tmp_item.stats)
+			for (const auto &stat : tmp_item.stats)
 			{
 				auto itr = (*json)["lang"].FindMember (stat.first.c_str ());
 				if (itr != (*json)["lang"].MemberEnd ())
@@ -106,7 +106,7 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 			}
 
 			if (tmp_item.drawSpecialEffect)
-				for (auto &stat : tmp_item.specialEffectStats)
+				for (const auto &stat : tmp_item.specialEffectStats)
 				{
 					auto itr
 						= (*json)["lang"].FindMember (stat.first.c_str ());
@@ -185,7 +185,7 @@ ShopMenu::UpdateItemsStats ()
 
 			tmp_text.append ("\n Cost: " + std::to_string (tmp_item.itemCost));
 			tmp_text.append ("\n Level: " + std::to_string (tmp_item.level));
-			for (auto &stat : tmp_item.stats)
+			for (const auto &stat : tmp_item.stats)
 			{
 				auto itr = (*json)["lang"].FindMember (stat.first.c_str ());
 				if (itr != (*json)["lang"].MemberEnd ())
@@ -197,7 +197,7 @@ ShopMenu::UpdateItemsStats ()
 			}
 
 			if (tmp_item.drawSpecialEffect)
-				for (auto &stat : tmp_item.specialEffectStats)
+				for (const auto &stat : tmp_item.specialEffectStats)
 				{
 					auto itr
 						= (*json)["lang"].FindMember (stat.first.c_str ());
