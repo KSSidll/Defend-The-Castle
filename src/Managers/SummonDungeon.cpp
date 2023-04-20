@@ -5,17 +5,18 @@ SummonDungeon::SummonDungeon ()
 	textureManager = nullptr;
 	renderer = nullptr;
 	player = nullptr;
-	objectArray = nullptr;
 }
 
 SummonDungeon::~SummonDungeon ()
 {
-	if (objectArray)
-		delete objectArray;
-
 	player = nullptr;
 	renderer = nullptr;
 	textureManager = nullptr;
+
+	for (auto &summon : pendingKills)
+	{
+		delete summon;
+	}
 }
 
 SummonDungeon::SummonDungeon (const TextureManager *textureManager,
@@ -25,7 +26,6 @@ SummonDungeon::SummonDungeon (const TextureManager *textureManager,
 	this->textureManager = textureManager;
 	this->renderer = renderer;
 	this->player = player;
-	objectArray = new std::deque<PlayerSummon>;
 }
 
 void
@@ -33,16 +33,21 @@ SummonDungeon::KillPending ()
 {
 	for (const auto &summon : pendingKills)
 	{
-		for (size_t i = 0; i != objectArray->size (); ++i)
+		for (size_t i = 0; i != objectArray.size (); ++i)
 		{
-			if (objectArray->at (i).GetId () == summon->GetId ())
+			if (objectArray.at (i).GetId () == summon->GetId ())
 			{
-				objectArray->at (i) = objectArray->back ();
-				objectArray->pop_back ();
+				objectArray.at (i) = objectArray.back ();
+				objectArray.pop_back ();
 				--i;
 				break;
 			}
 		}
+	}
+
+	for (auto &summon : pendingKills)
+	{
+		delete summon;
 	}
 
 	pendingKills.clear ();
@@ -59,7 +64,7 @@ SummonDungeon::Update ()
 {
 	KillPending ();
 
-	for (auto &summon : *objectArray)
+	for (auto &summon : objectArray)
 	{
 		summon.Update ();
 		if (summon.KillPending ())
@@ -70,7 +75,7 @@ SummonDungeon::Update ()
 void
 SummonDungeon::Render () const
 {
-	for (const auto &summon : *objectArray)
+	for (const auto &summon : objectArray)
 	{
 		summon.Render ();
 	}
@@ -79,7 +84,7 @@ SummonDungeon::Render () const
 void
 SummonDungeon::Reset ()
 {
-	objectArray->clear ();
+	objectArray.clear ();
 	pendingKills.clear ();
 	id = 0;
 }
@@ -92,15 +97,15 @@ SummonDungeon::SummonObject (const rapidjson::Value &object)
 		auto test
 			= PlayerSummon (textureManager->GetTexture (object["textureSrc"]),
 		                    object, renderer, id);
-		objectArray->push_back (
+		objectArray.push_back (
 			{ textureManager->GetTexture (object["textureSrc"]), object,
 		      renderer, id });
 		++id;
 	}
 }
 
-std::deque<PlayerSummon> *
+const std::deque<PlayerSummon> *
 SummonDungeon::getObjectArray () const
 {
-	return objectArray;
+	return &objectArray;
 };

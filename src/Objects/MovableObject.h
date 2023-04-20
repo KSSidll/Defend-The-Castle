@@ -3,6 +3,7 @@
 
 #include "SceneObject.h"
 #include <rapidjson/document.h>
+#include <stdint.h>
 #include <vector>
 
 class MovableObject : public SceneObject
@@ -14,8 +15,8 @@ class MovableObject : public SceneObject
 	int xpos;
 	int ypos;
 	int animationFramesSkipped = 0;
-	int animationYpos = 0;
-	int animationXpos = 0;
+	unsigned int animationYpos = 0;
+	unsigned int animationXpos = 0;
 	int animationSpeed = 5;
 
 	float renderScale;
@@ -26,9 +27,7 @@ class MovableObject : public SceneObject
 
 	SDL_Rect srcRect, destRect;
 	SDL_Rect OsrcRect;
-	std::vector<int> animationLengths;
-
-	void Move ();
+	std::vector<unsigned int> animationLengths;
 
   public:
 	MovableObject ();
@@ -37,6 +36,7 @@ class MovableObject : public SceneObject
 	MovableObject (SDL_Texture *objTexture, const rapidjson::Value &object,
 	               SDL_Renderer *renderer);
 
+	void Move ();
 	void SetObjectValues (const rapidjson::Value &object);
 	void Update ();
 	void Render () const;

@@ -6,7 +6,7 @@
 // Recurrent dependency
 class Enemy;
 
-class PlayerSummon : virtual public EntityObject
+class PlayerSummon : public EntityObject
 {
   private:
 	int cost;
@@ -18,11 +18,9 @@ class PlayerSummon : virtual public EntityObject
 	PlayerSummon (SDL_Texture *objTexture, const rapidjson::Value &object,
 	              SDL_Renderer *renderer);
 	PlayerSummon (SDL_Texture *objTexture, const rapidjson::Value &object,
-	              SDL_Renderer *renderer, int id);
+	              SDL_Renderer *renderer, uint64_t id);
 
 	void Update ();
-	void Render () const;
-	void HandleCollision ();
 	void HandleCollision (Enemy *entity);
 };
 

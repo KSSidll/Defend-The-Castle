@@ -96,7 +96,7 @@ Shop::Buy (const char *itemName)
 	{
 		bool isValid = true;
 
-		for (const auto stat : items.at (itemName).stats)
+		for (const auto &stat : items.at (itemName).stats)
 		{
 			int previousValue = (*json)["summons"][items.at (itemName).unit]
 			                           [stat.first.c_str ()]

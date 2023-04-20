@@ -16,7 +16,7 @@ itemColumn::Render (size_t begin_column) const
 		offset = begin_column + 3 - items.size ();
 	}
 
-	for (auto itr = begin_column; itr < begin_column + 3 - offset; ++itr)
+	for (size_t itr = begin_column; itr < begin_column + 3 - offset; ++itr)
 	{
 		items[itr].button.Render ();
 	}
@@ -31,7 +31,7 @@ itemColumn::HandleEvents (size_t begin_column, SDL_Event *event, bool *bUpdate)
 		offset = begin_column + 3 - items.size ();
 	}
 
-	for (auto itr = begin_column; itr < begin_column + 3 - offset; ++itr)
+	for (size_t itr = begin_column; itr < begin_column + 3 - offset; ++itr)
 	{
 		if (items[itr].button.HandleEvents (event))
 		{
@@ -50,7 +50,7 @@ columnLine::Render (size_t begin_column, size_t begin_line) const
 		offset = begin_line + 3 - columns.size ();
 	}
 
-	for (auto itr = begin_line; itr < begin_line + 3 - offset; ++itr)
+	for (size_t itr = begin_line; itr < begin_line + 3 - offset; ++itr)
 	{
 		columns[itr].Render (begin_column);
 	}

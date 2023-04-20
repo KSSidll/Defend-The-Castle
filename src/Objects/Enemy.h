@@ -6,7 +6,7 @@
 // Recurrent dependency
 class PlayerSummon;
 
-class Enemy : virtual public EntityObject
+class Enemy : public EntityObject
 {
   private:
 	float speedReference;
@@ -21,9 +21,7 @@ class Enemy : virtual public EntityObject
 	       SDL_Renderer *renderer);
 
 	void Update ();
-	void Render () const;
 	void DoDamage (int attack);
-	void HandleCollision ();
 	void HandleCollision (PlayerSummon *entity);
 };
 

@@ -11,7 +11,7 @@ PlayerSummon::PlayerSummon (SDL_Texture *objTexture,
 
 PlayerSummon::PlayerSummon (SDL_Texture *objTexture,
                             const rapidjson::Value &object,
-                            SDL_Renderer *renderer, int id)
+                            SDL_Renderer *renderer, uint64_t id)
 	: PlayerSummon::PlayerSummon (objTexture, object, renderer)
 {
 	this->id = id;
@@ -26,18 +26,6 @@ PlayerSummon::Update ()
 		Move ();
 	if (isAnimationDone && animationYpos == animationLengths.size () - 1)
 		pendingKill = true;
-}
-
-void
-PlayerSummon::Render () const
-{
-	EntityObject::Render ();
-}
-
-void
-PlayerSummon::HandleCollision ()
-{
-	EntityObject::HandleCollision ();
 }
 
 void

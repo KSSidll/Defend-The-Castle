@@ -26,23 +26,11 @@ Enemy::Update ()
 }
 
 void
-Enemy::Render () const
-{
-	EntityObject::Render ();
-}
-
-void
 Enemy::DoDamage (int attack)
 {
 	EntityObject::DoDamage (attack);
 	if (movementSpeed >= 6)
 		movementSpeed = speedReference * health;
-}
-
-void
-Enemy::HandleCollision ()
-{
-	EntityObject::HandleCollision ();
 }
 
 void

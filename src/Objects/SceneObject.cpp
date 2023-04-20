@@ -35,3 +35,12 @@ SceneObject::Render () const
 	else
 		SDL_RenderCopy (renderer, objTexture, NULL, &position);
 }
+
+void
+SceneObject::Render (const SDL_Rect *srcRect) const
+{
+	if (fullScreen)
+		SDL_RenderCopy (renderer, objTexture, srcRect, NULL);
+	else
+		SDL_RenderCopy (renderer, objTexture, srcRect, &position);
+}

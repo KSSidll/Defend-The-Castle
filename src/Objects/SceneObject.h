@@ -21,6 +21,7 @@ class SceneObject
 	SceneObject (SDL_Texture *objTexture, SDL_Renderer *renderer);
 
 	void Render () const;
+	void Render (const SDL_Rect *srcRect) const;
 };
 
 #endif // OBJECTS_SCENE_OBJECT_H_

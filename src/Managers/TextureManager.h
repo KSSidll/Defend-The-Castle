@@ -1,7 +1,7 @@
 #ifndef MANAGERS_TEXTURE_MANAGER_H_
 #define MANAGERS_TEXTURE_MANAGER_H_
 
-#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL.h>
 #include <rapidjson/document.h>
 #include <string>
 #include <unordered_map>
@@ -19,7 +19,6 @@ class TextureManager
 	SDL_Renderer *renderer;
 
 	std::unordered_map<std::string, SDL_Texture *> textureArray;
-	std::unordered_map<std::string, TTF_Font *> fontArray;
 	std::unordered_map<std::string, ButtonTextures *> buttonTextureArray;
 
   public:

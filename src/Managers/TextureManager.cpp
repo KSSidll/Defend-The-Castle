@@ -3,11 +3,29 @@
 
 TextureManager::TextureManager () { renderer = nullptr; }
 
-TextureManager::~TextureManager () { renderer = nullptr; }
+TextureManager::~TextureManager ()
+{
+	renderer = nullptr;
+
+	for (auto &button : buttonTextureArray)
+	{
+
+		SDL_DestroyTexture (button.second->down);
+		SDL_DestroyTexture (button.second->over);
+		SDL_DestroyTexture (button.second->none);
+
+		delete button.second;
+	}
+
+	for (auto &value : textureArray)
+	{
+
+		SDL_DestroyTexture (value.second);
+	}
+}
 
 TextureManager::TextureManager (SDL_Renderer *renderer)
 {
-	TTF_Init ();
 	this->renderer = renderer;
 
 	SDL_Surface *tempSurface = SDL_CreateRGBSurface (0, 1, 1, 12, 0, 0, 0, 0);

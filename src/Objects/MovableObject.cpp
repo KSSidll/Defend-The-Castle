@@ -71,7 +71,7 @@ MovableObject::Update ()
 void
 MovableObject::Render () const
 {
-	SDL_RenderCopy (renderer, objTexture, &srcRect, &destRect);
+	SceneObject::Render (&srcRect);
 }
 
 void

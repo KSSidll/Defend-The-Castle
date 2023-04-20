@@ -16,8 +16,6 @@ class EntityObject : public MovableObject
 	int movementSpeed;
 	int attackSpeed;
 
-	void Move ();
-
   public:
 	EntityObject (){};
 	~EntityObject (){};
@@ -25,6 +23,7 @@ class EntityObject : public MovableObject
 	EntityObject (SDL_Texture *objTexture, const rapidjson::Value &object,
 	              SDL_Renderer *renderer);
 
+	void Move ();
 	void Kill ();
 	void Attack ();
 	void SetObjectValues (const rapidjson::Value &object, float multiplier);

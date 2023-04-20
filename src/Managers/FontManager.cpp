@@ -1,6 +1,6 @@
 #include "FontManager.h"
 
-FontManager::FontManager () {}
+FontManager::FontManager () { TTF_Init (); }
 
 FontManager::~FontManager ()
 {
@@ -8,6 +8,8 @@ FontManager::~FontManager ()
 	{
 		TTF_CloseFont (font.second);
 	}
+
+	TTF_Quit ();
 }
 
 TTF_Font *

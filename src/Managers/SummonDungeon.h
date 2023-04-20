@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "TextureManager.h"
 #include <deque>
+#include <stdint.h>
 
 class SummonDungeon
 {
@@ -13,10 +14,10 @@ class SummonDungeon
 	SDL_Renderer *renderer;
 	Player *player;
 
-	std::deque<PlayerSummon> *objectArray;
+	std::deque<PlayerSummon> objectArray;
 	std::deque<PlayerSummon *> pendingKills;
 
-	int id = 0;
+	uint64_t id = 0;
 
 	void KillPending ();
 	void KillSummonObject (PlayerSummon *summon);
@@ -33,7 +34,7 @@ class SummonDungeon
 	void Reset ();
 	void SummonObject (const rapidjson::Value &object);
 
-	std::deque<PlayerSummon> *getObjectArray () const;
+	const std::deque<PlayerSummon> *getObjectArray () const;
 };
 
 #endif // MANAGERS_SUMMON_DUNGEON_H_
