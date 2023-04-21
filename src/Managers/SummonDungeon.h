@@ -14,7 +14,7 @@ class SummonDungeon
 	SDL_Renderer *renderer;
 	Player *player;
 
-	std::deque<PlayerSummon> objectArray;
+	std::deque<PlayerSummon> *objectArray;
 	std::deque<PlayerSummon *> pendingKills;
 
 	uint64_t id = 0;
@@ -34,7 +34,7 @@ class SummonDungeon
 	void Reset ();
 	void SummonObject (const rapidjson::Value &object);
 
-	const std::deque<PlayerSummon> *getObjectArray () const;
+	std::deque<PlayerSummon> *getObjectArray () const;
 };
 
 #endif // MANAGERS_SUMMON_DUNGEON_H_
