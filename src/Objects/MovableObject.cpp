@@ -1,7 +1,6 @@
 #include "MovableObject.h"
 
 MovableObject::MovableObject () { originalJsonValues = nullptr; }
-
 MovableObject::~MovableObject () { originalJsonValues = nullptr; }
 
 void
@@ -11,19 +10,21 @@ MovableObject::Move ()
 	xShift -= (int)xShift;
 }
 
-MovableObject::MovableObject (SDL_Texture *objTexture,
-                              const rapidjson::Value &object,
-                              SDL_Renderer *renderer)
-	: SceneObject (objTexture, renderer)
+MovableObject::MovableObject (SDL_Renderer *renderer, SDL_Texture *objTexture,
+                              const rapidjson::Value &object)
+	: SceneObject (renderer, objTexture)
 {
 	originalJsonValues = &object;
 
-	renderScale = object["renderScale"].GetFloat ();
+	renderScale = object["renderScale"].GetDouble ();
 
-	OsrcRect.x = srcRect.x = object["srcRectX"].GetInt ();
-	OsrcRect.y = srcRect.y = object["srcRectY"].GetInt ();
+	srcRect.x = object["srcRectX"].GetInt ();
+	srcRect.y = object["srcRectY"].GetInt ();
 	srcRect.h = object["srcRectH"].GetInt ();
 	srcRect.w = object["srcRectW"].GetInt ();
+
+	OsrcRect.x = srcRect.x;
+	OsrcRect.y = srcRect.y;
 	destRect.h = srcRect.h * renderScale;
 	destRect.w = srcRect.w * renderScale;
 
@@ -71,7 +72,7 @@ MovableObject::Update ()
 void
 MovableObject::Render () const
 {
-	SceneObject::Render (&srcRect);
+	SDL_RenderCopy (renderer, objTexture, &srcRect, &destRect);
 }
 
 void

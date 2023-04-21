@@ -24,7 +24,7 @@ class MainMenu
 	~MainMenu ();
 
 	MainMenu (SDL_Renderer *renderer, TextureManager *textureManager,
-	          Game *game, FontManager *fontManager);
+	          FontManager *fontManager, Game *game);
 
 	void Render () const;
 	void HandleEvents (SDL_Event *event);

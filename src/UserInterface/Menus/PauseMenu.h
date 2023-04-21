@@ -21,8 +21,8 @@ class PauseMenu
 	PauseMenu ();
 	~PauseMenu ();
 
-	PauseMenu (SDL_Renderer *renderer, Game *game,
-	           TextureManager *textureManager, FontManager *fontManager);
+	PauseMenu (SDL_Renderer *renderer, TextureManager *textureManager,
+	           FontManager *fontManager, Game *game);
 
 	void Render () const;
 	void HandleEvents (SDL_Event *event);

@@ -14,11 +14,11 @@ class Enemy : public EntityObject
 	void Move ();
 
   public:
-	Enemy (){};
-	~Enemy (){};
+	Enemy ();
+	~Enemy ();
 
-	Enemy (SDL_Texture *objTexture, const rapidjson::Value &object,
-	       SDL_Renderer *renderer);
+	Enemy (SDL_Renderer *renderer, SDL_Texture *objTexture,
+	       const rapidjson::Value &object);
 
 	void Update ();
 	void DoDamage (int attack);

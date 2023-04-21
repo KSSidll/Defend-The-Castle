@@ -42,9 +42,9 @@ class ShopMenu
 	ShopMenu ();
 	~ShopMenu ();
 
-	ShopMenu (SDL_Renderer *renderer, Game *game,
-	          TextureManager *textureManager, Player *player,
-	          rapidjson::Value *json, FontManager *fontManager);
+	ShopMenu (SDL_Renderer *renderer, TextureManager *textureManager,
+	          FontManager *fontManager, Game *game, Player *player,
+	          rapidjson::Value *json);
 
 	void Reset ();
 

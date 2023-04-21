@@ -1,15 +1,18 @@
 #include "Enemy.h"
 #include "PlayerSummon.h"
 
+Enemy::Enemy () {}
+Enemy::~Enemy () {}
+
 void
 Enemy::Move ()
 {
 	EntityObject::Move ();
 }
 
-Enemy::Enemy (SDL_Texture *objTexture, const rapidjson::Value &object,
-              SDL_Renderer *renderer)
-	: EntityObject (objTexture, object, renderer)
+Enemy::Enemy (SDL_Renderer *renderer, SDL_Texture *objTexture,
+              const rapidjson::Value &object)
+	: EntityObject (renderer, objTexture, object)
 {
 	movementVector = -1;
 	speedReference = (float)movementSpeed / (float)health;

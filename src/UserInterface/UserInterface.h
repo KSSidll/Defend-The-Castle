@@ -30,9 +30,9 @@ class UserInterface
 	UserInterface ();
 	~UserInterface ();
 
-	UserInterface (rapidjson::Value *json, SummonDungeon *dungeon,
-	               SDL_Renderer *renderer, TextureManager *textureManager,
-	               Game *game, Player *player);
+	UserInterface (SDL_Renderer *renderer, TextureManager *textureManager,
+	               Game *game, SummonDungeon *dungeon, Player *player,
+	               rapidjson::Value *json);
 
 	void Update ();
 	void Render () const;

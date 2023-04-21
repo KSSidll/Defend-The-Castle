@@ -29,8 +29,8 @@ class Button
 	Button ();
 	~Button ();
 
-	Button (ButtonTextures *textures, SDL_Rect rect, SDL_Renderer *renderer);
-	Button (ButtonTextures *textures, SDL_Rect rect, SDL_Renderer *renderer,
+	Button (SDL_Renderer *renderer, ButtonTextures *textures, SDL_Rect rect);
+	Button (SDL_Renderer *renderer, ButtonTextures *textures, SDL_Rect rect,
 	        std::function<void ()> callback);
 
 	void Render () const;

@@ -2,45 +2,34 @@
 
 SceneObject::SceneObject ()
 {
-	this->objTexture = nullptr;
 	this->renderer = nullptr;
+	this->objTexture = nullptr;
 }
 
 SceneObject::~SceneObject ()
 {
-	this->renderer = nullptr;
 	this->objTexture = nullptr;
+	this->renderer = nullptr;
 }
 
-SceneObject::SceneObject (SDL_Texture *objTexture, SDL_Renderer *renderer)
-	: SceneObject::SceneObject ()
+SceneObject::SceneObject (SDL_Renderer *renderer, SDL_Texture *objTexture)
+	: renderer (renderer), objTexture (objTexture)
 {
-	this->renderer = renderer;
-	this->objTexture = objTexture;
 }
 
-SceneObject::SceneObject (SDL_Texture *objTexture, SDL_Renderer *renderer,
-                          SDL_Rect position)
-	: SceneObject::SceneObject (objTexture, renderer)
+SceneObject::SceneObject (SDL_Renderer *renderer, SDL_Texture *objTexture,
+                          SDL_Rect destRect)
+	: SceneObject::SceneObject (renderer, objTexture)
 {
-	this->position = position;
-	fullScreen = false;
+	this->destRect = destRect;
+	fullscreen = false;
 }
 
 void
 SceneObject::Render () const
 {
-	if (fullScreen)
+	if (fullscreen)
 		SDL_RenderCopy (renderer, objTexture, NULL, NULL);
 	else
-		SDL_RenderCopy (renderer, objTexture, NULL, &position);
-}
-
-void
-SceneObject::Render (const SDL_Rect *srcRect) const
-{
-	if (fullScreen)
-		SDL_RenderCopy (renderer, objTexture, srcRect, NULL);
-	else
-		SDL_RenderCopy (renderer, objTexture, srcRect, &position);
+		SDL_RenderCopy (renderer, objTexture, NULL, &destRect);
 }

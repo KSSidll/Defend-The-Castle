@@ -10,8 +10,8 @@
 class SummonDungeon
 {
   private:
-	const TextureManager *textureManager;
 	SDL_Renderer *renderer;
+	const TextureManager *textureManager;
 	Player *player;
 
 	std::deque<PlayerSummon> *objectArray;
@@ -26,8 +26,8 @@ class SummonDungeon
 	SummonDungeon ();
 	~SummonDungeon ();
 
-	SummonDungeon (const TextureManager *textureManager,
-	               SDL_Renderer *renderer, Player *player);
+	SummonDungeon (SDL_Renderer *renderer,
+	               const TextureManager *textureManager, Player *player);
 
 	void Update ();
 	void Render () const;

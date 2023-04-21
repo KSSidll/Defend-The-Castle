@@ -1,18 +1,19 @@
 #include "PlayerSummon.h"
 #include "Enemy.h"
 
-PlayerSummon::PlayerSummon (SDL_Texture *objTexture,
-                            const rapidjson::Value &object,
-                            SDL_Renderer *renderer)
-	: EntityObject (objTexture, object, renderer)
+PlayerSummon::PlayerSummon () {}
+PlayerSummon::~PlayerSummon () {}
+
+PlayerSummon::PlayerSummon (SDL_Renderer *renderer, SDL_Texture *objTexture,
+                            const rapidjson::Value &object)
+	: EntityObject (renderer, objTexture, object)
 {
 	cost = object["cost"].GetInt ();
 }
 
-PlayerSummon::PlayerSummon (SDL_Texture *objTexture,
-                            const rapidjson::Value &object,
-                            SDL_Renderer *renderer, uint64_t id)
-	: PlayerSummon::PlayerSummon (objTexture, object, renderer)
+PlayerSummon::PlayerSummon (SDL_Renderer *renderer, SDL_Texture *objTexture,
+                            const rapidjson::Value &object, uint64_t id)
+	: PlayerSummon::PlayerSummon (renderer, objTexture, object)
 {
 	this->id = id;
 }

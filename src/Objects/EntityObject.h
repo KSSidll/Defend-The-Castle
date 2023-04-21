@@ -17,11 +17,11 @@ class EntityObject : public MovableObject
 	int attackSpeed;
 
   public:
-	EntityObject (){};
-	~EntityObject (){};
+	EntityObject ();
+	~EntityObject ();
 
-	EntityObject (SDL_Texture *objTexture, const rapidjson::Value &object,
-	              SDL_Renderer *renderer);
+	EntityObject (SDL_Renderer *renderer, SDL_Texture *objTexture,
+	              const rapidjson::Value &object);
 
 	void Move ();
 	void Kill ();

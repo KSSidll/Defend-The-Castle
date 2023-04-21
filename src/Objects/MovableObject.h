@@ -19,13 +19,13 @@ class MovableObject : public SceneObject
 	unsigned int animationXpos = 0;
 	int animationSpeed = 5;
 
-	float renderScale;
-	float xShift = 0;
+	double renderScale;
+	double xShift = 0;
 
 	bool isMoving = true;
 	bool isAnimationDone = false;
 
-	SDL_Rect srcRect, destRect;
+	SDL_Rect srcRect;
 	SDL_Rect OsrcRect;
 	std::vector<unsigned int> animationLengths;
 
@@ -33,8 +33,8 @@ class MovableObject : public SceneObject
 	MovableObject ();
 	~MovableObject ();
 
-	MovableObject (SDL_Texture *objTexture, const rapidjson::Value &object,
-	               SDL_Renderer *renderer);
+	MovableObject (SDL_Renderer *renderer, SDL_Texture *objTexture,
+	               const rapidjson::Value &object);
 
 	void Move ();
 	void SetObjectValues (const rapidjson::Value &object);

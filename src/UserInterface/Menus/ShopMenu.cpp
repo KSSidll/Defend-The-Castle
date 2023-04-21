@@ -5,31 +5,29 @@
 ShopMenu::ShopMenu ()
 {
 	player = nullptr;
-	json = nullptr;
 	shop = nullptr;
+	json = nullptr;
 }
 
 ShopMenu::~ShopMenu ()
 {
+	json = nullptr;
 	if (shop)
 		delete shop;
-
-	json = nullptr;
 	player = nullptr;
 }
 
-ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
-                    TextureManager *textureManager, Player *player,
-                    rapidjson::Value *json, FontManager *fontManager)
+ShopMenu::ShopMenu (SDL_Renderer *renderer, TextureManager *textureManager,
+                    FontManager *fontManager, Game *game, Player *player,
+                    rapidjson::Value *json)
 	: ShopMenu::ShopMenu ()
 {
 	this->player = player;
+	shop = new Shop (player, json);
 	this->json = json;
 
-	shop = new Shop (player, json);
-
-	background = SceneObject (textureManager->GetTexture ("darkBackground"),
-	                          renderer);
+	background = SceneObject (renderer,
+	                          textureManager->GetTexture ("darkBackground"));
 	playerInfoLabel
 		= UILabel (renderer, 0, 100, fontManager->GetFont (FONT_SANS, 32),
 	               ("Fuko: " + std::to_string (player->GetFuko ())),
@@ -37,24 +35,24 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 	returnButtonLabel
 		= UILabel (renderer, 10, 10, fontManager->GetFont (FONT_SANS, 32),
 	               "Return", { 255, 255, 255 }, 150, 100);
-	returnButton = Button (textureManager->GetButtonTexture ("button1"),
-	                       { 10, 10, 150, 100 }, renderer,
-	                       [game] { game->WinMenu (); });
+	returnButton
+		= Button (renderer, textureManager->GetButtonTexture ("button1"),
+	              { 10, 10, 150, 100 }, [game] { game->WinMenu (); });
 	mainLabel = UILabel (renderer, 0, 50, fontManager->GetFont (FONT_SANS, 48),
 	                     "Item Shop", { 255, 255, 255 }, 1024);
 
-	col_incButton
-		= Button (textureManager->GetButtonTexture ("button-arrow-down"),
-	              { 502, 732, 20, 20 }, renderer);
-	col_decButton
-		= Button (textureManager->GetButtonTexture ("button-arrow-up"),
-	              { 502, 693, 20, 20 }, renderer);
-	line_incButton
-		= Button (textureManager->GetButtonTexture ("button-arrow-right"),
-	              { 522, 713, 20, 20 }, renderer);
-	line_decButton
-		= Button (textureManager->GetButtonTexture ("button-arrow-left"),
-	              { 482, 713, 20, 20 }, renderer);
+	col_incButton = Button (
+		renderer, textureManager->GetButtonTexture ("button-arrow-down"),
+		{ 502, 732, 20, 20 });
+	col_decButton = Button (
+		renderer, textureManager->GetButtonTexture ("button-arrow-up"),
+		{ 502, 693, 20, 20 });
+	line_incButton = Button (
+		renderer, textureManager->GetButtonTexture ("button-arrow-right"),
+		{ 522, 713, 20, 20 });
+	line_decButton = Button (
+		renderer, textureManager->GetButtonTexture ("button-arrow-left"),
+		{ 482, 713, 20, 20 });
 
 	fullPage = ShopPage ();
 
@@ -120,8 +118,8 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, Game *game,
 					}
 				}
 			Button tmp_button = Button (
-				textureManager->GetButtonTexture ("button1"), tmp_pos,
-				renderer,
+				renderer, textureManager->GetButtonTexture ("button1"),
+				tmp_pos,
 				[shop = shop, itemName = item.name.GetString (),
 			     unitClass = unit.name.GetString ()] {
 					shop->Buy (

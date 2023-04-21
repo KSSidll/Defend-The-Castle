@@ -12,8 +12,8 @@ Button::~Button ()
 	renderer = nullptr;
 }
 
-Button::Button (ButtonTextures *textures, SDL_Rect rect,
-                SDL_Renderer *renderer)
+Button::Button (SDL_Renderer *renderer, ButtonTextures *textures,
+                SDL_Rect rect)
 	: Button::Button ()
 {
 	this->rect.x = rect.x;
@@ -25,9 +25,9 @@ Button::Button (ButtonTextures *textures, SDL_Rect rect,
 	this->textures = textures;
 }
 
-Button::Button (ButtonTextures *textures, SDL_Rect rect,
-                SDL_Renderer *renderer, std::function<void ()> callback)
-	: Button (textures, rect, renderer)
+Button::Button (SDL_Renderer *renderer, ButtonTextures *textures,
+                SDL_Rect rect, std::function<void ()> callback)
+	: Button (renderer, textures, rect)
 {
 	this->callback = callback;
 }

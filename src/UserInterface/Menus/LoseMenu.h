@@ -21,8 +21,8 @@ class LoseMenu
 	LoseMenu ();
 	~LoseMenu ();
 
-	LoseMenu (SDL_Renderer *renderer, Game *game,
-	          TextureManager *textureManager, FontManager *fontManager);
+	LoseMenu (SDL_Renderer *renderer, TextureManager *textureManager,
+	          FontManager *fontManager, Game *game);
 
 	void Render () const;
 	void HandleEvents (SDL_Event *event);

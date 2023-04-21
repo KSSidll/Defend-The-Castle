@@ -3,30 +3,29 @@
 
 GameMenu::GameMenu ()
 {
-	json = nullptr;
-	player = nullptr;
 	game = nullptr;
+	player = nullptr;
+	json = nullptr;
 }
 
 GameMenu::~GameMenu ()
 {
-	game = nullptr;
-	player = nullptr;
 	json = nullptr;
+	player = nullptr;
+	game = nullptr;
 }
 
-GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
-                    SDL_Renderer *renderer, TextureManager *textureManager,
-                    const Player *player, const Game *game,
-                    FontManager *fontManager)
-	: GameMenu::GameMenu ()
+GameMenu::GameMenu (SDL_Renderer *renderer, TextureManager *textureManager,
+                    FontManager *fontManager, const Game *game,
+                    SummonDungeon *dungeon, const Player *player,
+                    const rapidjson::Value *json)
 {
-	this->json = json;
-	this->player = player;
 	this->game = game;
+	this->player = player;
+	this->json = json;
 
 	gameInfoBackground
-		= SceneObject (textureManager->GetTexture ("darkBackground"), renderer,
+		= SceneObject (renderer, textureManager->GetTexture ("darkBackground"),
 	                   gameInfoBackgroundPos);
 
 	playerFujika = UILabel (
@@ -79,7 +78,7 @@ GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
 		               fontManager->GetFont (FONT_SANS, 16), tmp_statText,
 		               { 255, 255, 255 });
 		Button button = Button (
-			textureManager->GetButtonTexture ("button2"), tmp_rect, renderer,
+			renderer, textureManager->GetButtonTexture ("button2"), tmp_rect,
 			[dungeon, json, type = entity.name.GetString ()]
 			{ dungeon->SummonObject ((*json)["summons"][type]); });
 
@@ -94,7 +93,7 @@ GameMenu::GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
 	tmp_rect.w = gameInfoBackgroundPos.w - (rectW * entityCounter);
 
 	enemyStatsBackground = SceneObject (
-		textureManager->GetTexture ("darkBackground"), renderer, tmp_rect);
+		renderer, textureManager->GetTexture ("darkBackground"), tmp_rect);
 	enemyNameLabel = UILabel (renderer, tmp_rect.x + 5, tmp_rect.y + 5,
 	                          fontManager->GetFont (FONT_SANS, 24), "Enemy",
 	                          { 255, 255, 255 }, tmp_rect.w);

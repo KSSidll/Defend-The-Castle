@@ -26,10 +26,10 @@ class DifficultySelectionMenu
 	DifficultySelectionMenu ();
 	~DifficultySelectionMenu ();
 
-	DifficultySelectionMenu (SDL_Renderer *renderer, Game *game,
+	DifficultySelectionMenu (SDL_Renderer *renderer,
 	                         TextureManager *textureManager,
-	                         const rapidjson::Value *json,
-	                         FontManager *fontManager);
+	                         FontManager *fontManager, Game *game,
+	                         const rapidjson::Value *json);
 
 	void Render () const;
 	void HandleEvents (SDL_Event *event);

@@ -34,24 +34,24 @@ UserInterface::~UserInterface ()
 	game = nullptr;
 }
 
-UserInterface::UserInterface (rapidjson::Value *json, SummonDungeon *dungeon,
-                              SDL_Renderer *renderer,
+UserInterface::UserInterface (SDL_Renderer *renderer,
                               TextureManager *textureManager, Game *game,
-                              Player *player)
+                              SummonDungeon *dungeon, Player *player,
+                              rapidjson::Value *json)
 	: UserInterface::UserInterface ()
 {
 	this->game = game;
 	fontManager = new FontManager ();
-	gameMenu = new GameMenu (json, dungeon, renderer, textureManager, player,
-	                         game, fontManager);
-	pauseMenu = new PauseMenu (renderer, game, textureManager, fontManager);
-	mainMenu = new MainMenu (renderer, textureManager, game, fontManager);
+	gameMenu = new GameMenu (renderer, textureManager, fontManager, game,
+	                         dungeon, player, json);
+	pauseMenu = new PauseMenu (renderer, textureManager, fontManager, game);
+	mainMenu = new MainMenu (renderer, textureManager, fontManager, game);
 	difficultySelectionMenu = new DifficultySelectionMenu (
-		renderer, game, textureManager, json, fontManager);
-	winMenu = new WinMenu (renderer, game, textureManager, fontManager);
-	loseMenu = new LoseMenu (renderer, game, textureManager, fontManager);
-	shopMenu = new ShopMenu (renderer, game, textureManager, player, json,
-	                         fontManager);
+		renderer, textureManager, fontManager, game, json);
+	winMenu = new WinMenu (renderer, textureManager, fontManager, game);
+	loseMenu = new LoseMenu (renderer, textureManager, fontManager, game);
+	shopMenu = new ShopMenu (renderer, textureManager, fontManager, game,
+	                         player, json);
 }
 
 void

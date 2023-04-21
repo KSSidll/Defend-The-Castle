@@ -1,35 +1,36 @@
 #include "SummonDungeon.h"
+#include <unordered_map>
 
 SummonDungeon::SummonDungeon ()
 {
-	textureManager = nullptr;
 	renderer = nullptr;
+	textureManager = nullptr;
 	player = nullptr;
 	objectArray = nullptr;
 }
 
 SummonDungeon::~SummonDungeon ()
 {
-	player = nullptr;
-	renderer = nullptr;
-	textureManager = nullptr;
-
 	for (auto &summon : pendingKills)
 	{
 		delete summon;
 	}
 
 	delete objectArray;
+
+	player = nullptr;
+	textureManager = nullptr;
+	renderer = nullptr;
 }
 
-SummonDungeon::SummonDungeon (const TextureManager *textureManager,
-                              SDL_Renderer *renderer, Player *player)
-	: SummonDungeon::SummonDungeon ()
+SummonDungeon::SummonDungeon (SDL_Renderer *renderer,
+                              const TextureManager *textureManager,
+                              Player *player)
 {
-	this->textureManager = textureManager;
 	this->renderer = renderer;
+	this->textureManager = textureManager;
 	this->player = player;
-	this->objectArray = new std::deque<PlayerSummon>;
+	this->objectArray = new std::deque<PlayerSummon> ();
 }
 
 void
@@ -37,21 +38,15 @@ SummonDungeon::KillPending ()
 {
 	for (const auto &summon : pendingKills)
 	{
-		for (size_t i = 0; i != objectArray->size (); ++i)
+		for (int itr = objectArray->size () - 1; itr >= 0; --itr)
 		{
-			if (objectArray->at (i).GetId () == summon->GetId ())
+			if (objectArray->at (itr).GetId () == summon->GetId ())
 			{
-				objectArray->at (i) = objectArray->back ();
+				std::swap (objectArray->at (itr), objectArray->back ());
 				objectArray->pop_back ();
-				--i;
 				break;
 			}
 		}
-	}
-
-	for (auto &summon : pendingKills)
-	{
-		delete summon;
 	}
 
 	pendingKills.clear ();
@@ -66,7 +61,8 @@ SummonDungeon::KillSummonObject (PlayerSummon *summon)
 void
 SummonDungeon::Update ()
 {
-	KillPending ();
+	if (!pendingKills.empty ())
+		KillPending ();
 
 	for (auto &summon : *objectArray)
 	{
@@ -98,12 +94,12 @@ SummonDungeon::SummonObject (const rapidjson::Value &object)
 {
 	if (player->Summon (object["cost"].GetInt ()))
 	{
-		auto test
-			= PlayerSummon (textureManager->GetTexture (object["textureSrc"]),
-		                    object, renderer, id);
+		auto test = PlayerSummon (
+			renderer, textureManager->GetTexture (object["textureSrc"]),
+			object, id);
 		objectArray->push_back (
-			{ textureManager->GetTexture (object["textureSrc"]), object,
-		      renderer, id });
+			{ renderer, textureManager->GetTexture (object["textureSrc"]),
+		      object, id });
 		++id;
 	}
 }

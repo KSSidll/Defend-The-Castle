@@ -16,9 +16,9 @@ struct EntityButton
 class GameMenu
 {
   private:
-	const rapidjson::Value *json;
-	const Player *player;
 	const Game *game;
+	const Player *player;
+	const rapidjson::Value *json;
 
 	std::deque<EntityButton> buttons;
 
@@ -40,10 +40,10 @@ class GameMenu
 	GameMenu ();
 	~GameMenu ();
 
-	GameMenu (const rapidjson::Value *json, SummonDungeon *dungeon,
-	          SDL_Renderer *renderer, TextureManager *textureManager,
-	          const Player *player, const Game *game,
-	          FontManager *fontManager);
+	GameMenu (SDL_Renderer *renderer, TextureManager *textureManager,
+	          FontManager *fontManager, const Game *game,
+	          SummonDungeon *dungeon, const Player *player,
+	          const rapidjson::Value *json);
 
 	void Render () const;
 	void HandleEvents (SDL_Event *event);

@@ -118,18 +118,19 @@ Game::Init (const char *title, int width, int height, bool fullscreen)
 	                                   "assets/prototypes/arrow-right.png",
 	                                   "assets/prototypes/arrow-right.png");
 
-	background = SceneObject (
-		textureManager->GetTexture ((*objectsDoc)["background"]["textureSrc"]),
-		renderer);
+	background = SceneObject (renderer,
+	                          textureManager->GetTexture (
+								  (*objectsDoc)["background"]["textureSrc"]));
 
-	summonDungeon = new SummonDungeon (textureManager, renderer, player);
+	summonDungeon = new SummonDungeon (renderer, textureManager, player);
 
 	enemy = new Enemy (
+		renderer,
 		textureManager->GetTexture ((*objectsDoc)["enemy"]["textureSrc"]),
-		(*objectsDoc)["enemy"], renderer);
+		(*objectsDoc)["enemy"]);
 
-	userInterface = new UserInterface (objectsDoc, summonDungeon, renderer,
-	                                   textureManager, this, player);
+	userInterface = new UserInterface (renderer, textureManager, this,
+	                                   summonDungeon, player, objectsDoc);
 }
 
 void

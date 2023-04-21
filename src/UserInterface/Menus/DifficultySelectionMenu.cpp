@@ -4,22 +4,21 @@ DifficultySelectionMenu::DifficultySelectionMenu () {}
 DifficultySelectionMenu::~DifficultySelectionMenu () {}
 
 DifficultySelectionMenu::DifficultySelectionMenu (
-	SDL_Renderer *renderer, Game *game, TextureManager *textureManager,
-	const rapidjson::Value *json, FontManager *fontManager)
-	: DifficultySelectionMenu::DifficultySelectionMenu ()
+	SDL_Renderer *renderer, TextureManager *textureManager,
+	FontManager *fontManager, Game *game, const rapidjson::Value *json)
 {
 	easy = (*json)["difficulties"]["easy"].GetFloat ();
 	medium = (*json)["difficulties"]["medium"].GetFloat ();
 	hard = (*json)["difficulties"]["hard"].GetFloat ();
 
-	background = SceneObject (textureManager->GetTexture ("darkBackground"),
-	                          renderer);
+	background = SceneObject (renderer,
+	                          textureManager->GetTexture ("darkBackground"));
 	label = UILabel (renderer, 0, 50, fontManager->GetFont (FONT_SANS, 48),
 	                 "Select Difficulty", { 255, 255, 255 }, 1024);
 
 	buttons.push_back (
-		{ Button (textureManager->GetButtonTexture ("button1"), easyButtonPos,
-	              renderer,
+		{ Button (renderer, textureManager->GetButtonTexture ("button1"),
+	              easyButtonPos,
 	              [game, easy = &easy]
 	              { game->ChangeEnemyLevelMultiplier (*easy); }),
 	      { { "", UILabel (renderer, easyButtonPos.x, easyButtonPos.y,
@@ -28,8 +27,8 @@ DifficultySelectionMenu::DifficultySelectionMenu (
 	                       easyButtonPos.h) } } });
 
 	buttons.push_back (
-		{ Button (textureManager->GetButtonTexture ("button1"),
-	              mediumButtonPos, renderer,
+		{ Button (renderer, textureManager->GetButtonTexture ("button1"),
+	              mediumButtonPos,
 	              [game, medium = &medium]
 	              { game->ChangeEnemyLevelMultiplier (*medium); }),
 	      { { "", UILabel (renderer, mediumButtonPos.x, mediumButtonPos.y,
@@ -38,8 +37,8 @@ DifficultySelectionMenu::DifficultySelectionMenu (
 	                       mediumButtonPos.h) } } });
 
 	buttons.push_back (
-		{ Button (textureManager->GetButtonTexture ("button1"), hardButtonPos,
-	              renderer,
+		{ Button (renderer, textureManager->GetButtonTexture ("button1"),
+	              hardButtonPos,
 	              [game, hard = &hard]
 	              { game->ChangeEnemyLevelMultiplier (*hard); }),
 	      { { "", UILabel (renderer, hardButtonPos.x, hardButtonPos.y,

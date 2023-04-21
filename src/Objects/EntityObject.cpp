@@ -1,5 +1,8 @@
 #include "EntityObject.h"
 
+EntityObject::EntityObject () {}
+EntityObject::~EntityObject () {}
+
 void
 EntityObject::Move ()
 {
@@ -7,10 +10,9 @@ EntityObject::Move ()
 	MovableObject::Move ();
 }
 
-EntityObject::EntityObject (SDL_Texture *objTexture,
-                            const rapidjson::Value &object,
-                            SDL_Renderer *renderer)
-	: MovableObject (objTexture, object, renderer)
+EntityObject::EntityObject (SDL_Renderer *renderer, SDL_Texture *objTexture,
+                            const rapidjson::Value &object)
+	: MovableObject (renderer, objTexture, object)
 {
 	SetObjectValues (object);
 }

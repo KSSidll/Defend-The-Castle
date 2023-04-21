@@ -12,13 +12,13 @@ class PlayerSummon : public EntityObject
 	int cost;
 
   public:
-	PlayerSummon (){};
-	~PlayerSummon (){};
+	PlayerSummon ();
+	~PlayerSummon ();
 
-	PlayerSummon (SDL_Texture *objTexture, const rapidjson::Value &object,
-	              SDL_Renderer *renderer);
-	PlayerSummon (SDL_Texture *objTexture, const rapidjson::Value &object,
-	              SDL_Renderer *renderer, uint64_t id);
+	PlayerSummon (SDL_Renderer *renderer, SDL_Texture *objTexture,
+	              const rapidjson::Value &object);
+	PlayerSummon (SDL_Renderer *renderer, SDL_Texture *objTexture,
+	              const rapidjson::Value &object, uint64_t id);
 
 	void Update ();
 	void HandleCollision (Enemy *entity);
