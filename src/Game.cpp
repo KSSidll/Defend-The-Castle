@@ -131,6 +131,7 @@ Game::Init (const char *title, int width, int height, bool fullscreen)
 
 	userInterface = new UserInterface (renderer, textureManager, this,
 	                                   summonDungeon, player, objectsDoc);
+	userInterface->EnableMainMenu ();
 }
 
 void
@@ -148,10 +149,16 @@ Game::HandleEvents ()
 		switch (event.key.keysym.sym)
 		{
 		case SDLK_ESCAPE:
-			if (isPaused && !menuFlag)
+			if (isPaused)
+			{
+				userInterface->DisablePauseMenu ();
 				UnPause ();
+			}
 			else
+			{
+				userInterface->EnablePauseMenu ();
 				Pause ();
+			}
 			break;
 		}
 		break;
@@ -175,7 +182,7 @@ Game::Update ()
 	}
 
 	if (enemy->KillPending ())
-		WinMenu ();
+		WinGame ();
 
 	if (enemy->GetPosition () <= -250)
 		LoseGame ();
@@ -307,7 +314,6 @@ Game::Load ()
 	}
 
 	Reset ();
-	Start ();
 }
 
 void
@@ -323,6 +329,31 @@ Game::UnPause ()
 };
 
 void
+Game::LoseGame ()
+{
+	Reset ();
+	Pause ();
+	userInterface->EnableLoseMenu ();
+}
+
+void
+Game::WinGame ()
+{
+	Reset ();
+	Pause ();
+	userInterface->EnableWinMenu ();
+}
+
+void
+Game::NewGame ()
+{
+	level = 0;
+	HardReset ();
+	Reset ();
+	UnPause ();
+}
+
+void
 Game::Quit ()
 {
 	isRunning = false;
@@ -332,14 +363,14 @@ void
 Game::IncreaseLevel ()
 {
 	++level;
-	Start ();
+	UnPause ();
 }
 
 void
 Game::ChangeEnemyLevelMultiplier (float multiplier)
 {
 	enemyStatsLevelMultiplier = multiplier;
-	Start ();
+	UnPause ();
 }
 
 bool
@@ -358,103 +389,4 @@ int
 Game::Level () const
 {
 	return level;
-};
-
-void
-Game::LoseGame ()
-{
-	ResetMenus ();
-	Reset ();
-	loseMenu = true;
-	isPaused = true;
-	menuFlag = true;
-}
-
-void
-Game::NewGame ()
-{
-	level = 0;
-	ResetMenus ();
-	HardReset ();
-	Reset ();
-	isPaused = true;
-	difficultyMenu = true;
-	menuFlag = true;
-}
-
-void
-Game::Start ()
-{
-	ResetMenus ();
-}
-
-void
-Game::MainMenu ()
-{
-	ResetMenus ();
-	HardReset ();
-	mainMenu = true;
-	isPaused = true;
-	menuFlag = true;
-}
-
-void
-Game::WinMenu ()
-{
-	Reset ();
-	ResetMenus ();
-	winMenu = true;
-	isPaused = true;
-	menuFlag = true;
-}
-
-void
-Game::ShopMenu ()
-{
-	ResetMenus ();
-	shopMenu = true;
-	isPaused = true;
-	menuFlag = true;
-}
-
-void
-Game::ResetMenus ()
-{
-	mainMenu = false;
-	isPaused = false;
-	difficultyMenu = false;
-	winMenu = false;
-	loseMenu = false;
-	shopMenu = false;
-	menuFlag = false;
-}
-
-bool
-Game::isMainMenu () const
-{
-	return mainMenu;
-};
-
-bool
-Game::isDifficultyMenu () const
-{
-	return difficultyMenu;
-};
-
-bool
-Game::isWinMenu () const
-{
-	return winMenu;
-};
-
-bool
-Game::isLoseMenu () const
-{
-	return loseMenu;
-};
-
-bool
-Game::isShopMenu () const
-{
-	return shopMenu;
 };

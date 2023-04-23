@@ -33,8 +33,9 @@ class GameMenu
 	UILabel enemyNameLabel;
 	UILabel enemyStatsLabel;
 
+	bool enabled;
+
 	void UpdateEnemyStatsLabel (float multiplier = 1);
-	void UpdateEntitiesStatsLabel ();
 
   public:
 	GameMenu ();
@@ -48,7 +49,9 @@ class GameMenu
 	void Render () const;
 	void HandleEvents (SDL_Event *event);
 	void Reset (float multiplier);
-	void Update (bool bStatUpdate = false);
+	void Update (bool enabled);
+	void UpdatePlayerStatsLabel ();
+	void UpdateEntitiesStatsLabel ();
 };
 
 #endif // USER_INTERFACE_GAME_MENU_H_

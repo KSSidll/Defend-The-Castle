@@ -121,6 +121,9 @@ GameMenu::GameMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 void
 GameMenu::Render () const
 {
+	if (!enabled)
+		return;
+
 	for (const auto &button : buttons)
 	{
 		button.button.Render ();
@@ -139,6 +142,9 @@ GameMenu::Render () const
 void
 GameMenu::HandleEvents (SDL_Event *event)
 {
+	if (!enabled)
+		return;
+
 	for (auto &button : buttons)
 	{
 		button.button.HandleEvents (event, true);
@@ -156,7 +162,13 @@ GameMenu::Reset (float multiplier)
 }
 
 void
-GameMenu::Update (bool bStatUpdate)
+GameMenu::Update (bool enabled)
+{
+	this->enabled = enabled;
+}
+
+void
+GameMenu::UpdatePlayerStatsLabel ()
 {
 	playerFujika.ChangeText (("Fujika " + std::to_string (player->GetFujika ())
 	                          + " / "
@@ -167,9 +179,30 @@ GameMenu::Update (bool bStatUpdate)
 	playerFuko.ChangeText (("Fuko " + std::to_string (player->GetFuko ())
 	                        + " / " + std::to_string (player->GetFukoLimit ()))
 	                           .c_str ());
+}
 
-	if (bStatUpdate)
-		UpdateEntitiesStatsLabel ();
+void
+GameMenu::UpdateEntitiesStatsLabel ()
+{
+	for (auto &button : buttons)
+	{
+		std::string tmp_statText = "";
+		for (const auto &stat :
+		     (*json)["summons"][(const char *)(button.entity_type)]
+		         .GetObject ())
+		{
+			auto itr = (*json)["lang"].FindMember (stat.name.GetString ());
+			if (itr != (*json)["lang"].MemberEnd ())
+			{
+				tmp_statText.append (std::string (itr->value.GetString ())
+				                     + ": "
+				                     + std::to_string (stat.value.GetInt ()));
+				tmp_statText.append ("\n");
+			}
+		}
+
+		button.button.ChangeText ("stats", tmp_statText.c_str ());
+	}
 }
 
 void
@@ -195,28 +228,4 @@ GameMenu::UpdateEnemyStatsLabel (float multiplier)
 		}
 	}
 	enemyStatsLabel.ChangeText (tmp_statText.c_str ());
-}
-
-void
-GameMenu::UpdateEntitiesStatsLabel ()
-{
-	for (auto &button : buttons)
-	{
-		std::string tmp_statText = "";
-		for (const auto &stat :
-		     (*json)["summons"][(const char *)(button.entity_type)]
-		         .GetObject ())
-		{
-			auto itr = (*json)["lang"].FindMember (stat.name.GetString ());
-			if (itr != (*json)["lang"].MemberEnd ())
-			{
-				tmp_statText.append (std::string (itr->value.GetString ())
-				                     + ": "
-				                     + std::to_string (stat.value.GetInt ()));
-				tmp_statText.append ("\n");
-			}
-		}
-
-		button.button.ChangeText ("stats", tmp_statText.c_str ());
-	}
 }

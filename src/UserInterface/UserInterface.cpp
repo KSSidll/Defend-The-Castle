@@ -44,29 +44,31 @@ UserInterface::UserInterface (SDL_Renderer *renderer,
 	fontManager = new FontManager ();
 	gameMenu = new GameMenu (renderer, textureManager, fontManager, game,
 	                         dungeon, player, json);
-	pauseMenu = new PauseMenu (renderer, textureManager, fontManager, game);
+	pauseMenu
+		= new PauseMenu (renderer, textureManager, fontManager, game, this);
 	mainMenu = new MainMenu (renderer, textureManager, fontManager, game);
 	difficultySelectionMenu = new DifficultySelectionMenu (
 		renderer, textureManager, fontManager, game, json);
-	winMenu = new WinMenu (renderer, textureManager, fontManager, game);
-	loseMenu = new LoseMenu (renderer, textureManager, fontManager, game);
-	shopMenu = new ShopMenu (renderer, textureManager, fontManager, game,
+	winMenu = new WinMenu (renderer, textureManager, fontManager, game, this);
+	loseMenu
+		= new LoseMenu (renderer, textureManager, fontManager, game, this);
+	shopMenu = new ShopMenu (renderer, textureManager, fontManager, this,
 	                         player, json);
 }
 
 void
 UserInterface::Update ()
 {
-	if (game->isShopMenu ())
-		shopMenu->Update ();
+	shopMenu->Update ();
+	gameMenu->Update (ShouldGameMenuBeActive ());
 
-	else if (!game->Paused ())
-		gameMenu->Update ();
+	if (!game->Paused ())
+		gameMenu->UpdatePlayerStatsLabel ();
 
 	if (bStatUpdate)
 	{
-		shopMenu->Update (true);
-		gameMenu->Update (true);
+		shopMenu->UpdateItemsStats ();
+		gameMenu->UpdateEntitiesStatsLabel ();
 		bStatUpdate = false;
 	}
 }
@@ -74,51 +76,25 @@ UserInterface::Update ()
 void
 UserInterface::Render () const
 {
-	if (game->isMainMenu ())
-		mainMenu->Render ();
-
-	else if (game->isDifficultyMenu ())
-		difficultySelectionMenu->Render ();
-
-	else if (game->isWinMenu ())
-		winMenu->Render ();
-
-	else if (game->isLoseMenu ())
-		loseMenu->Render ();
-
-	else if (game->isShopMenu ())
-		shopMenu->Render ();
-
-	else if (game->Paused ())
-		pauseMenu->Render ();
-
-	else
-		gameMenu->Render ();
+	mainMenu->Render ();
+	difficultySelectionMenu->Render ();
+	winMenu->Render ();
+	loseMenu->Render ();
+	shopMenu->Render ();
+	pauseMenu->Render ();
+	gameMenu->Render ();
 }
 
 void
 UserInterface::HandleEvents (SDL_Event *event)
 {
-	if (game->isMainMenu ())
-		mainMenu->HandleEvents (event);
-
-	else if (game->isDifficultyMenu ())
-		difficultySelectionMenu->HandleEvents (event);
-
-	else if (game->isWinMenu ())
-		winMenu->HandleEvents (event);
-
-	else if (game->isLoseMenu ())
-		loseMenu->HandleEvents (event);
-
-	else if (game->isShopMenu ())
-		shopMenu->HandleEvents (event, &bStatUpdate);
-
-	else if (game->Paused ())
-		pauseMenu->HandleEvents (event);
-
-	else
-		gameMenu->HandleEvents (event);
+	mainMenu->HandleEvents (event);
+	difficultySelectionMenu->HandleEvents (event);
+	winMenu->HandleEvents (event);
+	loseMenu->HandleEvents (event);
+	shopMenu->HandleEvents (event, &bStatUpdate);
+	pauseMenu->HandleEvents (event);
+	gameMenu->HandleEvents (event);
 }
 
 void
@@ -148,4 +124,54 @@ UserInterface::Load (const rapidjson::Value *saveJson)
 {
 	shopMenu->Load (saveJson);
 	bStatUpdate = true;
+}
+
+void
+UserInterface::EnablePauseMenu ()
+{
+	pauseMenu->Enable ();
+}
+
+void
+UserInterface::DisablePauseMenu ()
+{
+	pauseMenu->Disable ();
+}
+
+void
+UserInterface::EnableMainMenu ()
+{
+	mainMenu->Enable ();
+}
+
+void
+UserInterface::EnableDifficultySelectionMenu ()
+{
+	difficultySelectionMenu->Enable ();
+}
+
+void
+UserInterface::EnableWinMenu ()
+{
+	winMenu->Enable ();
+}
+
+void
+UserInterface::EnableLoseMenu ()
+{
+	loseMenu->Enable ();
+}
+
+void
+UserInterface::EnableShopMenu ()
+{
+	shopMenu->Enable ();
+}
+
+bool
+UserInterface::ShouldGameMenuBeActive () const
+{
+	return !(pauseMenu->IsEnabled () || mainMenu->IsEnabled ()
+	         || difficultySelectionMenu->IsEnabled () || winMenu->IsEnabled ()
+	         || loseMenu->IsEnabled () || shopMenu->IsEnabled ());
 }

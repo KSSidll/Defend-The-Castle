@@ -1,11 +1,12 @@
 #include "PauseMenu.h"
+#include "../UserInterface.h"
 
 PauseMenu::PauseMenu () {}
 PauseMenu::~PauseMenu () {}
 
 PauseMenu::PauseMenu (SDL_Renderer *renderer, TextureManager *textureManager,
-                      FontManager *fontManager, Game *game)
-	: PauseMenu::PauseMenu ()
+                      FontManager *fontManager, Game *game,
+                      UserInterface *userInterface)
 {
 	background = SceneObject (renderer,
 	                          textureManager->GetTexture ("darkBackground"));
@@ -14,14 +15,24 @@ PauseMenu::PauseMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 
 	buttons.push_back (
 		{ Button (renderer, textureManager->GetButtonTexture ("button1"),
-	              resumeButtonPos, [game] { game->UnPause (); }),
+	              resumeButtonPos,
+	              [this, game]
+	              {
+					  game->UnPause ();
+					  this->enabled = false;
+				  }),
 	      { { "", UILabel (renderer, resumeButtonPos.x, resumeButtonPos.y,
 	                       fontManager->GetFont (FONT_SANS, 32), "Resume",
 	                       { 255, 255, 255 }, resumeButtonPos.w,
 	                       resumeButtonPos.h) } } });
 	buttons.push_back (
 		{ Button (renderer, textureManager->GetButtonTexture ("button1"),
-	              exitButtonPos, [game] { game->MainMenu (); }),
+	              exitButtonPos,
+	              [this, userInterface]
+	              {
+					  userInterface->EnableMainMenu ();
+					  this->enabled = false;
+				  }),
 	      { { "", UILabel (renderer, exitButtonPos.x, exitButtonPos.y,
 	                       fontManager->GetFont (FONT_SANS, 32), "Exit",
 	                       { 255, 255, 255 }, exitButtonPos.w,
@@ -31,6 +42,9 @@ PauseMenu::PauseMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 void
 PauseMenu::Render () const
 {
+	if (!enabled)
+		return;
+
 	background.Render ();
 	label.Render ();
 	for (const auto &button : buttons)
@@ -42,8 +56,29 @@ PauseMenu::Render () const
 void
 PauseMenu::HandleEvents (SDL_Event *event)
 {
+	if (!enabled)
+		return;
+
 	for (auto &button : buttons)
 	{
 		button.HandleEvents (event, true);
 	}
+}
+
+void
+PauseMenu::Enable ()
+{
+	enabled = true;
+}
+
+void
+PauseMenu::Disable ()
+{
+	enabled = false;
+}
+
+bool
+PauseMenu::IsEnabled () const
+{
+	return enabled;
 }

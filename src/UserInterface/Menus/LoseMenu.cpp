@@ -1,11 +1,12 @@
 #include "LoseMenu.h"
+#include "../UserInterface.h"
 
 LoseMenu::LoseMenu () {}
 LoseMenu::~LoseMenu () {}
 
 LoseMenu::LoseMenu (SDL_Renderer *renderer, TextureManager *textureManager,
-                    FontManager *fontManager, Game *game)
-	: LoseMenu::LoseMenu ()
+                    FontManager *fontManager, Game *game,
+                    UserInterface *userInterface)
 {
 	background = SceneObject (renderer,
 	                          textureManager->GetTexture ("darkBackground"));
@@ -15,7 +16,12 @@ LoseMenu::LoseMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 
 	buttons.push_back (
 		{ Button (renderer, textureManager->GetButtonTexture ("button1"),
-	              exitButtonPos, [game] { game->MainMenu (); }),
+	              exitButtonPos,
+	              [this, userInterface]
+	              {
+					  userInterface->EnableMainMenu ();
+					  this->enabled = false;
+				  }),
 	      { { "", UILabel (renderer, exitButtonPos.x, exitButtonPos.y,
 	                       fontManager->GetFont (FONT_SANS, 48), "Exit",
 	                       { 255, 255, 255 }, exitButtonPos.w,
@@ -23,7 +29,12 @@ LoseMenu::LoseMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 
 	buttons.push_back (
 		{ Button (renderer, textureManager->GetButtonTexture ("button1"),
-	              loadButtonPos, [game] { game->Load (); }),
+	              loadButtonPos,
+	              [this, game]
+	              {
+					  game->Load ();
+					  this->enabled = false;
+				  }),
 	      { { "", UILabel (renderer, loadButtonPos.x, loadButtonPos.y,
 	                       fontManager->GetFont (FONT_SANS, 32),
 	                       "Load Previous Save", { 255, 255, 255 },
@@ -33,6 +44,9 @@ LoseMenu::LoseMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 void
 LoseMenu::Render () const
 {
+	if (!enabled)
+		return;
+
 	background.Render ();
 	label.Render ();
 	for (const auto &button : buttons)
@@ -44,8 +58,23 @@ LoseMenu::Render () const
 void
 LoseMenu::HandleEvents (SDL_Event *event)
 {
+	if (!enabled)
+		return;
+
 	for (auto &button : buttons)
 	{
 		button.HandleEvents (event, true);
 	}
+}
+
+void
+LoseMenu::Enable ()
+{
+	enabled = true;
+}
+
+bool
+LoseMenu::IsEnabled () const
+{
+	return enabled;
 }

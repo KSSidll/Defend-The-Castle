@@ -19,6 +19,8 @@ class MainMenu
 	SDL_Rect continueButtonPos = { 362, 400, 300, 150 };
 	SDL_Rect quitButtonPos = { 412, 600, 200, 100 };
 
+	bool enabled;
+
   public:
 	MainMenu ();
 	~MainMenu ();
@@ -28,6 +30,8 @@ class MainMenu
 
 	void Render () const;
 	void HandleEvents (SDL_Event *event);
+	void Enable ();
+	bool IsEnabled () const;
 };
 
 #endif // USER_INTERFACE_MAIN_MENU_H_

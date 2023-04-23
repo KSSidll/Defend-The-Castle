@@ -10,6 +10,9 @@
 #include "../Components/UILabel.h"
 #include <deque>
 
+// Recurrent dependency
+class UserInterface;
+
 class ShopMenu
 {
   private:
@@ -36,23 +39,25 @@ class ShopMenu
 	Button line_incButton;
 	Button line_decButton;
 
-	void UpdateItemsStats ();
+	bool enabled;
 
   public:
 	ShopMenu ();
 	~ShopMenu ();
 
 	ShopMenu (SDL_Renderer *renderer, TextureManager *textureManager,
-	          FontManager *fontManager, Game *game, Player *player,
-	          rapidjson::Value *json);
+	          FontManager *fontManager, UserInterface *userInterface,
+	          Player *player, rapidjson::Value *json);
 
 	void Reset ();
-
-	void Update (bool bStatUpdate = false);
+	void Update ();
+	void UpdateItemsStats ();
 	void Render () const;
 	void HandleEvents (SDL_Event *event, bool *bUpdate);
 	void Save (rapidjson::Document *saveJson) const;
 	void Load (const rapidjson::Value *saveJson);
+	void Enable ();
+	bool IsEnabled () const;
 };
 
 #endif // USER_INTERFACE_SHOP_MENU_H_

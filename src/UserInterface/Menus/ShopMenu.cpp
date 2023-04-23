@@ -1,6 +1,7 @@
 #include "ShopMenu.h"
 #include "../../Managers/Player.h"
 #include "../../Managers/TextureManager.h"
+#include "../UserInterface.h"
 
 ShopMenu::ShopMenu ()
 {
@@ -18,9 +19,8 @@ ShopMenu::~ShopMenu ()
 }
 
 ShopMenu::ShopMenu (SDL_Renderer *renderer, TextureManager *textureManager,
-                    FontManager *fontManager, Game *game, Player *player,
-                    rapidjson::Value *json)
-	: ShopMenu::ShopMenu ()
+                    FontManager *fontManager, UserInterface *userInterface,
+                    Player *player, rapidjson::Value *json)
 {
 	this->player = player;
 	shop = new Shop (player, json);
@@ -37,7 +37,12 @@ ShopMenu::ShopMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 	               "Return", { 255, 255, 255 }, 150, 100);
 	returnButton
 		= Button (renderer, textureManager->GetButtonTexture ("button1"),
-	              { 10, 10, 150, 100 }, [game] { game->WinMenu (); });
+	              { 10, 10, 150, 100 },
+	              [this, userInterface]
+	              {
+					  userInterface->EnableWinMenu ();
+					  this->enabled = false;
+				  });
 	mainLabel = UILabel (renderer, 0, 50, fontManager->GetFont (FONT_SANS, 48),
 	                     "Item Shop", { 255, 255, 255 }, 1024);
 
@@ -163,12 +168,13 @@ ShopMenu::Reset ()
 }
 
 void
-ShopMenu::Update (bool bStatUpdate)
+ShopMenu::Update ()
 {
+	if (!enabled)
+		return;
+
 	playerInfoLabel.ChangeText (
 		("Fuko: " + std::to_string (player->GetFuko ())).c_str ());
-	if (bStatUpdate)
-		UpdateItemsStats ();
 }
 
 void
@@ -217,6 +223,9 @@ ShopMenu::UpdateItemsStats ()
 void
 ShopMenu::Render () const
 {
+	if (!enabled)
+		return;
+
 	background.Render ();
 	mainLabel.Render ();
 	if (begin_column + 3 < column_count)
@@ -236,6 +245,9 @@ ShopMenu::Render () const
 void
 ShopMenu::HandleEvents (SDL_Event *event, bool *bUpdate)
 {
+	if (!enabled)
+		return;
+
 	fullPage.HandleEvents (begin_column, begin_line, event, bUpdate);
 	returnButton.HandleEvents (event, true);
 
@@ -259,4 +271,16 @@ void
 ShopMenu::Load (const rapidjson::Value *saveJson)
 {
 	shop->Load (saveJson);
+}
+
+void
+ShopMenu::Enable ()
+{
+	enabled = true;
+}
+
+bool
+ShopMenu::IsEnabled () const
+{
+	return enabled;
 }

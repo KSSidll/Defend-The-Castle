@@ -1,11 +1,12 @@
 #include "WinMenu.h"
+#include "../UserInterface.h"
 
 WinMenu::WinMenu () {}
 WinMenu::~WinMenu () {}
 
 WinMenu::WinMenu (SDL_Renderer *renderer, TextureManager *textureManager,
-                  FontManager *fontManager, Game *game)
-	: WinMenu::WinMenu ()
+                  FontManager *fontManager, Game *game,
+                  UserInterface *userInterface)
 {
 	background = SceneObject (renderer,
 	                          textureManager->GetTexture ("darkBackground"));
@@ -23,7 +24,12 @@ WinMenu::WinMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 
 	buttons.push_back (
 		{ Button (renderer, textureManager->GetButtonTexture ("button1"),
-	              shopButtonPos, [game] { game->ShopMenu (); }),
+	              shopButtonPos,
+	              [this, userInterface]
+	              {
+					  userInterface->EnableShopMenu ();
+					  this->enabled = false;
+				  }),
 	      { { "", UILabel (renderer, shopButtonPos.x, shopButtonPos.y,
 	                       fontManager->GetFont (FONT_SANS, 32), "Shop",
 	                       { 255, 255, 255 }, shopButtonPos.w,
@@ -31,7 +37,12 @@ WinMenu::WinMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 
 	buttons.push_back (
 		{ Button (renderer, textureManager->GetButtonTexture ("button1"),
-	              nextLevelButtonPos, [game] { game->IncreaseLevel (); }),
+	              nextLevelButtonPos,
+	              [this, game]
+	              {
+					  game->IncreaseLevel ();
+					  this->enabled = false;
+				  }),
 	      { { "",
 	          UILabel (renderer, nextLevelButtonPos.x, nextLevelButtonPos.y,
 	                   fontManager->GetFont (FONT_SANS, 32), "Next Level",
@@ -42,6 +53,9 @@ WinMenu::WinMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 void
 WinMenu::Render () const
 {
+	if (!enabled)
+		return;
+
 	background.Render ();
 	label.Render ();
 	for (const auto &button : buttons)
@@ -53,8 +67,23 @@ WinMenu::Render () const
 void
 WinMenu::HandleEvents (SDL_Event *event)
 {
+	if (!enabled)
+		return;
+
 	for (auto &button : buttons)
 	{
 		button.HandleEvents (event, true);
 	}
+}
+
+void
+WinMenu::Enable ()
+{
+	enabled = true;
+}
+
+bool
+WinMenu::IsEnabled () const
+{
+	return enabled;
 }

@@ -29,16 +29,8 @@ class Game
 	float enemyStatsLevelMultiplier = 1.1;
 	int level = 0;
 
-	bool menuFlag = true;
 	bool isPaused = true;
-	bool mainMenu = true;
-	bool difficultyMenu = false;
-	bool winMenu = false;
-	bool loseMenu = false;
-	bool shopMenu = false;
 	bool isRunning;
-
-	void ResetMenus ();
 
   public:
 	Game ();
@@ -58,6 +50,9 @@ class Game
 
 	void Pause ();
 	void UnPause ();
+	void LoseGame ();
+	void WinGame ();
+	void NewGame ();
 	void Quit ();
 	void IncreaseLevel ();
 	void ChangeEnemyLevelMultiplier (float multiplier);
@@ -65,19 +60,6 @@ class Game
 	bool Running () const;
 	bool Paused () const;
 	int Level () const;
-
-	void LoseGame ();
-	void NewGame ();
-	void Start ();
-	void MainMenu ();
-	void WinMenu ();
-	void ShopMenu ();
-
-	bool isMainMenu () const;
-	bool isDifficultyMenu () const;
-	bool isWinMenu () const;
-	bool isLoseMenu () const;
-	bool isShopMenu () const;
 };
 
 #endif // ENGINE_GAME_H_

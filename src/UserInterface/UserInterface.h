@@ -26,6 +26,8 @@ class UserInterface
 
 	bool bStatUpdate = false;
 
+	bool ShouldGameMenuBeActive () const;
+
   public:
 	UserInterface ();
 	~UserInterface ();
@@ -41,6 +43,14 @@ class UserInterface
 	void HardReset ();
 	void Save (rapidjson::Document *saveJson) const;
 	void Load (const rapidjson::Value *saveJson);
+
+	void EnablePauseMenu ();
+	void DisablePauseMenu ();
+	void EnableMainMenu ();
+	void EnableDifficultySelectionMenu ();
+	void EnableWinMenu ();
+	void EnableLoseMenu ();
+	void EnableShopMenu ();
 };
 
 #endif // USER_INTERFACE_USER_INTERFACE_H_

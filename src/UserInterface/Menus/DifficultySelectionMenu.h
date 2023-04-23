@@ -22,6 +22,8 @@ class DifficultySelectionMenu
 	SDL_Rect mediumButtonPos = { 412, 400, 200, 100 };
 	SDL_Rect hardButtonPos = { 412, 600, 200, 100 };
 
+	bool enabled;
+
   public:
 	DifficultySelectionMenu ();
 	~DifficultySelectionMenu ();
@@ -33,6 +35,8 @@ class DifficultySelectionMenu
 
 	void Render () const;
 	void HandleEvents (SDL_Event *event);
+	void Enable ();
+	bool IsEnabled () const;
 };
 
 #endif // USER_INTERFACE_DIFFICULTY_SELECTION_MENU_H_
