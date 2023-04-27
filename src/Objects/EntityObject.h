@@ -38,8 +38,8 @@ class EntityObject : public MovableObject
 	float GetRange () const;
 	int GetId () const;
 	int GetHealth () const;
-	bool KillPending () const;
-	bool Alive () const;
+	bool IsKillPending () const;
+	bool IsAlive () const;
 };
 
 #endif // OBJECTS_ENTITY_OBJECT_H_

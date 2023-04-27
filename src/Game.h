@@ -29,7 +29,7 @@ class Game
 	float enemyStatsLevelMultiplier = 1.1;
 	int level = 0;
 
-	bool isPaused = true;
+	bool isPaused;
 	bool isRunning;
 
   public:
@@ -57,9 +57,9 @@ class Game
 	void IncreaseLevel ();
 	void ChangeEnemyLevelMultiplier (float multiplier);
 
-	bool Running () const;
-	bool Paused () const;
-	int Level () const;
+	int GetLevel () const;
+	bool IsRunning () const;
+	bool IsPaused () const;
 };
 
 #endif // ENGINE_GAME_H_

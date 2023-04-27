@@ -152,13 +152,13 @@ EntityObject::GetHealth () const
 };
 
 bool
-EntityObject::KillPending () const
+EntityObject::IsKillPending () const
 {
 	return pendingKill;
 };
 
 bool
-EntityObject::Alive () const
+EntityObject::IsAlive () const
 {
 	return alive;
 };

@@ -41,6 +41,7 @@ WinMenu::WinMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 	              [this, game]
 	              {
 					  game->IncreaseLevel ();
+					  game->UnPause ();
 					  this->enabled = false;
 				  }),
 	      { { "",

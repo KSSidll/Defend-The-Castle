@@ -38,7 +38,7 @@ GameMenu::GameMenu (SDL_Renderer *renderer, TextureManager *textureManager,
 	levelInfo = UILabel (
 		renderer, (gameInfoBackgroundPos.w / 3 * 1), gameInfoBackgroundPos.y,
 		fontManager->GetFont (FONT_SANS, 24),
-		"Level " + std::to_string (game->Level () + 1), { 255, 255, 255 },
+		"Level " + std::to_string (game->GetLevel () + 1), { 255, 255, 255 },
 		gameInfoBackgroundPos.w / 3, gameInfoBackgroundPos.h);
 	playerFuko = UILabel (renderer, (gameInfoBackgroundPos.w / 3 * 2),
 	                      gameInfoBackgroundPos.y,
@@ -175,7 +175,7 @@ GameMenu::UpdatePlayerStatsLabel ()
 	                          + std::to_string (player->GetFujikaLimit ()))
 	                             .c_str ());
 	levelInfo.ChangeText (
-		("Level " + std::to_string (game->Level () + 1)).c_str ());
+		("Level " + std::to_string (game->GetLevel () + 1)).c_str ());
 	playerFuko.ChangeText (("Fuko " + std::to_string (player->GetFuko ())
 	                        + " / " + std::to_string (player->GetFukoLimit ()))
 	                           .c_str ());

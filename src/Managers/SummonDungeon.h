@@ -34,7 +34,7 @@ class SummonDungeon
 	void Reset ();
 	void SummonObject (const rapidjson::Value &object);
 
-	std::deque<PlayerSummon> *getObjectArray () const;
+	std::deque<PlayerSummon> *GetObjectArray () const;
 };
 
 #endif // MANAGERS_SUMMON_DUNGEON_H_

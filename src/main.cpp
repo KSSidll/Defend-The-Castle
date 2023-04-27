@@ -11,7 +11,7 @@ main ()
 	Game *game = new Game ();
 	game->Init ("Defend The Castle", 1024, 768, false);
 
-	while (game->Running ())
+	while (game->IsRunning ())
 	{
 		frameStart = SDL_GetTicks64 ();
 

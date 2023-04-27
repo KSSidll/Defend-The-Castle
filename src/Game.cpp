@@ -131,7 +131,9 @@ Game::Init (const char *title, int width, int height, bool fullscreen)
 
 	userInterface = new UserInterface (renderer, textureManager, this,
 	                                   summonDungeon, player, objectsDoc);
+
 	userInterface->EnableMainMenu ();
+	Pause ();
 }
 
 void
@@ -181,7 +183,7 @@ Game::Update ()
 		enemy->Update ();
 	}
 
-	if (enemy->KillPending ())
+	if (enemy->IsKillPending ())
 		WinGame ();
 
 	if (enemy->GetPosition () <= -250)
@@ -213,8 +215,8 @@ void
 Game::HandleCollisions ()
 {
 	bool bEnemyCollision = false;
-	if (enemy->Alive ())
-		for (auto &summon : *(summonDungeon->getObjectArray ()))
+	if (enemy->IsAlive ())
+		for (auto &summon : *(summonDungeon->GetObjectArray ()))
 		{
 			if (summon.GetPosition () + summon.GetRange ()
 			    > enemy->GetPosition ())
@@ -229,7 +231,7 @@ Game::HandleCollisions ()
 		}
 
 	if (bEnemyCollision)
-		for (auto &summon : *(summonDungeon->getObjectArray ()))
+		for (auto &summon : *(summonDungeon->GetObjectArray ()))
 		{
 			if (enemy->GetPosition () - enemy->GetRange ()
 			    < summon.GetPosition ())
@@ -242,6 +244,7 @@ Game::HandleCollisions ()
 void
 Game::HardReset ()
 {
+	level = 0;
 	player->HardReset ();
 	userInterface->HardReset ();
 }
@@ -253,7 +256,6 @@ Game::Reset ()
 	summonDungeon->Reset ();
 	userInterface->Reset (powf (enemyStatsLevelMultiplier, level));
 	player->Reset ();
-	UnPause ();
 }
 
 void
@@ -314,6 +316,7 @@ Game::Load ()
 	}
 
 	Reset ();
+	UnPause ();
 }
 
 void
@@ -347,7 +350,6 @@ Game::WinGame ()
 void
 Game::NewGame ()
 {
-	level = 0;
 	HardReset ();
 	Reset ();
 	UnPause ();
@@ -363,30 +365,28 @@ void
 Game::IncreaseLevel ()
 {
 	++level;
-	UnPause ();
 }
 
 void
 Game::ChangeEnemyLevelMultiplier (float multiplier)
 {
 	enemyStatsLevelMultiplier = multiplier;
-	UnPause ();
 }
 
+int
+Game::GetLevel () const
+{
+	return level;
+};
+
 bool
-Game::Running () const
+Game::IsRunning () const
 {
 	return isRunning;
 };
 
 bool
-Game::Paused () const
+Game::IsPaused () const
 {
 	return isPaused;
-};
-
-int
-Game::Level () const
-{
-	return level;
 };

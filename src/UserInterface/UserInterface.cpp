@@ -62,7 +62,7 @@ UserInterface::Update ()
 	shopMenu->Update ();
 	gameMenu->Update (ShouldGameMenuBeActive ());
 
-	if (!game->Paused ())
+	if (!game->IsPaused ())
 		gameMenu->UpdatePlayerStatsLabel ();
 
 	if (bStatUpdate)

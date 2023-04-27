@@ -67,7 +67,7 @@ SummonDungeon::Update ()
 	for (auto &summon : *objectArray)
 	{
 		summon.Update ();
-		if (summon.KillPending ())
+		if (summon.IsKillPending ())
 			KillSummonObject (&summon);
 	}
 }
@@ -105,7 +105,7 @@ SummonDungeon::SummonObject (const rapidjson::Value &object)
 }
 
 std::deque<PlayerSummon> *
-SummonDungeon::getObjectArray () const
+SummonDungeon::GetObjectArray () const
 {
 	return objectArray;
 };

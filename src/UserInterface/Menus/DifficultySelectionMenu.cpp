@@ -23,6 +23,7 @@ DifficultySelectionMenu::DifficultySelectionMenu (
 	              [this, game, easy = &easy]
 	              {
 					  game->ChangeEnemyLevelMultiplier (*easy);
+					  game->UnPause ();
 					  this->enabled = false;
 				  }),
 	      { { "", UILabel (renderer, easyButtonPos.x, easyButtonPos.y,
@@ -36,6 +37,7 @@ DifficultySelectionMenu::DifficultySelectionMenu (
 	              [this, game, medium = &medium]
 	              {
 					  game->ChangeEnemyLevelMultiplier (*medium);
+					  game->UnPause ();
 					  this->enabled = false;
 				  }),
 	      { { "", UILabel (renderer, mediumButtonPos.x, mediumButtonPos.y,
@@ -49,6 +51,7 @@ DifficultySelectionMenu::DifficultySelectionMenu (
 	              [this, game, hard = &hard]
 	              {
 					  game->ChangeEnemyLevelMultiplier (*hard);
+					  game->UnPause ();
 					  this->enabled = false;
 				  }),
 	      { { "", UILabel (renderer, hardButtonPos.x, hardButtonPos.y,
