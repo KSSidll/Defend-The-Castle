@@ -45,6 +45,8 @@ Game::~Game ()
 		SDL_DestroyRenderer (renderer);
 	if (window)
 		SDL_DestroyWindow (window);
+
+	SDL_Quit ();
 }
 
 void
@@ -201,14 +203,6 @@ Game::Render ()
 
 	userInterface->Render ();
 	SDL_RenderPresent (renderer);
-}
-
-void
-Game::Clean ()
-{
-	SDL_DestroyWindow (window);
-	SDL_DestroyRenderer (renderer);
-	SDL_Quit ();
 }
 
 void

@@ -41,7 +41,6 @@ class Game
 	void HandleEvents ();
 	void Update ();
 	void Render ();
-	void Clean ();
 	void HandleCollisions ();
 	void HardReset ();
 	void Reset ();

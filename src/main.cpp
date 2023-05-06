@@ -31,6 +31,7 @@ main ()
 			updateOnly = true;
 	}
 
-	game->Clean ();
+	delete game;
+
 	return 0;
 }
