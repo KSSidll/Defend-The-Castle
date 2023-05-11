@@ -346,7 +346,7 @@ Game::NewGame ()
 {
 	HardReset ();
 	Reset ();
-	UnPause ();
+	userInterface->EnableDifficultySelectionMenu ();
 }
 
 void
